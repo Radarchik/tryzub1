@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition>
+
+            <h:form>
+                <h:link  value="#{msg.main}" outcome="index" />
+                <h3><h:commandLink value ="Весь каталог">
+                        <f:ajax event="click" render=":table" listener="#{organizationHelper.getOrganizations()}"/>
+                    </h:commandLink></h3>
+                <h3><h:commandLink value = "#{msg.ukrgoods}" action="#{organizationHelper.fillOrganizationsByGenre()}">
+                        <f:param name="genre_id" value="#{msg.ukrgoods}" />            
+                    </h:commandLink> </h3>
+                <h5><h:commandLink value = "Ресторани та кафе"/></h5>
+                <h5><h:commandLink value ="Магазини"/></h5>
+                <h5><h:commandLink value ="Перукарні та салони краси"/></h5>
+                <h5><h:commandLink value ="Індивідуальні майстри:"/> </h5>
+                <h6><h:commandLink value ="- сектор краси та здоров'я"/></h6>
+                <h6><h:commandLink value ="- сектор харчування"/></h6>
+                <h6><h:commandLink value ="- сектор ремонту та будівельних послуг"/></h6>
+                <h6><h:commandLink value ="- інші послуги"/></h6>
+                <h5><h:commandLink value ="Перевізники"/></h5>
+                <hr></hr>
+
+
+                <h3><h:commandLink value ="Громадські організації"/> </h3>
+                <h5><h:commandLink value ="Посольство України у Великій Британії">
+                        <f:ajax event="click" render=":table" listener="#{organizationHelper.fillOrganizationsByGenre3()}"/>
+                    </h:commandLink></h5>
+                <h5><h:commandLink value ="Церкви" action="#{organizationHelper.fillOrganizationsByGenre1()}"/></h5>
+                <h5><h:commandLink value ="Навчальні заклади"/></h5>
+                <h5><h:commandLink value ="Благодійні організації"/></h5>
+            </h:form>
+
+        </ui:composition>
+    </h:body>
+</html>
+

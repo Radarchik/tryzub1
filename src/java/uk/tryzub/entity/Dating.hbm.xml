@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 24-Jul-2017 19:32:26 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+  <class catalog="tryzub" name="uk.tryzub.entity.Dating" optimistic-lock="version" table="dating">
+    <id name="id" type="java.lang.Integer">
+      <column name="id"/>
+      <generator class="identity"/>
+    </id>
+    <property name="city" type="string">
+      <column length="45" name="city" not-null="true"/>
+    </property>
+    <property name="date" type="timestamp">
+      <column length="19" name="date" not-null="true"/>
+    </property>
+    <property name="email" type="string">
+      <column length="45" name="email" not-null="true"/>
+    </property>
+    <property name="message" type="string">
+      <column length="1000" name="message" not-null="true"/>
+    </property>
+    <property name="name" type="string">
+      <column length="45" name="name" not-null="true"/>
+    </property>
+    <property name="section" type="int">
+      <column name="section" not-null="true"/>
+    </property>
+  </class>
+</hibernate-mapping>

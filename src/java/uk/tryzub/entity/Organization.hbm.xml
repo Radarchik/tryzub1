@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 05-Aug-2017 20:30:18 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class catalog="tryzub" name="uk.tryzub.entity.Organization" optimistic-lock="version" table="organization">
+        <id name="idorganization" type="java.lang.Integer">
+            <column name="idorganization" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="string">
+            <column name="name" length="200" not-null="true" />
+        </property>
+        <property name="section" type="string">
+            <column name="section" length="100" not-null="true" />
+        </property>
+        <property name="address" type="string">
+            <column name="address" length="100" />
+        </property>
+        <property name="description" type="string">
+            <column name="description" length="1000" />
+        </property>
+        <property name="contact" type="string">
+            <column name="contact" length="100" />
+        </property>
+        <property name="photo" type="binary">
+            <column name="photo" />
+        </property>
+        <set name="reviews" table="reviews" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idzakladu" not-null="true" />
+            </key>
+            <one-to-many class="uk.tryzub.entity.Reviews" />
+        </set>
+    </class>
+</hibernate-mapping>
