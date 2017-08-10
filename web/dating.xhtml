@@ -26,19 +26,26 @@
                     <div style="background-color: green; color: white; width: 45px; ">date</div>
                     <div>name (email)</div>
                     <div>Місто: Лондон</div>
-                      <br></br>
+                    <br></br>
                     <div>
                         Ищу мужчину для регулярного интима. Интересуют длительные, регулярные отношения без взаимных обязательств.
                         Семейное положение не важно. ajy r t y u Коммерция не интересует. Пожелания к мужчинам: приятный, позитивный, не напрягающий,
                         уверенный, адекватный.
                         О себе: красивая, сексуальная блондинка, позитивная, раскрепощенная... Подробности во время переписки и общения.
                     </div>
-                      <HR></HR>
+                    <HR></HR>
                 </div>
             </div>
 
         </div>
         <div id="cap">
+            <div class="welcome">
+                <h:form>
+                    <h5>#{msg.welcome},  #{user.username==null? msg.guest:user.username}</h5>
+                    <h:commandLink action="#{loginController.exit()}" value="#{msg.exit}"/>
+                </h:form>
+            </div>
+            
 
         </div>
 

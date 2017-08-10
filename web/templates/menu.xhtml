@@ -12,31 +12,97 @@
 
             <h:form>
                 <h:link  value="#{msg.main}" outcome="index" />
-                <h3><h:commandLink value ="Весь каталог">
+
+                <h2><h:commandLink value ="Весь каталог">
                         <f:ajax event="click" render=":table" listener="#{organizationHelper.getOrganizations()}"/>
-                    </h:commandLink></h3>
-                <h3><h:commandLink value = "#{msg.ukrgoods}" action="#{organizationHelper.fillOrganizationsByGenre()}">
-                        <f:param name="genre_id" value="#{msg.ukrgoods}" />            
-                    </h:commandLink> </h3>
-                <h5><h:commandLink value = "Ресторани та кафе"/></h5>
-                <h5><h:commandLink value ="Магазини"/></h5>
-                <h5><h:commandLink value ="Перукарні та салони краси"/></h5>
-                <h5><h:commandLink value ="Індивідуальні майстри:"/> </h5>
-                <h6><h:commandLink value ="- сектор краси та здоров'я"/></h6>
-                <h6><h:commandLink value ="- сектор харчування"/></h6>
-                <h6><h:commandLink value ="- сектор ремонту та будівельних послуг"/></h6>
-                <h6><h:commandLink value ="- інші послуги"/></h6>
-                <h5><h:commandLink value ="Перевізники"/></h5>
+                    </h:commandLink></h2>
                 <hr></hr>
 
+                <h3><h:commandLink value ="#{msg.ukrgoods}">
+                        <f:param name="section" value="in(1,2,3,4)" />
+                        <f:ajax event="click" render=":table" listener="#{organizationHelper.fillOrganizationsBySection()}"/>
+                    </h:commandLink></h3>
 
-                <h3><h:commandLink value ="Громадські організації"/> </h3>
-                <h5><h:commandLink value ="Посольство України у Великій Британії">
-                        <f:ajax event="click" render=":table" listener="#{organizationHelper.fillOrganizationsByGenre3()}"/>
-                    </h:commandLink></h5>
-                <h5><h:commandLink value ="Церкви" action="#{organizationHelper.fillOrganizationsByGenre1()}"/></h5>
-                <h5><h:commandLink value ="Навчальні заклади"/></h5>
-                <h5><h:commandLink value ="Благодійні організації"/></h5>
+                
+
+                <h:commandLink value = "Ресторани та кафе">
+                     <f:param name="section" value="= 1" />
+                     <f:ajax event="click" render=":table" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                </h:commandLink> 
+<br />
+                <h:commandLink value = "Магазини">
+                    <f:param name="section" value="= 2" />
+                    <f:ajax event="click" render=":table" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                </h:commandLink> 
+<br />
+                <h:commandLink value = "Перукарні та салони краси">
+                    <f:param name="section" value="= 3" />
+                    <f:ajax event="click" render=":table" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                </h:commandLink> 
+<br />
+                <h:commandLink value = "Перевізники">
+                    <f:param name="section" value="= 4" />
+                    <f:ajax event="click" render=":table" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                </h:commandLink> 
+
+                <hr></hr>
+
+                <h3><h:commandLink value = "Індивідуальні майстри:">
+                        <f:param name="section" value="in(5,6,7,8)" />
+                        <f:ajax event="click" render=":table" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                    </h:commandLink></h3> 
+
+                <h:commandLink value = "Краси та здоров'я">
+                    <f:param name="section" value="= 5" />
+                    <f:ajax event="click" render=":table" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                </h:commandLink> 
+<br />
+                <h:commandLink value = "Харчування">
+                    <f:param name="section" value="= 6" />
+                    <f:ajax event="click" render=":table" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                </h:commandLink> 
+<br />
+                <h:commandLink value = "Ремонт та будівельні послуги">
+                    <f:param name="section" value="= 7" />
+                    <f:ajax event="click" render=":table" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                </h:commandLink> 
+<br />
+                <h:commandLink value = "Навчання та репетиторство">
+                    <f:param name="section" value="= 8" />
+                    <f:ajax event="click" render=":table" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                </h:commandLink> 
+
+
+
+                <hr></hr>
+                <h3><h:commandLink value = "Громадські організації:">
+                        <f:param name="section" value="in(10,11,12,13)" />
+                        <f:ajax event="click" render=":table" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                    </h:commandLink></h3> 
+
+                <h:commandLink value = "Посольство та консульства">
+                    <f:param name="section" value="= 10" />
+                    <f:ajax event="click" render=":table" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                </h:commandLink> 
+<br />
+                <h:commandLink value = "Церкви">
+                    <f:param name="section" value="= 11" />
+                    <f:ajax event="click" render=":table" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                </h:commandLink> 
+<br />
+                <h:commandLink value = "Навчальні заклади">
+                    <f:param name="section" value="= 12" />
+                    <f:ajax event="click" render=":table" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                </h:commandLink> 
+<br />
+                <h:commandLink value = "Сайти, газети, групи ФБ, клуби та гуртки">
+                    <f:param name="section" value="= 13" />
+                    <f:ajax event="click" render=":table" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                </h:commandLink> 
+
+
+
+
             </h:form>
 
         </ui:composition>

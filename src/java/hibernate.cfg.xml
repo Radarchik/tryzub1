@@ -56,5 +56,6 @@ Contributor(s):
     <mapping resource="uk/tryzub/entity/User.hbm.xml"/>
     <mapping resource="uk/tryzub/entity/Organization.hbm.xml"/>
     <mapping resource="uk/tryzub/entity/Reviews.hbm.xml"/>
+    <mapping resource="uk/tryzub/entity/Section.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

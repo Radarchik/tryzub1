@@ -26,3 +26,13 @@
     height: 2000px;
     background-color: blue;
 }
+
+
+.welcome{
+    position: fixed;
+    align-items: center;
+    top: 3px;
+    left: 87%;
+    width: 10%;
+    height: 10%;
+}

@@ -4,6 +4,7 @@
     Author     : tszin
 --%>
 
+<%@page import="java.util.Arrays"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -50,7 +51,10 @@
         </div>
 
         <div id="content">
-
+            <% String []arr=  session.getValueNames();%>
+            
+            <%= Arrays.toString(arr) %>
+          
 
         </div>
 

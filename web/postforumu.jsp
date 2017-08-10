@@ -13,6 +13,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+         <link href="resources/css/postforumu.css" rel="stylesheet" type="text/css">
     </head>
     <body>
         <% String numberTopic = request.getParameter("topicid");
@@ -20,6 +21,8 @@
             List<Post> arr = postHelper.getPosts(numberTopic);
             int numberPost = 1;
         %>
+        
+        
         
         <h1> Тема: <%= arr.get(0).getTopic().getName()%></h1>
 

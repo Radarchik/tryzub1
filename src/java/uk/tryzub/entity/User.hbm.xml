@@ -1,47 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 24-Jul-2017 19:32:26 by Hibernate Tools 4.3.1 -->
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 10-Aug-2017 20:22:17 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-  <class catalog="tryzub" name="uk.tryzub.entity.User" optimistic-lock="version" table="user">
-    <id name="username" type="string">
-      <column name="username"/>
-      <generator class="assigned"/>
-    </id>
-    <property name="email" type="string">
-      <column name="email" not-null="true"/>
-    </property>
-    <property name="password" type="string">
-      <column name="password" not-null="true"/>
-    </property>
-    <property name="creationtime" type="timestamp">
-      <column length="19" name="creationtime" not-null="true"/>
-    </property>
-    <property name="avatar" type="string">
-      <column name="avatar" not-null="true"/>
-    </property>
-    <property name="city" type="string">
-      <column name="city" not-null="true"/>
-    </property>
-    <property name="quantity" type="int">
-      <column name="quantity" not-null="true"/>
-    </property>
-    <property name="reputation" type="string">
-      <column name="reputation" not-null="true"/>
-    </property>
-    <property name="sign" type="string">
-      <column name="sign" not-null="true"/>
-    </property>
-    <set fetch="select" inverse="true" lazy="true" name="posts" table="post">
-      <key>
-        <column name="postauthor" not-null="true"/>
-      </key>
-      <one-to-many class="uk.tryzub.entity.Post"/>
-    </set>
-    <set fetch="select" inverse="true" lazy="true" name="topics" table="topic">
-      <key>
-        <column name="topicauthor" not-null="true"/>
-      </key>
-      <one-to-many class="uk.tryzub.entity.Topic"/>
-    </set>
-  </class>
+    <class name="uk.tryzub.entity.User" table="user" catalog="tryzub" optimistic-lock="version">
+        <id name="username" type="string">
+            <column name="username" />
+            <generator class="assigned" />
+        </id>
+        <property name="email" type="string">
+            <column name="email" not-null="true" />
+        </property>
+        <property name="password" type="string">
+            <column name="password" not-null="true" />
+        </property>
+        <property name="creationtime" type="timestamp">
+            <column name="creationtime" length="19" not-null="true" />
+        </property>
+        <property name="avatar" type="string">
+            <column name="avatar" not-null="true" />
+        </property>
+        <property name="city" type="string">
+            <column name="city" not-null="true" />
+        </property>
+        <property name="quantity" type="int">
+            <column name="quantity" not-null="true" />
+        </property>
+        <property name="reputation" type="string">
+            <column name="reputation" not-null="true" />
+        </property>
+        <property name="sign" type="string">
+            <column name="sign" not-null="true" />
+        </property>
+        <set name="posts" table="post" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="postauthor" not-null="true" />
+            </key>
+            <one-to-many class="uk.tryzub.entity.Post" />
+        </set>
+        <set name="topics" table="topic" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="topicauthor" not-null="true" />
+            </key>
+            <one-to-many class="uk.tryzub.entity.Topic" />
+        </set>
+        <set name="organizations" table="organization" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="userwhoadded" not-null="true" />
+            </key>
+            <one-to-many class="uk.tryzub.entity.Organization" />
+        </set>
+    </class>
 </hibernate-mapping>

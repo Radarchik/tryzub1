@@ -1,18 +1,21 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
 "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<!-- Generated 05-Aug-2017 20:30:18 by Hibernate Tools 4.3.1 -->
+<!-- Generated 10-Aug-2017 20:22:17 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-    <class catalog="tryzub" name="uk.tryzub.entity.Organization" optimistic-lock="version" table="organization">
+    <class name="uk.tryzub.entity.Organization" table="organization" catalog="tryzub" optimistic-lock="version">
         <id name="idorganization" type="java.lang.Integer">
             <column name="idorganization" />
             <generator class="identity" />
         </id>
+        <many-to-one name="section" class="uk.tryzub.entity.Section" fetch="select">
+            <column name="section" not-null="true" />
+        </many-to-one>
+        <many-to-one name="user" class="uk.tryzub.entity.User" fetch="select">
+            <column name="userwhoadded" not-null="true" />
+        </many-to-one>
         <property name="name" type="string">
             <column name="name" length="200" not-null="true" />
-        </property>
-        <property name="section" type="string">
-            <column name="section" length="100" not-null="true" />
         </property>
         <property name="address" type="string">
             <column name="address" length="100" />
@@ -23,10 +26,10 @@
         <property name="contact" type="string">
             <column name="contact" length="100" />
         </property>
-        <property name="photo" type="binary">
-            <column name="photo" />
+        <property name="photo" type="string">
+            <column name="photo" length="1000" />
         </property>
-        <set name="reviews" table="reviews" inverse="true" lazy="true" fetch="select">
+        <set name="reviewses" table="reviews" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idzakladu" not-null="true" />
             </key>

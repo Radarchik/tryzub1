@@ -1,5 +1,5 @@
 package uk.tryzub.entity;
-// Generated 05-Aug-2017 20:30:17 by Hibernate Tools 4.3.1
+// Generated 10-Aug-2017 20:22:17 by Hibernate Tools 4.3.1
 
 
 import java.util.HashSet;
@@ -12,30 +12,33 @@ public class Organization  implements java.io.Serializable {
 
 
      private Integer idorganization;
+     private Section section;
+     private User user;
      private String name;
-     private String section;
      private String address;
      private String description;
      private String contact;
-     private byte[] photo;
-     private Set reviews = new HashSet(0);
+     private String photo;
+     private Set reviewses = new HashSet(0);
 
     public Organization() {
     }
 
 	
-    public Organization(String name, String section) {
-        this.name = name;
+    public Organization(Section section, User user, String name) {
         this.section = section;
+        this.user = user;
+        this.name = name;
     }
-    public Organization(String name, String section, String address, String description, String contact, byte[] photo, Set reviewses) {
-       this.name = name;
+    public Organization(Section section, User user, String name, String address, String description, String contact, String photo, Set reviewses) {
        this.section = section;
+       this.user = user;
+       this.name = name;
        this.address = address;
        this.description = description;
        this.contact = contact;
        this.photo = photo;
-       this.reviews = reviews;
+       this.reviewses = reviewses;
     }
    
     public Integer getIdorganization() {
@@ -45,19 +48,26 @@ public class Organization  implements java.io.Serializable {
     public void setIdorganization(Integer idorganization) {
         this.idorganization = idorganization;
     }
+    public Section getSection() {
+        return this.section;
+    }
+    
+    public void setSection(Section section) {
+        this.section = section;
+    }
+    public User getUser() {
+        return this.user;
+    }
+    
+    public void setUser(User user) {
+        this.user = user;
+    }
     public String getName() {
         return this.name;
     }
     
     public void setName(String name) {
         this.name = name;
-    }
-    public String getSection() {
-        return this.section;
-    }
-    
-    public void setSection(String section) {
-        this.section = section;
     }
     public String getAddress() {
         return this.address;
@@ -80,19 +90,19 @@ public class Organization  implements java.io.Serializable {
     public void setContact(String contact) {
         this.contact = contact;
     }
-    public byte[] getPhoto() {
+    public String getPhoto() {
         return this.photo;
     }
     
-    public void setPhoto(byte[] photo) {
+    public void setPhoto(String photo) {
         this.photo = photo;
     }
-    public Set getReviews() {
-        return this.reviews;
+    public Set getReviewses() {
+        return this.reviewses;
     }
     
-    public void setReviews(Set reviews) {
-        this.reviews = reviews;
+    public void setReviewses(Set reviewses) {
+        this.reviewses = reviewses;
     }
 
 

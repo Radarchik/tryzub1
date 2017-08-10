@@ -35,5 +35,15 @@ and open the template in the editor.
     left: 20%;
     width: 80%;
     height: 2000px;
-    background-color: blue;
+    background-color: #dcdcdc;
+}
+
+
+.welcome{
+    position: fixed;
+    align-items: center;
+    top: 3px;
+    left: 87%;
+    width: 10%;
+    height: 10%;
 }

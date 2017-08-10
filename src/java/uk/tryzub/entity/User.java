@@ -1,5 +1,5 @@
 package uk.tryzub.entity;
-// Generated 24-Jul-2017 19:32:25 by Hibernate Tools 4.3.1
+//  Generated 10-Aug-2017 20:22:17 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -23,6 +23,7 @@ public class User  implements java.io.Serializable {
      private String sign;
      private Set posts = new HashSet(0);
      private Set topics = new HashSet(0);
+     private Set organizations = new HashSet(0);
 
     public User() {
     }
@@ -39,7 +40,7 @@ public class User  implements java.io.Serializable {
         this.reputation = reputation;
         this.sign = sign;
     }
-    public User(String username, String email, String password, Date creationtime, String avatar, String city, int quantity, String reputation, String sign, Set posts, Set topics) {
+    public User(String username, String email, String password, Date creationtime, String avatar, String city, int quantity, String reputation, String sign, Set posts, Set topics, Set organizations) {
        this.username = username;
        this.email = email;
        this.password = password;
@@ -51,6 +52,7 @@ public class User  implements java.io.Serializable {
        this.sign = sign;
        this.posts = posts;
        this.topics = topics;
+       this.organizations = organizations;
     }
    
     public String getUsername() {
@@ -129,6 +131,13 @@ public class User  implements java.io.Serializable {
     
     public void setTopics(Set topics) {
         this.topics = topics;
+    }
+    public Set getOrganizations() {
+        return this.organizations;
+    }
+    
+    public void setOrganizations(Set organizations) {
+        this.organizations = organizations;
     }
 
 

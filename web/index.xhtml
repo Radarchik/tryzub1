@@ -4,7 +4,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
-        <title>Facelet Title</title>
+        <title>Тризуб</title>
         <h:outputStylesheet  name="css/main_css.css" />
         <!-- <h:outputScript library="js" name="library.js" target="head"/> -->
     </h:head>
@@ -16,8 +16,10 @@
                 <div id="flaguk"><h:graphicImage  class="images_flags" name="images/flaguk.jpg"/></div>
                 <div id="community_ukr"> Українська громада у Великій Британії</div>
                 <div id="community_uk">  Ukrainian community in Great Britain</div>
+
+
                 <div class="login_div">
-                    <p class="title">#{msg.input_info}</p>
+                    <p class="title">#{msg.authorization}</p>
 
                     <h:form styleClass="login_form">
                         #{msg.input_name} <h:inputText id="username" value="#{user.username}" required="true" requiredMessage="#{msg.login_required}">
@@ -29,26 +31,52 @@
 
                 </div>
 
-                <!-- <img src="resources/image/lesya.png" id="lesya"> -->
-                <h:graphicImage  id="sheva" name="images/sheva2.png"/>
-                <!-- <img src="resources/image/Volod.png" id="volod">  -->
-                <h:graphicImage  name="images/Bogdan.png" id="bogdan"/>
+                <div class="login">
+                    <h5>#{msg.welcome},  #{user.username==null? msg.guest:user.username}</h5>
+                    <span><i>&nbsp;</i>#{msg.authorization}</span>
 
+                    <!-- Авторизація -->
+                    <div class="logins red-border-block">
+                        <form action="/index.xhtml" method="post" id="user-login-form" accept-charset="UTF-8">
+                            <div><div class="form-item form-type-textfield form-item-name">
+                                    <label class="element-invisible" for="edit-name">Логин <span class="form-required" title="Это поле обязательно для заполнения.">*</span></label>
+                                    <input placeholder="Логин" type="text" id="edit-name" name="name" value="" size="15" maxlength="60" class="form-text required"/>
+                                </div>
+                                <div class="form-item form-type-password form-item-pass">
+                                    <label class="element-invisible" for="edit-pass">Пароль <span class="form-required" title="Это поле обязательно для заполнения.">*</span></label>
+                                    <input placeholder="Пароль" type="password" id="edit-pass" name="pass" size="15" maxlength="128" class="form-text required"/>
+                                </div>
+                                <input type="hidden" name="links" value=""/>
+                                <input type="hidden" name="form_build_id" value="form-G2OkA93zKQXJmeHhDoG27I5j723PGmSSVSZ4NRtJ8WE"/>
+                                <input type="hidden" name="form_id" value="user_login_block"/>
+                                <div class="form-wrapper" id="edit-actions"><input type="submit" id="edit-submit--2" name="op" value="Войти" class="form-submit"/></div>
+                            </div>
+                        </form>                        <a href="/user/password">Восстановить пароль</a>
+                        <a href="/user/register">Регистрация</a>
+                    </div>
+                </div>
 
 
             </div>
+
+            <!-- <h:graphicImage  name="images/lesya.png" id="lesya"/> -->
+            <h:graphicImage  id="sheva" name="images/shev.png"/>
+            <!-- <img src="resources/image/Volod.png" id="volod">  -->
+            <h:graphicImage  name="images/Bogdan.png" id="bogdan"/>
+
+
         </div>
         <div id="content">
             <div id="buttons">
                 <a>Новини</a> &nbsp;
-                <h:outputLink value="ukrbiz.xhtml">Робота для українців</h:outputLink>&nbsp;
-                <h:outputLink value="ukrbiz.jsp">Українські заклади (товари, послуги та громадські організації)</h:outputLink> 
+                <h:outputLink value="ukrbiz.jsp">Робота для українців</h:outputLink>&nbsp;
+                <h:outputLink value="ukrbiz.xhtml">Українські заклади (товари, послуги та громадські організації)</h:outputLink> 
                 <a> Житло</a>&nbsp;
                 <h:outputLink value="dating1.jsp">Оголошення </h:outputLink> &nbsp;
                 <h:outputLink value="dating.xhtml">
                     #{msg.dating}
                 </h:outputLink>
-
+ 
                 &nbsp;
 
                 <h:outputLink value="forum.jsp">

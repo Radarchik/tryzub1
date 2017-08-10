@@ -47,4 +47,5 @@ Contributor(s):
   <table-filter match-name="topic"/>
   <table-filter match-name="reviews"/>
   <table-filter match-name="organization"/>
+  <table-filter match-name="section"/>
 </hibernate-reverse-engineering>
