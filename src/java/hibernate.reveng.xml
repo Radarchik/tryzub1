@@ -45,7 +45,7 @@ Contributor(s):
   <table-filter match-name="user"/>
   <table-filter match-name="dating"/>
   <table-filter match-name="topic"/>
-  <table-filter match-name="reviews"/>
+  <table-filter match-name="review"/>
   <table-filter match-name="organization"/>
   <table-filter match-name="section"/>
 </hibernate-reverse-engineering>

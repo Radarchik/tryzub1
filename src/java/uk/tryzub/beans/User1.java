@@ -57,7 +57,7 @@ public class User1 implements Serializable {
 
 
 
-            return "books";
+            return "index";
         } catch (ServletException ex) {
             ResourceBundle bundle = ResourceBundle.getBundle("ru.javabegin.training.web.nls.messages", FacesContext.getCurrentInstance().getViewRoot().getLocale());
             Logger.getLogger(User1.class.getName()).log(Level.SEVERE, null, ex);

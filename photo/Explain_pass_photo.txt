@@ -1,0 +1,70 @@
+
+To the point, it has to be accessible by a public URL. Thus, the <img src> must ultimately refer a http:// URI, not something like a file:// URI or so. Ultimately, the HTML source is executed at enduser's machine and images are downloaded individually by the webbrowser during parsing the HTML source. When the webbrowser encounters a file:// URI such as C:\path\to\image.png, then it will look in enduser's own local disk file system for the image instead of the webserver's one. This is obviously not going to work if the webbrowser runs at a physically different machine than the webserver.
+
+There are several ways to achieve this:
+
+If you have full control over the images folder, then just drop the folder with all images, e.g. /images directly in servletcontainer's deploy folder, such as the /webapps folder in case of Tomcat and /domains/domain1/applications folder in case of GlassFish. No further configuration is necessary.
+Or, add a new webapp context to the server which points to the absolute disk file system location of the folder with those images. How to do that depends on the container used. The below examples assume that images are located in /path/to/images and that you'd like to access them via http://.../images.
+
+In case of Tomcat, add the following new entry to Tomcat's /conf/server.xml inside <Host>:
+
+<Context docBase="/path/to/images" path="/images" />
+In case of GlassFish, add the following entry to /WEB-INF/glassfish-web.xml:
+
+<property name="alternatedocroot_1" value="from=/images/* dir=/path/to" />
+In case of WildFly, add the following entry inside <host name="default-host"> of /standalone/configuration/standalone.xml ...
+
+<location name="/images" handler="images-content" />
+... and further down in <handlers> entry of the very same <subsystem> as above <location>:
+<file name="images-content" path="/path/to/images" />
+Or, create a Servlet which streams the image from disk to response:
+
+@WebServlet("/images/*")
+public class ImageServlet extends HttpServlet {
+
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String filename = request.getPathInfo().substring(1);
+        File file = new File("/path/to/images", filename);
+        response.setHeader("Content-Type", getServletContext().getMimeType(filename));
+        response.setHeader("Content-Length", String.valueOf(file.length()));
+        response.setHeader("Content-Disposition", "inline; filename=\"" + filename + "\"");
+        Files.copy(file.toPath(), response.getOutputStream());
+    }
+
+}
+If you happen to use OmniFaces, then the FileServlet may be useful as it also takes into account head, caching and range requests.
+Or, use OmniFaces <o:graphicImage> which supports a bean property returning byte[] or InputStream:
+public InputStream getImage(String filename) {
+    return new FileInputStream(new File("/path/to/images", filename));
+}
+Or, use PrimeFaces <p:graphicImage> which supports a bean method returning PrimeFaces-specific StreamedContent.
+public StreamedContent getImage() throws IOException {
+    FacesContext context = FacesContext.getCurrentInstance();
+
+    if (context.getCurrentPhaseId() == PhaseId.RENDER_RESPONSE) {
+        // So, we're rendering the view. Return a stub StreamedContent so that it will generate right URL.
+        return new DefaultStreamedContent();
+    }
+    else {
+        // So, browser is requesting the image. Return a real StreamedContent with the image bytes.
+        String filename = context.getExternalContext().getRequestParameterMap().get("filename");
+        return new DefaultStreamedContent(new FileInputStream(new File("/path/to/images", filename)));
+    }
+}
+For the first way and the Tomcat and WildFly approaches in second way, the images will be available by http://example.com/images/filename.ext and thus referencable in plain HTML as follows
+
+<img src="/images/filename.ext" />
+For the GlassFish approach in second way and the third way, the images will be available by http://example.com/context/images/filename.ext and thus referencable in plain HTML as follows
+
+<img src="#{request.contextPath}/images/filename.ext" />
+or in JSF as follows (context path is automatically prepended)
+
+<h:graphicImage value="/images/filename.ext" />
+For the OmniFaces approach in fourth way, reference it as follows
+
+<o:graphicImage value="#{bean.getImage('filename.ext')}" />
+For the PrimeFaces approach in fifth way, reference it as follows:
+
+<p:graphicImage value="#{bean.image}">
+    <f:param name="filename" value="filename.ext" />
+</p:graphicImage>

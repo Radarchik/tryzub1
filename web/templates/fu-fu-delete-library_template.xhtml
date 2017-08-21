@@ -17,20 +17,26 @@
                 </ui:insert>                 
             </div>
 
-
-            <div id ="content">
-                <ui:insert name="content">
-                    <ui:include src="/templates/content.xhtml"/>
-                </ui:insert>    
-            </div>
-
-
             <div id ="header">
                 <ui:insert name="header">
                     <ui:include src="/templates/header.xhtml"/>
                 </ui:insert>                 
             </div>
 
+            <div id="wrapperContentAndReviews">
+                <div id ="content">
+                    <ui:insert name="content">
+                        <ui:include src="/templates/content.xhtml"/>
+                    </ui:insert>    
+                </div>
+
+
+                <div id ="reviews">
+                    <ui:insert name="reviews">
+                        <ui:include src="/templates/reviews.xhtml"/>
+                    </ui:insert>                 
+                </div>
+            </div>
 
         </div>
     </h:body>

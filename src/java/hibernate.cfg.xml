@@ -49,13 +49,13 @@ Contributor(s):
     <property name="hibernate.show_sql">true</property>
     <property name="hibernate.current_session_context_class">thread</property>
     <property name="hibernate.enable_lazy_load_no_trans">true</property>
-    <property name="hibernate.query.factory_class">org.hibernate.hql.internal.classic.ClassicQueryTranslatorFactory</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
     <mapping resource="uk/tryzub/entity/Dating.hbm.xml"/>
     <mapping resource="uk/tryzub/entity/Topic.hbm.xml"/>
     <mapping resource="uk/tryzub/entity/Post.hbm.xml"/>
     <mapping resource="uk/tryzub/entity/User.hbm.xml"/>
     <mapping resource="uk/tryzub/entity/Organization.hbm.xml"/>
-    <mapping resource="uk/tryzub/entity/Reviews.hbm.xml"/>
+    <mapping resource="uk/tryzub/entity/Review.hbm.xml"/>
     <mapping resource="uk/tryzub/entity/Section.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

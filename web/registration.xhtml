@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Реєстрація користувача</title>
+        <h:outputStylesheet  name="css/registration.css" />
+    </h:head>
+    <body>
+        <div>
+            <h:form>
+
+                <div>
+                    <h:outputText value="Ім'я користувача (login):"/>
+                    <p:outputLabel value="Введіть імя користувача (для авторизації)" styleClass="edit-title"/><br/>
+                    <p:inputText id="inputUserLogin" value="#{userAddController.login}"   styleClass="edit-field"/>
+                </div>
+
+                <div>
+                    <h:outputText value="Пароль:"/>
+                    <p:outputLabel value="Введіть пароль (для авторизації)" styleClass="edit-title"/><br/>
+                    <p:password id="inputUserPassword" value="#{userAddController.password}"   styleClass="edit-field"/>
+                </div>
+
+                <div>
+                    <h:outputText value="Електронна пошта"/>
+                    <p:outputLabel value="Введіть діючу електронну адресу" styleClass="edit-title"/><br/>
+                    <p:inputText id="inputUserEmail" value="#{userAddController.email}"   styleClass="edit-field"/>
+                </div>
+
+                <div>
+                    <h:outputText value="Місто (за бажанням) :"/>
+                    <p:outputLabel value="Введіть населений пункт Вашого проживання (не обов'язково у Великій Британії)" styleClass="edit-title"/><br/>
+                    <p:inputText id="inputUserCity" value="#{userAddController.city}"   styleClass="edit-field"/>
+                </div>
+
+                <div>
+                    <h:outputText value="Справжнє ім'я: (за бажанням)"/>
+                    <p:outputLabel value="Введіть ваше справжнє ім'я" styleClass="edit-title"/><br/>
+                    <p:inputText id="inputUserRealname" value="#{userAddController.realname}"   styleClass="edit-field"/>    
+                </div>
+
+                <div>
+                    <h:outputText value="Захист:"/>
+
+                    <p:outputLabel value="Перевірка на бота" styleClass="edit-title"/><br/>
+                    <p:inputText id="inputUserDefBot" value=""   styleClass="edit-field"/>
+
+                    <p:outputLabel value="Перевірка на москаля" styleClass="edit-title"/><br/>
+                    <p:inputText id="inputUserDefMoskal" value=""   styleClass="edit-field"/>
+                </div>
+                <!-- Крим це:   Русь було освящено в місті:  Який клуб найбільше ставав чемпіоном СРСР:  -->
+
+                <div>
+                    <p:commandButton id="button_saveOrg" value="Save user" process="@form" rendered="true"
+                                     title="Save"   action="#{userAddController.addUser()}">
+                    </p:commandButton> 
+                </div>
+
+
+            </h:form>
+
+
+
+
+
+
+
+
+
+        </div>
+    </body>
+</html>

@@ -21,8 +21,8 @@
     align-items: center;
     top: 0px;
     left: 20%;
-    width: 10%;
-    height: 10%;
+    height: 100px;
+    width: 100px;
 }
 
 #tryzub{
@@ -38,8 +38,8 @@
     align-items: center;
     top: 0px;
     left: 70%;
-    width: 10%;
-    height: 10%;
+   height: 110px;
+    width: 80px;
 }
 
 #community_ukr{
@@ -129,7 +129,7 @@
     position: fixed;
     align-items: center;
     top: 3px;
-    left: 87%;
+    left: 83%;
     width: 10%;
     height: 10%;
 }

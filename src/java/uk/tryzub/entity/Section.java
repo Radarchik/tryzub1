@@ -49,7 +49,20 @@ public class Section  implements java.io.Serializable {
         this.organizations = organizations;
     }
 
-
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Section other = (Section) obj;
+        if (this.sectionid != other.sectionid && (this.sectionid == null || !this.sectionid.equals(other.sectionid))) {
+            return false;
+        }
+        return true;
+    }
 
 
 }

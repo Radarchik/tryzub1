@@ -1,0 +1,98 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:head>
+        <title>Добавлення або редагування організації</title>
+    </h:head>
+    <h:body>
+
+
+        <p:dialog id="dlgorg"  widgetVar="dlgedit" modal="true" resizable="false" closable="false"> 
+
+            <h:form enctype="multipart/form-data">
+                <p:growl id="messages" showDetail="true" />
+                <p:fileUpload fileUploadListener="#{fileUploadView.handleFileUpload}" mode="advanced"
+                              update="messages" auto="true" sizeLimit="1000000" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+                              invalidFileMessage="Неправильний тип (розширення). Допустимі формати: gif jpg jpeg png"/>
+             <!-- подключить омнифесис здесь можно получить в байтах   <o:graphicImage value="" library="images" width="160" height="220" id="bookNewImage"/> -->
+            </h:form>
+
+            <h:form id="tableedit">
+
+                <p:dataTable value="#{organizationHelper.selectedOrgStrd}" var="orgslist" id="orgs"
+                             styleClass="order-table"
+
+                             > 
+
+                    <f:facet name="header">
+                        Cell Editing with Click and RightClick
+                    </f:facet>
+
+
+
+                    <p:column>
+                        <h:outputLink value="#{request.contextPath}/editorganization.xhtml?id=#{orgslist.idorganization}" target="_blank">
+                            <h:graphicImage  value="#{orgslist.photo}" width="160" height="220"/>
+                        </h:outputLink>
+
+
+
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">#{msg.name}:</f:facet>
+
+                        <h:inputText value="#{orgslist.name}" size="20" rendered="true" />
+
+                        <h:outputText value="#{orgslist.name}" rendered="false" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">#{msg.address}:</f:facet>
+
+                        <h:inputText value="#{orgslist.address}" size="20" rendered="true" />
+
+                        <h:outputText value="#{orgslist.address}" rendered="false" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">#{msg.contact}:</f:facet>
+
+                        <h:inputText value="#{orgslist.contact}" size="20" rendered="true" />
+
+                        <h:outputText value="#{orgslist.contact}" rendered="false" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">#{msg.descr}:</f:facet>
+
+                        <h:inputTextarea value="#{orgslist.description}" rendered="true" />
+
+                        <h:outputText value="#{orgslist.description}" rendered="false" />
+                    </p:column>
+
+
+
+
+                </p:dataTable>
+
+                <p:commandButton id="id_saveRowButton" value="Save Changes" process="@form" update=":table"
+                                 title="Save" onclick="dlgedit.hide()" actionListener="#{fileUploadView.upload}" action="#{organizationHelper.saveAction1}">
+
+                </p:commandButton> 
+                
+                <p:commandButton onclick="dlgedit.hide()" icon="ui-icon-close"  value="#{msg.cancel}" immediate="true" global="false">
+                    <f:actionListener binding="#{fileUploadView.setFile(null)}" />
+                </p:commandButton> 
+            </h:form>
+
+        </p:dialog>
+
+
+
+    </h:body>
+</html>
+

@@ -4,8 +4,6 @@
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
     </context-param>
-   
-
     <servlet>
         <servlet-name>Faces Servlet</servlet-name>
         <servlet-class>javax.faces.webapp.FacesServlet</servlet-class>
@@ -19,7 +17,6 @@
         <servlet-name>ServletFromTopicToPost</servlet-name>
         <servlet-class>uk.tryzub.servlets.ServletFromTopicToPost</servlet-class>
     </servlet>
-    
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.xhtml</url-pattern>
@@ -32,10 +29,6 @@
         <servlet-name>ServletFromTopicToPost</servlet-name>
         <url-pattern>/ServletFromTopicToPost</url-pattern>
     </servlet-mapping>
-    
-    
-    
-    
     <session-config>
         <session-timeout>
             30
@@ -52,7 +45,7 @@
         </form-login-config>
     </login-config>
     <security-role>
-        <description/>
+        <description>Цар і бог сайту. Доступні всі функції, включно з видаленням об'єктів та суб'єктів</description>
         <role-name>admin</role-name>
     </security-role>
     <security-role>
@@ -64,5 +57,9 @@
         <description>незареєстрований відвідувач сайту
 </description>
         <role-name>guest</role-name>
+    </security-role>
+    <security-role>
+        <description>Виконує роль модератора. Може банити користувачів і т.д.</description>
+        <role-name>moderator</role-name>
     </security-role>
 </web-app>

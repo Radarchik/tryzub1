@@ -29,11 +29,11 @@
         <property name="photo" type="string">
             <column name="photo" length="1000" />
         </property>
-        <set name="reviewses" table="reviews" inverse="true" lazy="true" fetch="select">
+        <set name="reviews" table="review" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="idzakladu" not-null="true" />
             </key>
-            <one-to-many class="uk.tryzub.entity.Reviews" />
+            <one-to-many class="uk.tryzub.entity.Review" />
         </set>
     </class>
 </hibernate-mapping>

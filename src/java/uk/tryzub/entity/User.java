@@ -1,5 +1,5 @@
 package uk.tryzub.entity;
-//  Generated 10-Aug-2017 20:22:17 by Hibernate Tools 4.3.1
+// Generated 11-Aug-2017 12:48:46 by Hibernate Tools 4.3.1
 
 
 import java.util.Date;
@@ -22,12 +22,18 @@ public class User  implements java.io.Serializable {
      private String reputation;
      private String sign;
      private Set posts = new HashSet(0);
+     private Set reviews = new HashSet(0);
      private Set topics = new HashSet(0);
      private Set organizations = new HashSet(0);
 
     public User() {
     }
 
+        public User(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;       
+    }
 	
     public User(String username, String email, String password, Date creationtime, String avatar, String city, int quantity, String reputation, String sign) {
         this.username = username;
@@ -40,7 +46,7 @@ public class User  implements java.io.Serializable {
         this.reputation = reputation;
         this.sign = sign;
     }
-    public User(String username, String email, String password, Date creationtime, String avatar, String city, int quantity, String reputation, String sign, Set posts, Set topics, Set organizations) {
+    public User(String username, String email, String password, Date creationtime, String avatar, String city, int quantity, String reputation, String sign, Set posts, Set reviews, Set topics, Set organizations) {
        this.username = username;
        this.email = email;
        this.password = password;
@@ -51,6 +57,7 @@ public class User  implements java.io.Serializable {
        this.reputation = reputation;
        this.sign = sign;
        this.posts = posts;
+       this.reviews = reviews;
        this.topics = topics;
        this.organizations = organizations;
     }
@@ -124,6 +131,13 @@ public class User  implements java.io.Serializable {
     
     public void setPosts(Set posts) {
         this.posts = posts;
+    }
+    public Set getReviews() {
+        return this.reviews;
+    }
+    
+    public void setReviews(Set reviews) {
+        this.reviews = reviews;
     }
     public Set getTopics() {
         return this.topics;

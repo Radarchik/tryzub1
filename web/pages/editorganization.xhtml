@@ -9,113 +9,73 @@
     </h:head>
     <h:body>
 
-        <p:dialog id="editDialog" modal="true" widgetVar="dlgEditBook" dynamic="true" resizable="false" header="#{msg.edit_book}" closable="false" onHide="#{bookListController.cancelModes()}">
+
+        <p:dialog id="dlgorg"  widgetVar="dlgedit" modal="true" resizable="false" > 
+
             
-            
+            <h:form id="tableedit">
 
-            <h:form id="formEditBook"  rendered="#{bookListController.editMode or bookListController.addMode}">
-                <p:panelGrid columns="2" columnClasses="col1, col2" styleClass="edit_book_table" >
+                <p:dataTable value="#{organizationHelper.selectedOrgExt}" var="orgslist" id="orgs"
+                             styleClass="order-table"
 
-                    <p:panel id="imagePanel">
+                             > 
 
-                        <p:graphicImage  value="#{imageController.defaultImage}" width="110" height="150" id="bookImage" rendered="#{bookListController.editMode}"/>
-                        <h:form enctype="multipart/form-data" id="formUploadImage" >
-                            <p:fileUpload id="imageUpload" label="#{msg.load}" fileUploadListener="#{imageController.handleFileUpload}" update="messagesImage bookNewImage" sizeLimit="#{imageController.imageMaxSize}" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" multiple="false" auto="true"/>  
-                            <p:graphicImage value="#{imageController.uploadedImage}" library="images" width="110" height="150" id="bookNewImage"/>
-                            <p:messages id="messagesImage" showDetail="true" for="formUploadImage"/>
-                        </h:form>
-
-                    </p:panel>
-
-
-                    <p:panel>
-
-                        <p:panelGrid id="bookDetails" columns="2" styleClass="book-details">
-                            
-                            <p:outputLabel value="#{msg.book_name}:" styleClass="edit-title"/>
-                            <p:inputText id="inputBookName" value="#{bookListController.selectedBook.name}"   styleClass="edit-field"/>
-
-
-                            
-                            <p:outputLabel value="#{msg.author_name}:" styleClass="edit-title"/>
-
-                            <p:selectOneMenu value="#{bookListController.selectedBook.author}" converter="#{authorController}"  styleClass="edit-field">
-                                <f:selectItems value="${authorController.selectItems}"/>
-                            </p:selectOneMenu>
-
-                            
-
-                            <p:outputLabel value="#{msg.genre}:" styleClass="edit-title"/>
-
-                            <p:selectOneMenu  value="#{bookListController.selectedBook.genre}" converter="#{genreController}"  styleClass="edit-field">
-                                <f:selectItems value="${genreController.selectItems}"/>
-                            </p:selectOneMenu>
+                    <f:facet name="header">
+                        Cell Editing with Click and RightClick
+                    </f:facet>
 
 
 
-                            <p:outputLabel value="#{msg.publisher}:" styleClass="edit-title"/>
-                            
-                            <p:selectOneMenu  value="#{bookListController.selectedBook.publisher}" converter="#{publisherController}"  styleClass="edit-field">
-                                <f:selectItems value="${publisherController.selectItems}"/>
-                            </p:selectOneMenu>
+                    <p:column>
+                        <h:outputLink value="#{request.contextPath}/editorganization.xhtml?id=#{orgslist.idorganization}" target="_blank">
+                            <h:graphicImage  value="#{orgslist.photo}" width="160" height="220"/>
+                        </h:outputLink>
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">#{msg.name}:</f:facet>
+
+                        <h:inputText value="#{orgslist.name}" size="10" rendered="#{orgslist.editable}" />
+
+                        <h:outputText value="#{orgslist.name}" rendered="#{not orgslist.editable}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">#{msg.address}:</f:facet>
+
+                        <h:inputText value="#{orgslist.address}" size="10" rendered="#{orgslist.editable}" />
+
+                        <h:outputText value="#{orgslist.address}" rendered="#{not orgslist.editable}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">#{msg.contact}:</f:facet>
+
+                        <h:inputText value="#{orgslist.contact}" size="10" rendered="#{orgslist.editable}" />
+
+                        <h:outputText value="#{orgslist.contact}" rendered="#{not orgslist.editable}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">#{msg.descr}:</f:facet>
+
+                        <h:inputText value="#{orgslist.description}" size="10" rendered="#{orgslist.editable}" />
+
+                        <h:outputText value="#{orgslist.description}" rendered="#{not orgslist.editable}" />
+                    </p:column>
 
 
-                            <p:outputLabel value="#{msg.publish_year}:" styleClass="edit-title"/>
-                            <p:inputMask id="inputPublishYear" value="#{bookListController.selectedBook.publishYear}"  maxlength="4" styleClass="edit-field" placeHolder="_" mask="9999"/>
+                   
 
+                </p:dataTable>
 
-                            <p:outputLabel value="#{msg.isbn}:" styleClass="edit-title"/>
-                            <p:inputText id="inputIsbn" value="#{bookListController.selectedBook.isbn}"  styleClass="edit-field"/>
+                <p:commandButton id="id_saveRowButton" value="Save Changes" process="@form" update=":table"
+                                 title="Save" onclick="dlgedit.hide()" action="#{organizationHelper.saveAction}">
 
-
-                            <p:outputLabel value="#{msg.page_count}:" styleClass="edit-title"/>
-                            <p:inputText id="inputPageCount" value="#{bookListController.selectedBook.pageCount}"  styleClass="edit-field"/>  
-
-                            <p:outputLabel value="#{msg.text}:" styleClass="edit-title"/>
-
-                            <h:outputLink value="#{request.contextPath}/PdfContent"  target="_blank" styleClass="pdf-link" rendered="#{bookListController.editMode}">                                                             
-                                <p:outputLabel value="#{msg.show_pdf}"/>
-                                <f:param name="id" value="#{bookListController.selectedBook.id}"/>
-                            </h:outputLink> 
-
-                            <p:outputLabel rendered="#{bookListController.editMode}"/> 
-
-                            
-                         
-
-                            <p:outputLabel value="#{msg.descr}:" styleClass="edit-title"/>
-
-                            <p:panel styleClass="descr-text">
-                                <p:inputTextarea id="inputDescr" value="#{bookListController.selectedBook.descr}" cols="60" rows="20" maxlength="1500" counter="counter" counterTemplate="#{msg.letters_left} {0}" autoResize="false"  />
-                                <h:outputText id="counter" />  
-                            </p:panel>
-
-
-                            <f:facet name="footer">
-                                
-                                
-                                <h:messages styleClass="error" id="validationError"/>
-
-                                <p:commandButton id="saveButton" action="#{bookListController.saveBook()}" styleClass="button-update" value="#{msg.save}" icon="ui-icon-check"  onclick="this.disabled=true;" update=":formEditBook :booksForm:booksList :booksCount :growlMessage"/>
-                                <p:commandButton action="#{bookListController.cancelModes()}" icon="ui-icon-close"  value="#{msg.cancel}" immediate="true" global="false"/>
-
-                            </f:facet>
-
-                        </p:panelGrid>
-
-                    </p:panel>
-
-                </p:panelGrid>
-
-
-
-
-            </h:form>  
-
-
+                </p:commandButton> 
+            </h:form>
 
         </p:dialog>
-
 
 
 

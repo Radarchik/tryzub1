@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="/templates/library_template.xhtml"> 
+
+
+            <ui:define name="content"> 
+
+                #{msg.catalog} #{organizationHelper.currentOrganizationList.size()}
+
+
+
+                <!-- Відображення організації - відображається лист, що змінюється по запитам аджакс-->
+
+                <h:dataTable id="table" value="#{organizationHelper.currentOrganizationList}" var="b" cellspacing="10px" columnClasses="col1, col2, col3"> 
+
+                    <h:column>
+                        <h:outputLink value="#{request.contextPath}/editorganization.xhtml?id=#{b.idorganization}" target="_blank">
+                            <h:graphicImage  value="#{b.photo}" width="160" height="220"/>
+                        </h:outputLink>
+                    </h:column>
+
+                    <h:column>
+                        <div>
+                            <p>  <h:outputLink value="#{request.contextPath}/nova.xhtml?id=#{b.idorganization}" target="_blank">#{b.name} </h:outputLink></p>
+                            <p><strong>#{msg.section}: </strong>#{b.section.sectionname}</p> 
+                            <p><strong>#{msg.added} </strong>#{b.user.username}</p>  
+                            <p><strong>#{msg.address}</strong> #{b.address}</p>
+                            <p><strong>#{msg.contact}:</strong> #{b.contact}</p>
+
+                            <p><h:outputLink styleClass="content_link" value="#{request.contextPath}/PdfContent?id=#{b.idorganization}"  target="_blank">#{msg.read} </h:outputLink>                                                             
+                            </p>
+                        </div>
+                    </h:column>
+
+
+                    <h:column>
+                        <div class="book_details">
+                            <p><strong>#{msg.descr}</strong></p>
+                            <p >#{b.description}</p>
+                        </div>
+                    </h:column>
+
+                </h:dataTable>
+                 <!-- Відображення організації -->
+                 
+             
+                
+            </ui:define>
+
+
+        </ui:composition>
+    </h:body>
+</html>
+

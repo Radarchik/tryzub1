@@ -9,51 +9,83 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <ui:composition template="/templates/library_template.xhtml"> 
-
+        <ui:composition template="/templates/ukrbiz_template.xhtml"> 
 
             <ui:define name="content"> 
 
-                #{msg.catalog} #{organizationHelper.currentOrganizationList.size()}
-
-
-
                 <!-- Відображення організації - відображається лист, що змінюється по запитам аджакс-->
+                <h:form id="table" rendered="true">
 
-                <h:dataTable id="table" value="#{organizationHelper.currentOrganizationList}" var="b" cellspacing="10px" columnClasses="col1, col2, col3"> 
+                    <p:dataList value="#{organizationHelper.currentOrganizationList}" var="b" type="definition"
+                                paginator="true" id="datalist" itemStyleClass="listrowOrg"
+                                rows="3" paginatorAlwaysVisible="false"
+                                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                rowsPerPageTemplate="3,10,15"> 
 
-                    <h:column>
-                        <h:outputLink value="#{request.contextPath}/PdfContent?id=#{b.idorganization}" target="_blank">
-                            <h:graphicImage  value="#{b.photo}" width="160" height="220"/>
-                        </h:outputLink>
-                    </h:column>
+                        <f:facet name="header">
+                            <h:outputText value = "#{b.section}" />  <!-- поменять - достать жанр -->
+                        </f:facet>
 
-                    <h:column>
-                        <div>
-                            <p>  <h:outputLink value="#{request.contextPath}/PdfContent?id=#{b.idorganization}" target="_blank">#{b.name} </h:outputLink></p>
-                            <p><strong>#{msg.name}: </strong>#{b.name}</p> 
-                            <p><strong>#{msg.added} </strong>#{b.user.username}</p>  
+                        <div id="itemname">
+                            <strong>#{b.name}</strong>
+                        </div>
+
+                        <div id="itemphoto">
+                            <h:outputLink value="#{request.contextPath}/editorganization.xhtml?id=#{b.idorganization}" target="_blank">
+                                <h:graphicImage  value="#{b.photo}" width="210" height="250"/>
+                                <!-- Path is defined in glassfish-web.xml --> 
+                            </h:outputLink>
+                        </div>
+
+
+                        <div id="itemsections">
+                            <p><strong>#{msg.section}: </strong>#{b.section.sectionname}</p>                              
                             <p><strong>#{msg.address}</strong> #{b.address}</p>
                             <p><strong>#{msg.contact}:</strong> #{b.contact}</p>
+                            <p><strong>#{msg.added} </strong>#{b.user.username}</p> 
+                            <p><strong>Путь к файлу </strong>#{b.photo}</p>
+                        
+                            <!-- Создаем страничку(часть) с отзывами -->
+                            <!--:formreviews:reviewlist не подходит, 
+                            запомни: jsf не обновляет DOM object, ксли до этого он не рендерился -->
+                            <p:commandLink update=":table :formreviews" value="Відгуки та побажання">                                  
+                                <f:setPropertyActionListener target="#{organizationHelper.selectedOrgStrd}" value="#{b}" />
+                                <f:actionListener binding="#{organizationHelper.setSelectedOrgInCurrentList()}"/>
+                                <f:actionListener binding="#{reviewRequestScopedListener.setIsshown(true)}"/>
+                            </p:commandLink>
 
-                            <p><h:outputLink styleClass="content_link" value="#{request.contextPath}/PdfContent?id=#{b.idorganization}"  target="_blank">#{msg.read} </h:outputLink>                                                             
-                            </p>
                         </div>
-                    </h:column>
 
 
-                    <h:column>
-                        <div class="book_details">
+
+
+                        <div id="itemdescr">
                             <p><strong>#{msg.descr}</strong></p>
                             <p >#{b.description}</p>
-                        </div>
-                    </h:column>
 
-                </h:dataTable>
-                 <!-- Відображення організації -->
-                 
-             
-                
+
+                            ghgh
+                            <p:commandButton value="Edit1"  rendered="true" update=":dlgorg" oncomplete="PF('dlgedit').show();">
+                                <f:setPropertyActionListener target="#{organizationHelper.selectedOrgStrd}" value="#{b}" />
+                                <f:actionListener binding="#{organizationHelper.setAddable(false)}"/>
+                                <f:actionListener binding="#{organizationHelper.setEditable(true)}"/>
+                                <f:actionListener binding="#{fileUploadView.setIsshowed(true)}" />
+                                <f:actionListener binding="#{fileUploadView.setImageContent(null)}" />
+                                <f:actionListener binding="#{fileUploadView.setFile(null)}" />  <!-- если пользователь в диалоге выберет файл и нажмет "назад", то файл останется в бине, 
+                                                                                                поэтому обнуляем бин на входе в диалог, на всякий случай-->
+                            </p:commandButton>
+                            sdfds
+
+                        </div>
+
+                    </p:dataList>
+
+
+                </h:form>
+                <!-- Відображення організації -->
+
+
+                <ui:include src="editorganization.xhtml" />
             </ui:define>
 
 

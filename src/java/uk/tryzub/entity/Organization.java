@@ -19,8 +19,11 @@ public class Organization  implements java.io.Serializable {
      private String description;
      private String contact;
      private String photo;
-     private Set reviewses = new HashSet(0);
+     private Set reviews = new HashSet(0);
 
+          
+     
+     
     public Organization() {
     }
 
@@ -30,7 +33,7 @@ public class Organization  implements java.io.Serializable {
         this.user = user;
         this.name = name;
     }
-    public Organization(Section section, User user, String name, String address, String description, String contact, String photo, Set reviewses) {
+    public Organization(Section section, User user, String name, String address, String description, String contact, String photo, Set reviews) {
        this.section = section;
        this.user = user;
        this.name = name;
@@ -38,7 +41,7 @@ public class Organization  implements java.io.Serializable {
        this.description = description;
        this.contact = contact;
        this.photo = photo;
-       this.reviewses = reviewses;
+       this.reviews = reviews;
     }
    
     public Integer getIdorganization() {
@@ -97,12 +100,12 @@ public class Organization  implements java.io.Serializable {
     public void setPhoto(String photo) {
         this.photo = photo;
     }
-    public Set getReviewses() {
-        return this.reviewses;
+    public Set getReviews() {
+        return this.reviews;
     }
     
-    public void setReviewses(Set reviewses) {
-        this.reviewses = reviewses;
+    public void setReviews(Set reviews) {
+        this.reviews = reviews;
     }
 
 
