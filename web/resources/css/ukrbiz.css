@@ -65,6 +65,8 @@ display: block;
     height: 10%;
 }
 
+
+
 .listrowOrg{
     position: relative;   /*сейчас вложенные дивы будут отсчитывать позицию от этого*/
     box-sizing: border-box;   /*хорошее свойство, позволяет оставить див в заданных рамках при padding*/

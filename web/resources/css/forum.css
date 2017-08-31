@@ -17,3 +17,42 @@ and open the template in the editor.
     width: 10%;
     height: 10%;
 }
+
+
+
+
+.listrowTopic{
+    position: relative;   /*сейчас вложенные дивы будут отсчитывать позицию от этого*/
+    box-sizing: border-box;   /*хорошее свойство, позволяет оставить див в заданных рамках при padding*/
+    margin: 20px;
+    margin-bottom: 40px;
+    height: 280px;
+}
+
+
+#topic{
+    position: absolute;
+    box-sizing: border-box;
+    top: 0%;
+    left: 0%;
+    width: 250px;    
+}
+
+#itemsections{
+    position: absolute; 
+    box-sizing: border-box;
+    top: 30px;
+    left: 260px;
+    width: 350px;
+    height: 250px;
+    font-size:medium;
+}
+
+#itemdescr{
+    position: absolute;
+    box-sizing: border-box;
+    top: 30px;
+    left: 620px;
+    height: 250px;    
+    font-size:medium;
+}

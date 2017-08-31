@@ -18,7 +18,7 @@
     <body>
         <h1>Форум на Тризубі</h1>
         <% TopicHelper topicHelper = new TopicHelper();
-            List<Topic> arr = topicHelper.getTopics();
+            List<Topic> arr = topicHelper.getCurrentTopicList();
         %>
 
 
@@ -42,7 +42,7 @@
                     <td><%= arr.get(i).getUser().getUsername()%></td>
                     <td><%= arr.get(i).getAnswers()%></td>
                     <td><%= arr.get(i).getViews()%></td>
-                    <td><%= topicHelper.getLastPostFromTopic(arr.get(i)).getText()%></td>
+                    <td> останній хуй</td>
                 </tr> 
 
                 <%}%>

@@ -9,11 +9,15 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <ui:composition template="/templates/ukrbiz_template.xhtml"> 
+        <ui:composition template="/templates/organization/ukrbiz_template.xhtml"> 
 
             <ui:define name="content"> 
-
-                <!-- Відображення організації - відображається лист, що змінюється по запитам аджакс-->
+                <f:metadata>
+                    <!-- При загрузке стр. инициализ.весь список -->
+                    <f:viewAction action="#{organizationHelper.fillOrganizationsListAll()}" />
+                </f:metadata>
+                
+                <!-- Відображення організацій - відображається лист, що змінюється по запитам аджакс-->
                 <h:form id="table" rendered="true">
 
                     <p:dataList value="#{organizationHelper.currentOrganizationList}" var="b" type="definition"
@@ -44,7 +48,7 @@
                             <p><strong>#{msg.contact}:</strong> #{b.contact}</p>
                             <p><strong>#{msg.added} </strong>#{b.user.username}</p> 
                             <p><strong>Путь к файлу </strong>#{b.photo}</p>
-                        
+
                             <!-- Создаем страничку(часть) с отзывами -->
                             <!--:formreviews:reviewlist не подходит, 
                             запомни: jsf не обновляет DOM object, ксли до этого он не рендерился -->
@@ -61,7 +65,7 @@
 
                         <div id="itemdescr">
                             <p><strong>#{msg.descr}</strong></p>
-                            <p >#{b.description}</p>
+                            <p>#{b.description}</p>
 
 
                             ghgh
@@ -85,11 +89,12 @@
                 <!-- Відображення організації -->
 
 
-                <ui:include src="editorganization.xhtml" />
+                <ui:include src="/templates/organization/editorganization.xhtml" />
             </ui:define>
 
 
         </ui:composition>
+
     </h:body>
 </html>
 

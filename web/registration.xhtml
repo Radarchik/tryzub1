@@ -13,49 +13,52 @@
         <div>
             <h:form>
 
-                <div>
-                    <h:outputText value="Ім'я користувача (login):"/>
+                <div id="name">
+                   <p> <h:outputText value="Ім'я користувача (login):"/></p>
                     <p:outputLabel value="Введіть імя користувача (для авторизації)" styleClass="edit-title"/><br/>
                     <p:inputText id="inputUserLogin" value="#{userAddController.login}"   styleClass="edit-field"/>
                 </div>
 
-                <div>
-                    <h:outputText value="Пароль:"/>
+                <div id="password">
+                   <p> <h:outputText value="Пароль:"/></p>
                     <p:outputLabel value="Введіть пароль (для авторизації)" styleClass="edit-title"/><br/>
+                    <p:password id="inputUserPassword" value="#{userAddController.password}"   styleClass="edit-field"/>
+                    
+                    <p:outputLabel value="Повторіть пароль" styleClass="edit-title"/><br/>
                     <p:password id="inputUserPassword" value="#{userAddController.password}"   styleClass="edit-field"/>
                 </div>
 
-                <div>
-                    <h:outputText value="Електронна пошта"/>
+                <div id="email">
+                   <p> <h:outputText value="Електронна пошта"/></p>
                     <p:outputLabel value="Введіть діючу електронну адресу" styleClass="edit-title"/><br/>
                     <p:inputText id="inputUserEmail" value="#{userAddController.email}"   styleClass="edit-field"/>
                 </div>
 
-                <div>
-                    <h:outputText value="Місто (за бажанням) :"/>
+                <div id="city">
+                   <p> <h:outputText value="Місто (за бажанням) :"/></p>
                     <p:outputLabel value="Введіть населений пункт Вашого проживання (не обов'язково у Великій Британії)" styleClass="edit-title"/><br/>
                     <p:inputText id="inputUserCity" value="#{userAddController.city}"   styleClass="edit-field"/>
                 </div>
 
-                <div>
-                    <h:outputText value="Справжнє ім'я: (за бажанням)"/>
+                <div id="realname">
+                   <p> <h:outputText value="Справжнє ім'я: (за бажанням)"/></p>
                     <p:outputLabel value="Введіть ваше справжнє ім'я" styleClass="edit-title"/><br/>
                     <p:inputText id="inputUserRealname" value="#{userAddController.realname}"   styleClass="edit-field"/>    
                 </div>
 
-                <div>
-                    <h:outputText value="Захист:"/>
+                <div id="defence">
+                    <p><h:outputText value="Захист:"/></p>
 
-                    <p:outputLabel value="Перевірка на бота" styleClass="edit-title"/><br/>
-                    <p:inputText id="inputUserDefBot" value=""   styleClass="edit-field"/>
+                    <p><p:outputLabel value="Перевірка на бота" styleClass="edit-title"/><br/></p>
+                    <p:inputText id="inputUserDefBot"    styleClass="edit-field"/>
 
-                    <p:outputLabel value="Перевірка на москаля" styleClass="edit-title"/><br/>
-                    <p:inputText id="inputUserDefMoskal" value=""   styleClass="edit-field"/>
+                    <p><p:outputLabel value="Перевірка на москаля" styleClass="edit-title"/><br/></p>
+                    <p:inputText id="inputUserDefMoskal"   styleClass="edit-field"/>
                 </div>
                 <!-- Крим це:   Русь було освящено в місті:  Який клуб найбільше ставав чемпіоном СРСР:  -->
 
                 <div>
-                    <p:commandButton id="button_saveOrg" value="Save user" process="@form" rendered="true"
+                <p:commandButton id="button_saveOrg" value="Зареєструватися" process="@form" rendered="true"
                                      title="Save"   action="#{userAddController.addUser()}">
                     </p:commandButton> 
                 </div>

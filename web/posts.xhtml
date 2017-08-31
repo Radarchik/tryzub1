@@ -1,0 +1,158 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+    <h:head>
+        <title>Форум Тризуб</title>
+        <h:outputStylesheet  name="css/posts.css" />
+    </h:head>
+    <body>
+        <f:metadata>
+            <!-- При загрузке стр. инициализ. выбранную тему -->
+            <f:viewAction action="#{postHelper.fillSelectedPosts(param.id)}" />
+            <f:viewAction action="#{topicHelper.fillSelectedTopic(param.id)}" />
+        </f:metadata>
+
+        <div>
+
+
+
+            <h:form id="postform" rendered="true">
+
+                <p:dataList value="#{postHelper.currentPostList}" var="post" type="definition"
+                            paginator="true" id="postlist" itemStyleClass="listrowPost"
+                            styleClass="listPosts" rowIndexVar="indexRow"
+                            rows="3" paginatorAlwaysVisible="false"
+                            paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                            rowsPerPageTemplate="3,10,15"> 
+
+                    <f:facet name="header">
+                        <h:outputText value = "Тема: #{topicHelper.selectedTopic.name}" />  <!-- поменять - достать жанр -->
+                    </f:facet>
+
+                    <div id="left_author">
+
+                        <div id="authorName">
+                            <h:outputLink value="#{request.contextPath}/member.xhtml?id=#{post.user.username}" >
+                                <h:outputText  value="#{post.user.username}" />
+                            </h:outputLink>
+                        </div>
+
+                        <div id="authorPhoto">
+
+                            <h:graphicImage  value="#{post.user.avatar}" width="150" height="180"/>
+
+                        </div>
+
+                        <div id="authorInfo">
+                            <h:outputLabel for="authorDateReg" value="Реєстрація: "/>
+                            <h:outputText id="authorDateReg"  value="#{post.user.creationtime}" >
+                                <f:convertDateTime pattern="dd.MM.yyyy"/>
+                            </h:outputText>                            
+                            <br />
+
+                            <h:outputText rendered="#{not empty post.user.city}"  value="Місто: #{post.user.city}" />
+
+
+                        </div>
+
+                        <!-- Для flow-->                       
+                        <div style="clear:both;"></div>
+                    </div>
+
+
+
+
+                    <div id="right_post"> 
+                        <div id="topicName">
+                            <strong> <h:outputText value="RE:" rendered="#{indexRow !=0}"/></strong> 
+                            <strong><h:outputText value="#{post.topic.name}"/></strong> <br />
+                            <h:outputText value="Відповідь №#{indexRow}   "  rendered="#{indexRow !=0}" styleClass="preformatted"/>  
+                            <h:outputText  value="#{post.date}" >
+                                <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                            </h:outputText>
+                        </div>
+                        <hr/>
+                        <div id="postText">
+                            <p><h:outputText value="#{post.text}" escape="false"/></p>
+                        </div>
+                        <div id="authorSign">
+                            <p><h:outputText value="--------------------" rendered="#{not empty post.user.sign}"/></p>
+                            <p><h:outputText value="#{post.user.sign}" escape="false"/></p>
+                        </div>
+
+                        <div id="answerButtons">
+
+
+                            <p:commandButton value="ВІДПОВІСТИ" update=":dlgEditorForm:editorPostId"  onsuccess="PF('dlgaddpost').show();">
+                                <f:setPropertyActionListener target="#{postHelper.text}" value="" /> 
+                                <f:setPropertyActionListener target="#{postHelper.chosenTopic}" value="#{post.topic}" />
+                            </p:commandButton>
+
+                            <!-- set text in dlg editor for citata,  update for showing set value -->
+                            <p:commandButton value="ЦИТАТА" update=":dlgEditorForm:editorPostId"  onsuccess ="PF('dlgaddpost').show();">
+                                <f:setPropertyActionListener target="#{postHelper.text}" value="#{postHelper.createQuote(post)}"/>
+                                <f:setPropertyActionListener target="#{postHelper.chosenTopic}" value="#{post.topic}" />
+                            </p:commandButton>
+
+
+                        </div>
+
+                        <!-- Для flow-->
+                        <div style="clear:both;"></div>
+                    </div>
+
+
+
+
+                    <!-- Для flow-->
+                    <div style="clear:both;"></div>
+                </p:dataList>
+
+
+            </h:form>
+
+
+
+
+
+
+            <p:dialog id="dlgaddpost" position="center center" width="1000" height="500"  widgetVar="dlgaddpost" modal="true" resizable="false" closable="false"> 
+                <div id="dialogwrapper">
+
+                    <h:form id="dlgEditorForm">
+                        <div id="dialog_topicname">                       
+                            <p>
+                                <h:outputText value = "Відповідь по темі: #{topicHelper.selectedTopic.name}"/>                          
+                            </p>
+                        </div>
+
+
+                       
+                        <pe:ckEditor skin="moono-dark" id="editorPostId" widgetVar="editorPost" value="#{postHelper.text}" height="250" />
+
+                        <p:commandButton value="Submit" action="#{postHelper.addPost()}" icon="ui-icon-disk" update=":postform:postlist"  oncomplete="PF('dlgaddpost').hide();">
+                            <f:setPropertyActionListener target="#{postHelper.authentUser}" value="#{loginView.authenticatedUser}" />
+
+                        </p:commandButton>
+
+                        <p:commandButton value="Clear" type="button" onclick="PF('editorPost').clear();" icon="ui-icon-close" />
+
+                        <p:commandButton value="Відміна" type="button" onclick="PF('dlgaddpost').hide();" icon="ui-icon-close" />
+
+
+                    </h:form>
+                </div>
+            </p:dialog>
+
+
+
+
+            <p:lifecycle/>
+        </div>
+    </body>
+</html>

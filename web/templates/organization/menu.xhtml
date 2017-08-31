@@ -1,0 +1,121 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition>
+
+            <h:form>
+                <h:link  value="#{msg.main}" outcome="index" />
+
+                <h2><h:commandLink value ="Весь каталог">
+                        <f:ajax event="click" render=":table :formreviews" listener="#{organizationHelper.fillOrganizationsListAll()}"/>
+                    </h:commandLink></h2>
+                <hr></hr>
+
+                <h3><h:commandLink value ="#{msg.ukrgoods}">
+                        <f:param name="section" value="in(1,2,3,4)" />
+                        <f:ajax event="click" render=":table :formreviews" listener="#{organizationHelper.fillOrganizationsBySection()}"/>
+                    </h:commandLink></h3>
+
+
+
+                <h:commandLink value = "Ресторани та кафе">
+                    <f:param name="section" value="= 1" />                  
+                    <f:ajax event="click" render=":table :formreviews" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                </h:commandLink> 
+                <br />
+                <h:commandLink value = "Магазини">
+                    <f:param name="section" value="= 2" />
+                    <f:ajax event="click" render=":table :formreviews" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                </h:commandLink> 
+                <br />
+                <h:commandLink value = "Перукарні та салони краси">
+                    <f:param name="section" value="= 3" />
+                    <f:ajax event="click" render=":table :formreviews" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                </h:commandLink> 
+                <br />
+                <h:commandLink value = "Перевізники">
+                    <f:param name="section" value="= 4" />
+                    <f:ajax event="click" render=":table :formreviews" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                </h:commandLink> 
+
+                <hr></hr>
+
+                <h3><h:commandLink value = "Індивідуальні майстри:">
+                        <f:param name="section" value="in(5,6,7,8)" />
+                        <f:ajax event="click" render=":table :formreviews" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                    </h:commandLink></h3> 
+
+                <h:commandLink value = "Краси та здоров'я">
+                    <f:param name="section" value="= 5" />
+                    <f:ajax event="click" render=":table :formreviews" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                </h:commandLink> 
+                <br />
+                <h:commandLink value = "Харчування">
+                    <f:param name="section" value="= 6" />
+                    <f:ajax event="click" render=":table :formreviews" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                </h:commandLink> 
+                <br />
+                <h:commandLink value = "Ремонт та будівельні послуги">
+                    <f:param name="section" value="= 7" />
+                    <f:ajax event="click" render=":table :formreviews" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                </h:commandLink> 
+                <br />
+                <h:commandLink value = "Навчання та репетиторство">
+                    <f:param name="section" value="= 8" />
+                    <f:ajax event="click" render=":table :formreviews" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                </h:commandLink> 
+
+
+
+                <hr></hr>
+                <h3><h:commandLink value = "Громадські організації:">
+                        <f:param name="section" value="in(10,11,12,13)" />
+                        <f:ajax event="click" render=":table :formreviews" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                    </h:commandLink></h3> 
+
+                <h:commandLink value = "Посольство та консульства">
+                    <f:param name="section" value="= 10" />
+                    <f:ajax event="click" render=":table :formreviews" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                </h:commandLink> 
+                <br />
+                <h:commandLink value = "Церкви">
+                    <f:param name="section" value="= 11" />
+                    <f:ajax event="click" render=":table :formreviews" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                </h:commandLink> 
+                <br />
+                <h:commandLink value = "Навчальні заклади">
+                    <f:param name="section" value="= 12" />
+                    <f:ajax event="click" render=":table :formreviews" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                </h:commandLink> 
+                <br />
+
+                <h:commandLink value = "Сайти, газети, групи ФБ, клуби та гуртки">
+                    <f:param name="section" value="= 13" />
+                    <f:ajax event="click" render=":table :formreviews" listener="#{organizationHelper.fillOrganizationsBySection()}"/>         
+                </h:commandLink> 
+                <hr></hr>
+               
+                <br />
+                <p:commandButton value="Додати організацію"  rendered="true" update=":dlgorg" oncomplete="PF('dlgedit').show();">
+                    <f:actionListener binding="#{organizationHelper.setNewOrg()}" /> 
+                    <f:actionListener binding="#{organizationHelper.setAddable(true)}"/>
+                    <f:actionListener binding="#{organizationHelper.setEditable(false)}"/>
+                    <f:actionListener binding="#{fileUploadView.setImageContent(null)}" />
+                    <f:actionListener binding="#{fileUploadView.setFile(null)}" />  <!-- если пользователь в диалоге выберет файл и нажмет "назад", то файл останется в бине, 
+                                                                                    поэтому обнуляем бин на входе в диалог, на всякий случай-->
+                </p:commandButton>
+
+            </h:form>
+
+        </ui:composition>
+    </h:body>
+</html>
+

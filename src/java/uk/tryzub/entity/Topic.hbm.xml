@@ -14,17 +14,17 @@
       <column name="name" not-null="true"/>
     </property>
     <property name="answers" type="int">
-      <column name="answers" not-null="true"/>
+      <column name="answers" />
     </property>
     <property name="views" type="int">
-      <column name="views" not-null="true"/>
+      <column name="views" />
     </property>
     <property name="last" type="string">
-      <column length="45" name="last" not-null="true"/>
+      <column length="45" name="last" />
     </property>
     <set fetch="select" inverse="true" lazy="true" name="posts" table="post">
       <key>
-        <column name="topicid" not-null="true"/>
+        <column name="topicid" />
       </key>
       <one-to-many class="uk.tryzub.entity.Post"/>
     </set>

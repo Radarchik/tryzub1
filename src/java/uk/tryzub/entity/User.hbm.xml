@@ -32,6 +32,9 @@
         <property name="sign" type="string">
             <column name="sign" />
         </property>
+        <property name="sex" type="byte">
+            <column name="sex" not-null="true" />
+        </property>
         <set name="posts" table="post" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="postauthor" not-null="true" />

@@ -20,5 +20,6 @@
     </property>
   </jsp-config>
   <property name="alternatedocroot_1" value="from=/organization/* dir=F:/MyProjects/tryzub/photo"/>
+  <property name="alternatedocroot_2" value="from=/member/* dir=F:/MyProjects/tryzub/photo"/>
   <parameter-encoding default-charset="UTF-8"/>
 </glassfish-web-app>

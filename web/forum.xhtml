@@ -1,0 +1,135 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      >
+    <h:head>
+        <title>Форум Тризуб</title>
+    </h:head>
+    <body>
+        <f:metadata>
+            <!-- При загрузке стр. инициализ. выбранную тему -->
+            <f:viewAction action="#{topicHelper.fillTopics()}" />
+        </f:metadata>
+        <div>
+            <h:form id="forumtable" rendered="true">
+
+                <p:dataTable value="#{topicHelper.currentTopicList}" var="topic" 
+                             paginator="true" id="topictable"
+                             rows="15" paginatorAlwaysVisible="false"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                             rowsPerPageTemplate="3,10,15"> 
+
+                    <f:facet name="header">
+                        <h:outputText value = "Список тем" />  <!-- поменять - достать жанр -->
+                    </f:facet>
+
+                    <p:column headerText="Id">
+                        <h:outputText value="#{topic.topicid}" />
+                    </p:column>
+
+                    <p:column headerText="Тема">
+                        <h:outputLink value="#{request.contextPath}/posts.xhtml?id=#{topic.topicid}" >                        
+                            <h:outputText value="#{topic.name}" />                            
+                        </h:outputLink>
+                    </p:column>
+
+                    <p:column headerText="Автор">
+                        <h:outputLink value="#{request.contextPath}/member.xhtml?id=#{topic.user.username}" >   
+                            <h:outputText value="#{topic.user.username}" />
+                        </h:outputLink>
+                    </p:column>
+
+                    <p:column headerText="Відповіді">
+                        <h:outputText value="#{topic.answers}" />
+                    </p:column>
+
+                    <p:column headerText="Перегляди">
+                        <h:outputText value="#{topic.views}" />
+                    </p:column>
+
+                    <p:column headerText="Останній коментарій">
+                        <h:outputText value="#{topic.last}" escape="false"/>
+                    </p:column>
+
+                </p:dataTable>
+
+
+            </h:form>
+
+            <!-- Normal button -->
+            <h:form> 
+
+                <p:commandButton value="ВІДКРИТИ ТЕМУ"  rendered="#{loginView.authenticatedUser!=null}" onclick="PF('dlgaddtopic').show();">
+
+                </p:commandButton>
+
+            </h:form>
+
+
+
+
+            <p:dialog id="dlgtopic" position="center center" width="1000" height="500"  widgetVar="dlgaddtopic" modal="true" resizable="false" closable="false"> 
+                <div id="dialogwrapper">
+
+                    <h:form>
+                        <div id="dialog_topicname">                       
+                            <p>
+                                <p:outputLabel value="Введіть назву теми:" styleClass="edit-title"/><br/>
+                                <p:inputText id="inputOrgContact" value="#{topicHelper.topicName}"   styleClass="edit-field" size="50"/>
+                            </p>
+                        </div>
+
+
+                        <h3 style="margin-top:0">Суть теми:</h3>
+                        
+                        <p:textEditor widgetVar="editor" value="#{topicHelper.text}" height="250" style="margin-bottom:10px"/>
+
+                        <p:commandButton value="Submit" action="#{topicHelper.addTopic()}" icon="ui-icon-disk" update=":forumtable:topictable"  oncomplete="PF('dlgaddtopic').hide();">
+                            <f:setPropertyActionListener target="#{topicHelper.authentUser}" value="#{loginView.authenticatedUser}" />
+
+                        </p:commandButton>
+                        <p:commandButton value="Clear" type="button" onclick="PF('editor').clear();" icon="ui-icon-close" />
+
+
+                    </h:form>
+                </div>
+            </p:dialog>
+
+
+
+
+
+            <!-- fake button for registration -->
+            <h:form> 
+
+                <p:commandButton value="ВІДКРИТИ ТЕМУ"  rendered="#{loginView.authenticatedUser==null}" onclick="PF('dlgInviteRegistr').show();">
+
+                </p:commandButton>
+
+            </h:form>
+
+            <p:dialog id="dlgInviteRegistr" position="center center" width="400" height="150"  widgetVar="dlgInviteRegistr" modal="true" resizable="false" closable="false"> 
+                <div id="dialogwrapper1">
+
+                    <h:outputText  value="Шановний гість, "  />
+                    <h:outputText value="дана функція доступна лише зареєстрованим користувачам"  />
+
+                    <h:form>
+                        <p:button value="Зареєструватися" outcome="registration1.xhtml" />
+
+                        <p:commandButton value="Відміна" type="button" onclick="PF('dlgInviteRegistr').hide();" icon="ui-icon-close" />
+
+
+                    </h:form>
+                </div>
+            </p:dialog>
+
+
+
+        </div>
+    </body>
+</html>

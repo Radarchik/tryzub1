@@ -38,6 +38,7 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
+import uk.tryzub.beans.LoginView;
 import uk.tryzub.entity.HibernateUtil;
 import uk.tryzub.entity.Organization;
 import uk.tryzub.entity.Review;
@@ -50,6 +51,8 @@ public class ReviewRequestScopedListener implements Serializable {
     private boolean isshown = false;
     private Organization orgForReview;
     private String newComment;
+    private User user;
+
 
     public String getNewComment() {
         return newComment;
@@ -73,7 +76,7 @@ public class ReviewRequestScopedListener implements Serializable {
                
                 
                 /*получать надо будет автора из сессии (кто добавил). Пока moderator */
-                User user = (User) session.get(User.class, "moderator");
+          
                 
               //  Organization organ = (Organization) session.get(Organization.class, 2);
                 Review review = new Review();
@@ -114,6 +117,13 @@ public class ReviewRequestScopedListener implements Serializable {
         this.isshown = isshown;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
 
 
 }

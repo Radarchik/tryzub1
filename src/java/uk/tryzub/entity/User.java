@@ -21,6 +21,7 @@ public class User  implements java.io.Serializable {
      private int quantity;
      private String reputation;
      private String sign;
+       private byte sex;
      private Set posts = new HashSet(0);
      private Set reviews = new HashSet(0);
      private Set topics = new HashSet(0);
@@ -29,10 +30,11 @@ public class User  implements java.io.Serializable {
     public User() {
     }
 
-        public User(String username, String email, String password) {
+    public User(String username, String email, String password, byte sex) {
         this.username = username;
         this.email = email;
-        this.password = password;       
+        this.password = password;
+        this.sex = sex;
     }
 	
     public User(String username, String email, String password, Date creationtime, String avatar, String city, int quantity, String reputation, String sign) {
@@ -68,6 +70,7 @@ public class User  implements java.io.Serializable {
     
     public void setUsername(String username) {
         this.username = username;
+     
     }
     public String getEmail() {
         return this.email;
@@ -125,6 +128,15 @@ public class User  implements java.io.Serializable {
     public void setSign(String sign) {
         this.sign = sign;
     }
+    
+     public byte getSex() {
+        return this.sex;
+    }
+    
+    public void setSex(byte sex) {
+        this.sex = sex;
+    }
+    
     public Set getPosts() {
         return this.posts;
     }

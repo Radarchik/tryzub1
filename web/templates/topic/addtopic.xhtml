@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:o="http://omnifaces.org/ui">
+    <h:head>
+        <title>Добавлення або редагування Теми</title>
+    </h:head>
+    <h:body>
+
+
+
+
+
+        <p:dialog id="dlgtopic" dynamic="true" position="center center" width="1100" height="500"  widgetVar="dlgedit" modal="true" resizable="false" closable="false"> 
+            <div id="dialogwrapper">
+
+                <h:form>
+                    <div id="dialog_topicname">                       
+                        <p>
+                            <p:outputLabel value="Введіть назву теми:" styleClass="edit-title"/><br/>
+                            <p:inputText id="inputOrgContact" value="#{organizationHelper.selectedOrgStrd.contact}"   styleClass="edit-field"/>
+                        </p>
+                    </div>
+
+  
+                        <h3 style="margin-top:0">Суть теми:</h3>
+                        <p:textEditor widgetVar="editor" value="#{topicHelper.text}" height="300" style="margin-bottom:10px"/>
+
+                        <p:commandButton value="Submit" update="display"  icon="ui-icon-disk" />
+                        <p:commandButton value="Clear" type="button" onclick="PF('editor').clear();" icon="ui-icon-close" />
+
+                    
+                </h:form>
+            </div>
+        </p:dialog>
+
+
+
+    </h:body>
+</html>
+

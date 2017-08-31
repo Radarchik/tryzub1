@@ -39,6 +39,7 @@
     </welcome-file-list>
     <login-config>
         <auth-method>FORM</auth-method>
+        <realm-name>jdbc-realm</realm-name>
         <form-login-config>
             <form-login-page>/index.xhtml</form-login-page>
             <form-error-page>/index.xhtml</form-error-page>
@@ -50,13 +51,8 @@
     </security-role>
     <security-role>
         <description>зареєстрований користувач
-</description>
+        </description>
         <role-name>member</role-name>
-    </security-role>
-    <security-role>
-        <description>незареєстрований відвідувач сайту
-</description>
-        <role-name>guest</role-name>
     </security-role>
     <security-role>
         <description>Виконує роль модератора. Може банити користувачів і т.д.</description>

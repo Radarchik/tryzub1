@@ -21,55 +21,44 @@
 
 
                 <div class="login_div">
-                    <p class="title">#{msg.authorization}</p>
 
-                    <h:form styleClass="login_form">
-                        #{msg.input_name} <h:inputText id="username" value="#{user1.username}" required="true" requiredMessage="#{msg.login_required}">
-                            <f:validator validatorId="uk.tryzub.validators.LoginValidator"/>
-                        </h:inputText>
-                        <h:commandButton action="index?faces-redirect=true" value="Enter"/>
-                        <p><h:message for="username" styleClass="error"/></p>
-                    </h:form>
+                    <h:link value="Create new account" outcome="registration1" />
 
                 </div>
 
 
-                <h5>#{msg.welcome}, <h:outputText value="#{user1.username==null? msg.guest:user1.username}" id="nameofuser"/></h5>
-                
+
+
+                <h:form>
+                    <h:commandLink action="#{loginView.logout}" value="Logout" />
+                </h:form>
+                <h3>
+                    #{msg.welcome}, 
+                    <h:outputLink rendered="#{loginView.authenticatedUser!=null}" value="#{request.contextPath}/member.xhtml?id=#{loginView.authenticatedUser.username}" target="_self">
+                        <h:outputText value="#{loginView.authenticatedUser==null? msg.guest:loginView.authenticatedUser.username}"/>
+                    </h:outputLink>
+                </h3>
+                <p>Your user id is #{loginView.authenticatedUser.email}</p>
 
                 <div class="login">  
                     <!-- Авторизація -->
                     <span><i>&nbsp;</i>#{msg.authorization}</span>
-                    <h:form styleClass="form-login" id="form-user-login" >
-                        <p:inputText  id="inputUsername" value="#{user1.username}" required="true" requiredMessage="#{msg.login_required}" styleClass="aut-text"/>
+                    <h:form>
+                        <h3>Please Sign In</h3>
+                        <h:panelGrid columns="2">
+                            <h:outputLabel for="login">Login:</h:outputLabel>
+                            <h:inputText id="login" value="#{loginView.username}" required="true" requiredMessage="Please enter your login"></h:inputText>
 
-                        <p:password  id="inputPassword"  value="#{user1.password}" redisplay="true" required="true" requiredMessage="#{msg.password_required}" styleClass="aut-text"/>
+                            <h:outputLabel for="password">Password:</h:outputLabel>
+                            <h:inputSecret id="password" value="#{loginView.password}" required="true" requiredMessage="Please enter password"></h:inputSecret>
 
-                        <div class="div-login-button">
+                            <h:commandButton action="#{loginView.login}" value="Login"></h:commandButton>
+                        </h:panelGrid>
+                    </h:form>
 
-                            <p:panelGrid columns="3" columnClasses="col, col, col" styleClass="panel-login">
-
-                                <p:commandButton id="btnLogin" action="#{user1.login()}" value="#{msg.entry}" styleClass="login_button" update="nameofuser inputUsername inputPassword " onclick="this.disabled = true;" oncomplete="this.disabled=false"/>
-
-                                <p:ajaxStatus id="ajaxStatusPanel">  
-                                    <f:facet name="start">      
-                                        <h:graphicImage library="images" name="ajax_loading.gif"/> 
-                                    </f:facet>  
-
-                                    <f:facet name="complete">  
-                                        <h:outputText value="" />  
-                                    </f:facet>  
-                                </p:ajaxStatus>  
-
-                                <div class="save-me">
-                                    <label><input type="checkbox" /> #{msg.save_me}</label>
-                                </div>
-
-                            </p:panelGrid>
-                        </div>
-                    </h:form>                        
                     <a href="/user/password">Восстановить пароль</a>&nbsp;
-                    <h:outputLink value="registration.xhtml">Регистрация</h:outputLink>
+                    <h:outputLink value="registration.xhtml">Регистрация</h:outputLink>&nbsp;
+                    <h:outputLink value="registration1.xhtml">Регистрация1</h:outputLink>
                 </div>
 
 
@@ -88,7 +77,7 @@
                 <h:outputLink value="welcomePrimefaces.xhtml">Новини</h:outputLink>&nbsp;
                 <h:outputLink value="">Робота для українців</h:outputLink>&nbsp;
                 <h:outputLink value="ukrbiz.xhtml">Українські заклади (товари, послуги та громадські організації)</h:outputLink> &nbsp;
-                <h:outputLink value="default.xhtml">Житло</h:outputLink> &nbsp;
+                <h:outputLink value="forum.xhtml">Житло</h:outputLink> &nbsp;
                 <h:outputLink value="dating1.jsp">Оголошення </h:outputLink> &nbsp;
                 <h:outputLink value="ukrbiz.xhtml">
                     #{msg.dating}                    

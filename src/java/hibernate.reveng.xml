@@ -48,4 +48,5 @@ Contributor(s):
   <table-filter match-name="review"/>
   <table-filter match-name="organization"/>
   <table-filter match-name="section"/>
+    <table-filter match-name="groupofuser"/>
 </hibernate-reverse-engineering>

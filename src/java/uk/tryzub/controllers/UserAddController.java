@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
@@ -27,7 +29,9 @@ import uk.tryzub.entity.HibernateUtil;
 import uk.tryzub.entity.Organization;
 import org.primefaces.event.CellEditEvent;
 import uk.tryzub.entity.Review;
+import uk.tryzub.entity.Groupofuser;
 import uk.tryzub.entity.User;
+import uk.tryzub.utils.AuthenticationUtils;
 
 /**
  *
@@ -37,22 +41,17 @@ import uk.tryzub.entity.User;
 @SessionScoped
 public final class UserAddController implements Serializable {
 
-    private Organization selectedOrgStrd;
-
-    private boolean editable = false;
-    private boolean addable = false;
-
     private User user;
-    
+
     private String login;
     private String password;
-    private String email;    
-    
+    private String email;
+
     private String city;
     private String realname;
 
     public UserAddController() {
-        user = new User();
+        user=new User();
     }
 
     public String addUser() {
@@ -67,12 +66,20 @@ public final class UserAddController implements Serializable {
                 user.setPassword(password);
                 user.setEmail(email);
                 user.setCity(city);
-                /*получать надо будет автора из сессии (кто добавил). Пока moderator */
+                
+                try {
+			user.setPassword(AuthenticationUtils.encodeSHA256(user.getPassword()));
+		} catch (Exception e) {
+			Logger.getLogger(getClass().getName()).log(Level.SEVERE, null, e);
+			e.printStackTrace();
+		}
 
-
-             
+                Groupofuser groupofuser = new Groupofuser();
+                groupofuser.setUsername(user.getUsername());
+                groupofuser.setGroupname("members");
 
                 session.save(user);
+                session.save(groupofuser);
 
                 transaction.commit();
             } catch (Exception ex) {
@@ -96,6 +103,7 @@ public final class UserAddController implements Serializable {
     public void setUser(User user) {
         this.user = user;
     }
+
     public String getLogin() {
         return login;
     }
@@ -122,7 +130,7 @@ public final class UserAddController implements Serializable {
 
     public String getCity() {
         return city;
-    }
+    } 
 
     public void setCity(String city) {
         this.city = city;

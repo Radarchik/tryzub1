@@ -45,7 +45,8 @@ public final class OrganizationHelper implements Serializable {
     private boolean addable = false;
     
     public OrganizationHelper() {
-        getOrganizations();
+        //делаем это (заполняем лист) при загрузке страницы
+        //fillOrganizationsListAll();
     }
     
     /*При выборе "показать выдгуки" организации currentOrganizationList заповнюэться selectedOrgStrd
@@ -67,7 +68,7 @@ public final class OrganizationHelper implements Serializable {
      
      }
     
-    public void getOrganizations(/*String section*/) {
+    public void fillOrganizationsListAll(/*String section*/) {
         final Session session = HibernateUtil.getSession();
         
         try {

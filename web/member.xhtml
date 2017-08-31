@@ -1,20 +1,48 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <head>
         <title>TODO supply a title</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     </head>
     <body>
         <div>
-            
-            <h1>Сторінка зареєстрованого користувача</h1>
-        
+            <div class="welcome">
+                <h:form>
+                    <h:commandLink action="#{loginView.logout}" value="Logout" />
+                </h:form>
+                <h3>#{msg.welcome}, <h:outputText value="#{loginView.authenticatedUser==null? msg.guest:loginView.authenticatedUser.username}"/></h3>
+                <p>Your user id is #{loginView.authenticatedUser.email}</p>
+            </div>
+        <hr/>
+
+            <div id="membername">
+                Учасник  <strong>${param.id}</strong>
+            </div>
+
+
+
+
+
+            <div id="itemphoto">
+                <h:outputLink value="#{request.contextPath}/editorganization.xhtml?id=#{b.idorganization}" target="_blank">
+                    <h:graphicImage  value="#{userHelper.findUserByName(param.id).avatar}" width="150" height="180"/>
+                    <!-- Path is defined in glassfish-web.xml --> 
+                </h:outputLink>
+            </div>
+
+            <h3>Your account has been successfully created</h3>
+            <br/><br/>
+            <h:link value="Sign in with your new account" outcome="signin" />
+
+
+
+
+
         </div>
     </body>
 </html>

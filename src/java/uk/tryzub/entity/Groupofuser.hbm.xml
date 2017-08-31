@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 22-Aug-2017 20:47:48 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="uk.tryzub.entity.Groupofuser" table="groupofuser" catalog="tryzub" optimistic-lock="version">
+        <id name="username" type="string">
+            <column name="username" />
+            <generator class="assigned" />
+        </id>
+        <property name="groupname" type="string">
+            <column name="groupname" length="32" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>
