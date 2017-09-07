@@ -1,0 +1,120 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:o="http://omnifaces.org/ui">
+    <h:head>
+        <title>Добавлення або редагування організації</title>
+    </h:head>
+    <h:body>
+
+
+        <p:dialog id="dlgHabit" dynamic="true" position="center center" width="1100" height="500"  widgetVar="dlgHabit" modal="true" resizable="false" closable="false"> 
+
+            <div id="dialogwrapper">
+
+                <div id="dialog_itemphoto">
+
+                    <h:panelGroup id="padding" layout="block"> 
+                        <h:graphicImage   width="210" height="250" rendered="#{fileUploadHabitation.isshowed}"/> <!-- Пустышка - для вида -->                  
+                        <o:graphicImage value="#{fileUploadHabitation.imageContent}" width="210" height="250" id="newImage" dataURI="true" styleClass="myClass" rendered="#{not empty fileUploadHabitation.imageContent}" />
+                    </h:panelGroup>
+                    <!--
+                    The update attribute should point to an existing client ID in the HTML DOM tree. 
+                    However, since the element is not available in the HTML DOM tree because it's not rendered by the server side,
+                    JS/ajax cannot find anything in HTML DOM tree to update.
+                    In fact, you should wrap it in another element which is always available in the HTML DOM tree
+                    so that Ajax can locate it and then use its client ID in update. In your case, you can use padding for this.
+                    -->
+                    <h:form enctype="multipart/form-data">
+                        <p:growl id="messages" showDetail="true" />
+                        <p:fileUpload fileUploadListener="#{fileUploadHabitation.handleFileUpload}" mode="advanced"
+                                      auto="true" sizeLimit="1000000" update=":padding :padding1 :descrForm:filesQuantity" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" 
+                                      invalidFileMessage="Неправильний тип (розширення). Допустимі формати: gif jpg jpeg png"
+                                      label="Додати фото"/>
+                        <!-- подключить омнифесис здесь можно получить в байтах   <o:graphicImage value="" library="images" width="160" height="220" id="bookNewImage"/> -->
+                    </h:form>
+                </div>
+
+                <div id="dialog_smallphotos">
+                    <h:panelGroup id="padding1" layout="block">
+                        <div class="prePhoto">
+                            <o:graphicImage value="#{fileUploadHabitation.imageContents.get(0)}" width="60" height="60" dataURI="true" styleClass="myClass" rendered="#{not empty fileUploadHabitation.imageContents}" />
+                        </div>
+                        <div class="prePhoto">
+                            <o:graphicImage value="#{fileUploadHabitation.imageContents.get(1)}" width="60" height="60" dataURI="true" styleClass="myClass" rendered="#{fileUploadHabitation.imageContents.size()>1}" />
+                        </div>
+                        <div class="prePhoto">
+                            <o:graphicImage value="#{fileUploadHabitation.imageContents.get(2)}" width="60" height="60" dataURI="true" styleClass="myClass" rendered="#{fileUploadHabitation.imageContents.size()>2}" />
+                        </div>
+                        <div class="prePhoto">
+                            <o:graphicImage value="#{fileUploadHabitation.imageContents.get(3)}" width="60" height="60" dataURI="true" styleClass="myClass" rendered="#{fileUploadHabitation.imageContents.size()>3}" />
+                        </div>
+                        <div class="prePhoto">
+                            <o:graphicImage value="#{fileUploadHabitation.imageContents.get(4)}" width="60" height="60" dataURI="true" styleClass="myClass" rendered="#{fileUploadHabitation.imageContents.size()>4}" />
+                        </div> 
+                    </h:panelGroup>
+                </div>
+
+                <h:form id="descrForm">
+                    <div id="dialog_itemsections">
+
+
+
+
+                        <p>
+                            <p:outputLabel value="Адреса:" styleClass="edit-title"/><br/>
+                            <p:inputText id="inputHabAddress" value="#{habitationHelper.habit.address}"  size="20"  styleClass="edit-field"/>
+                        </p>
+
+                        <p>
+                            <p:outputLabel value="Електронна пошта:" styleClass="edit-title"/><br/>
+                            <p:inputText id="inputHabEmail" value="#{habitationHelper.habit.email}"   styleClass="edit-field"/>
+                        </p>
+
+                        <p>
+                            <p:outputLabel value="Телефон:" styleClass="edit-title"/><br/>
+                            <p:inputText id="inputHabPhone" value="#{habitationHelper.habit.phone}"   styleClass="edit-field"/>
+                        </p>
+                    </div>
+
+
+
+
+                    <div id="dialog_itemdescr">
+                        <p:outputLabel value="Текст оголошення:" styleClass="edit-title"/><br/>
+                        <p:inputTextarea id="inputOrgDescr" value="#{habitationHelper.habit.description}"   styleClass="edit-field"/>
+                    </div>
+
+
+                    <div id="dialog_checkbox">
+                        <h:outputText value="Вибрано фото: "/>
+                        <h:outputText value="#{fileUploadHabitation.filesList.size()}" id="filesQuantity"/>
+                        <h:outputText value=" із 5"/>
+                    </div>
+
+                    <div id="dialog_buttons">
+
+
+                        <!-- button for add-->
+                        <p:commandButton id="button_saveHab" value="Save habitation" process="@form" update=":habitForm:habitList" 
+                                         title="Save" onclick="dlgHabit.hide()" actionListener="#{fileUploadHabitation.upload}" action="#{habitationHelper.addHabitation()}">
+                        </p:commandButton> 
+
+                        <!-- button for cancel-->
+                        <p:commandButton onclick="dlgHabit.hide()" icon="ui-icon-close"  value="#{msg.cancel}" immediate="true" global="false">
+                            <f:actionListener binding="#{fileUploadHabitation.setImageContent(null)}" />
+                            <f:actionListener binding="#{fileUploadHabitationt.setIsshowed(true)}" />
+                        </p:commandButton> 
+                    </div>
+                </h:form>
+            </div>
+        </p:dialog>
+
+
+
+    </h:body>
+</html>
+

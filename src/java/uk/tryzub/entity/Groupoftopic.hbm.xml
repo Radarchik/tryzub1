@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 04-Sep-2017 16:53:59 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="uk.tryzub.entity.Groupoftopic" table="groupoftopic" catalog="tryzub" optimistic-lock="version">
+        <id name="idgroupoftopic" type="java.lang.Integer">
+            <column name="idgroupoftopic" />
+            <generator class="identity" />
+        </id>
+        <property name="name" type="string">
+            <column name="name" length="500" not-null="true" />
+        </property>
+        <set name="topics" table="topic" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="groupoftopic" not-null="true" />
+            </key>
+            <one-to-many class="uk.tryzub.entity.Topic" />
+        </set>
+    </class>
+</hibernate-mapping>

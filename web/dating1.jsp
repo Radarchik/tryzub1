@@ -4,6 +4,7 @@
     Author     : tszin
 --%>
 
+<%@page import="uk.tryzub.controllers.DatingHelper1"%>
 <%@page import="javax.servlet.http.HttpSession"%>
 <%@page import="javax.jms.Session"%>
 <%@page import="java.util.ArrayList"%>
@@ -17,7 +18,7 @@
         <meta http-equiv="pragma" content="no-cache">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Знайомства</title>
-        <link href="resources/css/dating.css" rel="stylesheet" type="text/css">
+        <link href="resources/css/dating1.css" rel="stylesheet" type="text/css">
                     
     </head>
     <body>
@@ -38,7 +39,7 @@
         </div>
 
         <div id="content">
-            <%!DatingHelper datingHelper = new DatingHelper();
+            <%!DatingHelper1 datingHelper = new DatingHelper1();
                 List<Dating> arr = datingHelper.getDatings();
             %>
             <%! int n = 0;%>

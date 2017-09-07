@@ -35,6 +35,7 @@ import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
+import uk.tryzub.controllers.HabitationHelper;
 
 @ManagedBean
 @ViewScoped
@@ -54,6 +55,10 @@ public class FileUploadView implements Serializable {
     public void setOrganizationHelper(OrganizationHelper organizationHelper) {
         this.organizationHelper = organizationHelper;
     }
+    
+    
+   
+    
 
     public UploadedFile getFile() {
         return file;
@@ -71,6 +76,16 @@ public class FileUploadView implements Serializable {
 
     }
 
+    
+    //придумать на жилье
+    public void upload1() {}
+    
+    
+    
+    
+    
+    
+    /*this part for organization*/
     public void upload() {
         if (file != null) {
 

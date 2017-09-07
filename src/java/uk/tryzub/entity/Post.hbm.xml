@@ -2,22 +2,25 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 24-Jul-2017 19:32:26 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-  <class catalog="tryzub" name="uk.tryzub.entity.Post" optimistic-lock="version" table="post">
-    <id name="postid" type="java.lang.Integer">
-      <column name="postid"/>
-      <generator class="identity"/>
-    </id>
-    <many-to-one class="uk.tryzub.entity.Topic" fetch="select" name="topic">
-      <column name="topicid" not-null="true"/>
-    </many-to-one>
-    <many-to-one class="uk.tryzub.entity.User" fetch="select" name="user">
-      <column name="postauthor" not-null="true"/>
-    </many-to-one>
-    <property name="text" type="string">
-      <column length="5000" name="text" not-null="true"/>
-    </property>
-    <property name="date" type="timestamp">
-      <column length="19" name="date" not-null="true"/>
-    </property>
-  </class>
+    <class catalog="tryzub" name="uk.tryzub.entity.Post" optimistic-lock="version" table="post">
+        <id name="postid" type="java.lang.Integer">
+            <column name="postid"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one class="uk.tryzub.entity.Topic" fetch="select" name="topic">
+            <column name="topicid" not-null="true"/>
+        </many-to-one>
+        <many-to-one class="uk.tryzub.entity.User" fetch="select" name="user">
+            <column name="postauthor" not-null="true"/>
+        </many-to-one>
+        <property name="text" type="string">
+            <column length="5000" name="text" not-null="true"/>
+        </property>
+        <property name="rating" type="int">
+            <column name="rating"  not-null="true"/>
+        </property>
+        <property name="date" type="timestamp">
+            <column length="19" name="date" not-null="true"/>
+        </property>
+    </class>
 </hibernate-mapping>

@@ -104,7 +104,7 @@
                 <hr></hr>
                
                 <br />
-                <p:commandButton value="Додати організацію"  rendered="true" update=":dlgorg" oncomplete="PF('dlgedit').show();">
+                <p:commandButton value="Додати організацію"  rendered="#{loginView.authenticatedUser!=null}" update=":dlgorg" oncomplete="PF('dlgedit').show();">
                     <f:actionListener binding="#{organizationHelper.setNewOrg()}" /> 
                     <f:actionListener binding="#{organizationHelper.setAddable(true)}"/>
                     <f:actionListener binding="#{organizationHelper.setEditable(false)}"/>

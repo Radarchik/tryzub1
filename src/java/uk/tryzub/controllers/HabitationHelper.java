@@ -28,7 +28,6 @@ import org.primefaces.context.RequestContext;
 import uk.tryzub.entity.HibernateUtil;
 import uk.tryzub.entity.Organization;
 import org.primefaces.event.CellEditEvent;
-import uk.tryzub.entity.Dating;
 import uk.tryzub.entity.Habitation;
 import uk.tryzub.entity.Review;
 import uk.tryzub.entity.User;
@@ -39,13 +38,13 @@ import uk.tryzub.entity.User;
  */
 @ManagedBean
 @SessionScoped
-public final class DatingHelper implements Serializable {
+public final class HabitationHelper implements Serializable {
 
-    private ArrayList<Dating> currentDatingList; //заповнюється автоматично при створенні обєкту
+    private ArrayList<Habitation> currentHabitationList; //заповнюється автоматично при створенні обєкту
 
-    private Dating dating;
+    private Habitation habit;
 
-    public DatingHelper() {
+    public HabitationHelper() {
 
         //делаем это (заполняем лист) при загрузке страницы
         //fillOrganizationsListAll();
@@ -54,26 +53,26 @@ public final class DatingHelper implements Serializable {
     /*creating new HAbitation for adding to DB*/
     @PostConstruct
     public void init() {
-        dating = new Dating();
+        habit = new Habitation();
     }
 
-    public void setNewDating() {
-        this.dating = new Dating();
+    public void setNewHabitation() {
+        this.habit = new Habitation();
     }
 
-    public ArrayList<Dating> getCurrentDatingList() {
-        return currentDatingList;
+    public ArrayList<Habitation> getCurrentHabitationList() {
+        return currentHabitationList;
     }
 
-    public void fillDatingsListAll(/*String section*/) {
+    public void fillHabitationsListAll(/*String section*/) {
         final Session session = HibernateUtil.getSession();
 
         try {
             final Transaction transaction = session.beginTransaction();
             try {
                 // The real work is here
-                Query q = session.createQuery("from Dating order by date desc");
-                currentDatingList = (ArrayList<Dating>) q.list();
+                Query q = session.createQuery("from Habitation");
+                currentHabitationList = (ArrayList<Habitation>) q.list();
 
                 transaction.commit();
             } catch (Exception ex) {
@@ -90,7 +89,7 @@ public final class DatingHelper implements Serializable {
     /*
     In jsf can not to send parameters in method signature, only in params
      */
-    public void fillDatingsByType() {
+    public void fillHabitationsByType() {
         Map<String, String> params
                 = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 
@@ -99,8 +98,8 @@ public final class DatingHelper implements Serializable {
             final Transaction transaction = session.beginTransaction();
             try {
                 // The real work is here
-                Query q = session.createQuery("from Dating where section = " + params.get("section")); // получение окончания с параметров
-                currentDatingList = (ArrayList<Dating>) q.list();
+                Query q = session.createQuery("from Habitation where type = " + params.get("type")); // получение окончания с параметров
+                currentHabitationList = (ArrayList<Habitation>) q.list();
 
                 transaction.commit();
             } catch (Exception ex) {
@@ -114,7 +113,7 @@ public final class DatingHelper implements Serializable {
 
     }
 
-    public String addDating() {
+    public String addHabitation() {
 
         //get all existing value but set "editable" to false 
         final Session session = HibernateUtil.getSession();
@@ -122,10 +121,10 @@ public final class DatingHelper implements Serializable {
             final Transaction transaction = session.beginTransaction();
             try {
 
-                dating.setId(null); // добавить новую запись, а не изменить существующую
-                dating.setSection(1);
+                habit.setId(null); // добавить новую запись, а не изменить существующую
+                habit.setType(1);
 
-                session.save(dating);
+                session.save(habit);
 
                 transaction.commit();
             } catch (Exception ex) {
@@ -142,13 +141,25 @@ public final class DatingHelper implements Serializable {
 
     }
     
-      
-   
-    public Dating getDating() {
-        return dating;
+    
+    public ArrayList<String> getImagesForHabitations (String imagesPaths) {
+       ArrayList <String> images = new ArrayList<>();
+       String[] arr = imagesPaths.split(" ");
+       
+       Collections.addAll(images, arr); 
+        return images;
+    }
+    
+    
+     public void setNewPhotosPath(String paths) {
+        this.habit.setPhoto(paths);
     }
 
-    public void setDating(Dating dating) {
-        this.dating = dating;
+    public Habitation getHabit() {
+        return habit;
+    }
+
+    public void setHabit(Habitation habit) {
+        this.habit = habit;
     }
 }

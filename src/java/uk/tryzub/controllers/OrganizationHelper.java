@@ -26,6 +26,7 @@ import org.primefaces.context.RequestContext;
 import uk.tryzub.entity.HibernateUtil;
 import uk.tryzub.entity.Organization;
 import org.primefaces.event.CellEditEvent;
+import uk.tryzub.entity.Habitation;
 import uk.tryzub.entity.Review;
 import uk.tryzub.entity.User;
 
@@ -33,14 +34,15 @@ import uk.tryzub.entity.User;
  *
  * @author tszin
  */
-@ManagedBean(eager = true)
+@ManagedBean
 @SessionScoped
 public final class OrganizationHelper implements Serializable {
     
     private ArrayList<Organization> currentOrganizationList; //заповнюється автоматично при створенні обєкту
     private Organization selectedOrgStrd;
+    
+   
     private String selectedSection;
-
     private boolean editable = false;
     private boolean addable = false;
     

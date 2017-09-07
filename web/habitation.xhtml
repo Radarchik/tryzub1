@@ -9,33 +9,37 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <ui:composition template="/templates/dating/dating_template.xhtml"> 
+        <ui:composition template="/templates/habitation/habitation_template.xhtml"> 
 
             <ui:define name="content"> 
                 <f:metadata>
                     <!-- При загрузке стр. инициализ.весь список -->
-                    <f:viewAction action="#{datingHelper.fillDatingsListAll()}" />
+                    <f:viewAction action="#{habitationHelper.fillHabitationsListAll()}" />
                 </f:metadata>
 
                 <!-- Відображення  - відображається лист, що змінюється по запитам аджакс-->
-                <h:form id="datingForm">
+                <h:form id="habitForm">
 
-                    <p:dataList value="#{datingHelper.currentDatingList}" var="hab" type="definition"
+                    <p:dataList value="#{habitationHelper.currentHabitationList}" var="hab" type="definition"
                                 paginator="true" id="habitList" itemStyleClass="listrowOrg"
                                 rows="3" paginatorAlwaysVisible="false"
                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                rowsPerPageTemplate="5,10,15"> 
+                                rowsPerPageTemplate="3,10,15"> 
 
                         <f:facet name="header">
-                            <h:outputText value = "#{hab.section}" />  <!-- поменять - достать жанр -->
+                            <h:outputText value = "#{hab.type}" />  <!-- поменять - достать жанр -->
                         </f:facet>
 
                         <div id="itemname">
-                            <strong><h:outputText value = "#{hab.name}" /> </strong>
+                            <strong>brodyaga</strong>
                         </div>
 
                         <div id="itemphoto">
-                          
+                            <p:galleria value="#{habitationHelper.getImagesForHabitations(hab.photo)}"
+                                        var="image" panelWidth="210" panelHeight="250" showCaption="false"
+                                        rendered="#{hab.photo != null}">
+                                <p:graphicImage  value="#{image}" width="210" height="250"/>
+                            </p:galleria>
 
                             
                             <!-- Path is defined in glassfish-web.xml --> 
@@ -45,9 +49,9 @@
 
                         <div id="itemsections">
 
-                            <p><strong>#{msg.address}</strong> #{hab.city}</p>
+                            <p><strong>#{msg.address}</strong> #{hab.address}</p>
                             <p><strong>email:</strong> #{hab.email}</p>
-                            <p><strong>Telephone:</strong> #{hab.date}</p>
+                            <p><strong>Telephone:</strong> #{hab.phone}</p>
 
                         </div>
 
@@ -56,7 +60,7 @@
 
                         <div id="itemdescr">
                             <p><strong>#{msg.descr}</strong></p>
-                            <p>#{hab.message}</p>
+                            <p>#{hab.description}</p>
 
 
 

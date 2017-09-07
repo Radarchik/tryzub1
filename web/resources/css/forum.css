@@ -9,50 +9,45 @@ and open the template in the editor.
 */
 
 
-.welcome{
+#menu{
     position: fixed;
-    align-items: center;
-    top: 3px;
-    left: 87%;
-    width: 10%;
-    height: 10%;
-}
-
-
-
-
-.listrowTopic{
-    position: relative;   /*сейчас вложенные дивы будут отсчитывать позицию от этого*/
-    box-sizing: border-box;   /*хорошее свойство, позволяет оставить див в заданных рамках при padding*/
-    margin: 20px;
-    margin-bottom: 40px;
-    height: 280px;
-}
-
-
-#topic{
-    position: absolute;
-    box-sizing: border-box;
-    top: 0%;
+    top:0%;
     left: 0%;
-    width: 250px;    
+    width: 20%;
+    height: 100%;
+    background-color: brown;
 }
 
-#itemsections{
-    position: absolute; 
-    box-sizing: border-box;
-    top: 30px;
-    left: 260px;
-    width: 350px;
-    height: 250px;
-    font-size:medium;
+#header{
+    position: relative;
+    top:0%;
+    left: 20%;
+    width: 80%;
+    height: 25%;
+    background-color: green;
+    display: block;
+
 }
 
-#itemdescr{
-    position: absolute;
-    box-sizing: border-box;
-    top: 30px;
-    left: 620px;
-    height: 250px;    
-    font-size:medium;
+#content{
+    position: relative;
+    top:25%;
+    left: 20%;
+    width: 80%;
+    display: block;
+}
+
+#footer{
+    position: relative;  
+    left: 20%;
+    width: 80%;
+    
+    display: block;
+    background-color: skyblue;
+}
+
+
+.selectedLink{
+    color: red;
+    background: #e9f6fc;
 }

@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition>
+
+            <h:form>
+                <h:link  value="#{msg.main}" outcome="index" />
+
+                <h2><h:commandLink value ="Весь каталог">
+                        <f:ajax event="click" render=":datingForm" listener="#{datingHelper.fillDatingsListAll()}"/>
+                    </h:commandLink></h2>
+                <hr></hr>
+
+
+                <h:commandLink value = "Хлопець познайомиться з дівчиною">
+                    <f:param name="section" value="1" />                  
+                    <f:ajax event="click" render=":datingForm" listener="#{datingHelper.fillDatingsByType()}"/>         
+                </h:commandLink> 
+                <br />
+                <h:commandLink value = "Дівчина познайомиться з хлопцем">
+                    <f:param name="section" value="2" />
+                    <f:ajax event="click" render=":datingForm" listener="#{datingHelper.fillDatingsByType()}"/>         
+                </h:commandLink> 
+                <br />
+                <h:commandLink value = "Знайомства для дружби/по інтересам">
+                    <f:param name="section" value="3" />
+                    <f:ajax event="click" render=":datingForm" listener="#{datingHelper.fillDatingsByType()}"/>         
+                </h:commandLink> 
+                <br />     
+                 <h:commandLink value = "Запрошення на побачення">
+                    <f:param name="section" value="4" />
+                    <f:ajax event="click" render=":datingForm" listener="#{datingHelper.fillDatingsByType()}"/>         
+                </h:commandLink> 
+                <br />   
+
+
+                <hr></hr>
+
+                <br />
+                <p:commandButton value="Додати оголошення"  update="" oncomplete="PF('dlgHabit').show();">
+                    <f:actionListener binding="#{fileUploadHabitation.setIsshowed(true)}" /> 
+                    <f:actionListener binding="#{fileUploadHabitation.setNewFilesList()}" />
+                    <f:actionListener binding="#{fileUploadHabitation.setImageContent(null)}" />
+                     </p:commandButton>
+
+
+            </h:form>
+            <ui:include src="/templates/habitation/addhabitation.xhtml" />
+        </ui:composition>
+    </h:body>
+</html>
+

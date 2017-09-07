@@ -6,7 +6,7 @@
 package uk.tryzub.servlets;
 
 import uk.tryzub.entity.Dating;
-import uk.tryzub.controllers.DatingHelper;
+import uk.tryzub.controllers.DatingHelper1;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
@@ -55,7 +55,7 @@ public class ServletFormAddDating extends HttpServlet {
             String message = request.getParameter("info");
 
             Dating dating = new Dating( city,  date, email,  message, name, section);
-            DatingHelper datingHelper = new DatingHelper();
+            DatingHelper1 datingHelper = new DatingHelper1();
             datingHelper.addDatings(dating);
             
             request.getSession().invalidate();

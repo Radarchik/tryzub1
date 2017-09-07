@@ -8,9 +8,11 @@ package uk.tryzub.controllers;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -51,11 +53,47 @@ public class PostHelper implements Serializable {
         StringBuilder quote = new StringBuilder("<blockquote><em><strong>");
         quote.append(p.getUser().getUsername());
         quote.append(" </strong>");
-        quote.append("пише:</br>");
+        quote.append("пише:<br/>");
         quote.append(p.getText());
-        quote.append("</em></blockquote></br>");
+        quote.append("</em></blockquote>");
 
         return quote.toString();
+    }
+
+    public void changeRating() {
+        final Session session = HibernateUtil.getSession();
+
+        try {
+            final Transaction transaction = session.beginTransaction();
+            try {
+                // The real work is here
+                Map<String, String> params
+                        = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+                
+                int postid = Integer.parseInt(params.get("postid"));
+                String username = params.get("username");
+                int rating = Integer.parseInt(params.get("rating"));
+
+                Post post = (Post) session.get(Post.class, postid);                
+                post.setRating(post.getRating()+rating);
+                
+                User user = (User) session.get(User.class, username);
+                user.setReputation(user.getReputation()+rating);
+                session.update(post);
+                session.update(user);
+                transaction.commit();
+                
+                /*для обновления аджаксового */
+                fillSelectedPosts(post.getTopic().getTopicid().toString());
+            } catch (Exception ex) {
+                // Log the exception here
+                transaction.rollback();
+                throw ex;
+            }
+        } finally {
+            HibernateUtil.closeSession();
+        }
+
     }
 
     public void fillSelectedPosts(String topicid) {
@@ -99,12 +137,10 @@ public class PostHelper implements Serializable {
                 session.save(post);
 
                 transaction.commit();
-                
+
                 /*для обновления списка постов*/
                 fillSelectedPosts(chosenTopic.getTopicid().toString());
-                
-                
-                
+
             } catch (Exception ex) {
                 // Log the exception here
                 transaction.rollback();

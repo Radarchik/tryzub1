@@ -105,7 +105,30 @@ and open the template in the editor.
 blockquote {
   background: #f9f9f9;
   border-left: 10px solid #ccc;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #ccc;
   margin: 1.5em 10px;
   padding: 0.5em 10px;
   quotes: "\201C""\201D""\2018""\2019";
 }
+
+blockquote blockquote {
+    background-color: #d1eae6;
+    font-size: 1em;
+    margin: 0.5em 1px 0 15px;
+}
+
+blockquote blockquote blockquote{
+    background-color: #9cecff;   
+}
+
+
+ #memberInfo { 
+ 
+     font-size: 80%; /* Размер шрифта в процентах */ 
+     font-family: serif; /* Шрифт с засечками */ 
+     position: relative; /* Относительное позиционирование */ 
+     display: block;
+     text-align: left;
+    }

@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition>
+
+            <h:form id="menuForm">
+                <h:link  value="#{msg.main}" outcome="index"  />
+
+                <h2><p:commandLink update=":forumtable:topictable @form" value="Всі теми" actionListener="#{topicHelper.fillTopics()}">
+                        <f:setPropertyActionListener target="#{topicHelper.selectedGroupoftopic}" value="#{null}" />
+                    </p:commandLink>
+                </h2>
+                <hr></hr>
+                <h2><h:outputText value="Розділи:"/></h2>
+
+                <ui:repeat value="#{topicHelper.currentGroupoftopic}" var="group" id="menuRepeat">
+                    <li>
+                        <p:commandLink update=":forumtable:topictable @form" value="#{group.name}" styleClass="#{group == topicHelper.selectedGroupoftopic ? 'selectedLink':''}" actionListener="#{topicHelper.fillTopicsByGroup(group.idgroupoftopic)}">
+                            <f:setPropertyActionListener target="#{topicHelper.selectedGroupoftopic}" value="#{group}" />
+                        </p:commandLink>
+
+                    </li>
+                </ui:repeat>
+<br/>
+
+
+            </h:form>
+
+            <!-- Normal button for registration-->
+            <h:form> 
+
+                <p:commandButton value="ВІДКРИТИ НОВУ ТЕМУ"  rendered="#{loginView.authenticatedUser!=null}" onclick="PF('dlgaddtopic').show();">
+
+                </p:commandButton>
+
+            </h:form>
+
+
+
+
+            <p:dialog id="dlgtopic" position="center center" width="1000" height="500"  
+                      widgetVar="dlgaddtopic" modal="true" resizable="false" closable="false"
+                      appendTo="@(body)"> 
+                <div id="dialogwrapper">
+
+                    <h:form>
+                        <div id="dialog_topicname">                       
+                            <p>
+                                <p:outputLabel value="Введіть назву теми:" styleClass="edit-title"/><br/>
+                                <p:inputText id="inputOrgContact" value="#{topicHelper.topicName}"   styleClass="edit-field" size="50"/>
+                            </p>
+                        </div>
+
+
+                        <h3 style="margin-top:0">Суть теми:</h3>
+
+                        <p:textEditor widgetVar="editor" value="#{topicHelper.text}" height="250" style="margin-bottom:10px"/>
+
+                        <p:commandButton value="Submit" action="#{topicHelper.addTopic()}" icon="ui-icon-disk" update=":forumtable:topictable"  oncomplete="PF('dlgaddtopic').hide();">
+                            <f:setPropertyActionListener target="#{topicHelper.authentUser}" value="#{loginView.authenticatedUser}" />
+
+                        </p:commandButton>
+                        <p:commandButton value="Clear" type="button" onclick="PF('editor').clear();" icon="ui-icon-close" />
+
+
+                    </h:form>
+                </div>
+            </p:dialog>
+
+
+
+
+
+            <!-- fake button for registration -->
+            <h:form> 
+
+                <p:commandButton value="ВІДКРИТИ НОВУ ТЕМУ"  rendered="#{loginView.authenticatedUser==null}" onclick="PF('dlgInviteRegistr').show();">
+
+                </p:commandButton>
+
+            </h:form>
+
+            <p:dialog id="dlgInviteRegistr" position="center center" width="400" height="150"  
+                      widgetVar="dlgInviteRegistr" modal="true" resizable="false" closable="false"
+                      appendTo="@(body)"> 
+                <div id="dialogwrapper1">
+
+                    <h:outputText  value="Шановний гість, "  />
+                    <h:outputText value="дана функція доступна лише зареєстрованим користувачам"  />
+
+                    <h:form>
+                        <p:button value="Зареєструватися" outcome="registration1.xhtml" />
+
+                        <p:commandButton value="Відміна" type="button" onclick="PF('dlgInviteRegistr').hide();" icon="ui-icon-close" />
+
+
+                    </h:form>
+                </div>
+            </p:dialog>
+
+
+
+        </ui:composition>
+    </h:body>
+</html>
+

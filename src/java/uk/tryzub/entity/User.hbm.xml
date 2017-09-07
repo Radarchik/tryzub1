@@ -26,7 +26,7 @@
         <property name="quantity" type="int">
             <column name="quantity" />
         </property>
-        <property name="reputation" type="string">
+        <property name="reputation" type="int">
             <column name="reputation"  />
         </property>
         <property name="sign" type="string">

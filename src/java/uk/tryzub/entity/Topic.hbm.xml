@@ -2,31 +2,34 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <!-- Generated 24-Jul-2017 19:32:26 by Hibernate Tools 4.3.1 -->
 <hibernate-mapping>
-  <class catalog="tryzub" name="uk.tryzub.entity.Topic" optimistic-lock="version" table="topic">
-    <id name="topicid" type="java.lang.Integer">
-      <column name="topicid"/>
-      <generator class="identity"/>
-    </id>
-    <many-to-one class="uk.tryzub.entity.User" fetch="select" name="user">
-      <column name="topicauthor" not-null="true"/>
-    </many-to-one>
-    <property name="name" type="string">
-      <column name="name" not-null="true"/>
-    </property>
-    <property name="answers" type="int">
-      <column name="answers" />
-    </property>
-    <property name="views" type="int">
-      <column name="views" />
-    </property>
-    <property name="last" type="string">
-      <column length="45" name="last" />
-    </property>
-    <set fetch="select" inverse="true" lazy="true" name="posts" table="post">
-      <key>
-        <column name="topicid" />
-      </key>
-      <one-to-many class="uk.tryzub.entity.Post"/>
-    </set>
-  </class>
+    <class catalog="tryzub" name="uk.tryzub.entity.Topic" optimistic-lock="version" table="topic">
+        <id name="topicid" type="java.lang.Integer">
+            <column name="topicid"/>
+            <generator class="identity"/>
+        </id>
+        <many-to-one name="groupoftopic" class="uk.tryzub.entity.Groupoftopic" fetch="select">
+            <column name="groupoftopic" not-null="true" />
+        </many-to-one>
+        <many-to-one class="uk.tryzub.entity.User" fetch="select" name="user">
+            <column name="topicauthor" not-null="true"/>
+        </many-to-one>
+        <property name="name" type="string">
+            <column name="name" not-null="true"/>
+        </property>
+        <property name="answers" type="int">
+            <column name="answers" />
+        </property>
+        <property name="views" type="int">
+            <column name="views" />
+        </property>
+        <property name="last" type="string">
+            <column length="45" name="last" />
+        </property>
+        <set fetch="select" inverse="true" lazy="true" name="posts" table="post">
+            <key>
+                <column name="topicid" />
+            </key>
+            <one-to-many class="uk.tryzub.entity.Post"/>
+        </set>
+    </class>
 </hibernate-mapping>

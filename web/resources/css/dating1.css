@@ -1,0 +1,38 @@
+#menu{
+    position: fixed;
+    top:0%;
+    left: 0%;
+    width: 20%;
+    height: 100%;
+    background-color: brown;
+}
+
+#cap{
+     position: fixed;
+     top:0%;
+     left: 20%;
+     width: 80%;
+     height: 25%;
+     background-color: green;
+ }
+
+#content{
+    box-sizing: border-box;   /*хорошее свойство, позволяет оставить див в заданных рамках при padding*/
+    padding: 20px;           /*увеличивает див на заданную величину, не очень подходит*/
+    position: absolute;
+    top:25%;
+    left: 20%;
+    width: 80%;
+    height: 2000px;
+    background-color: blue;
+}
+
+
+.welcome{
+    position: fixed;
+    align-items: center;
+    top: 3px;
+    left: 87%;
+    width: 10%;
+    height: 10%;
+}

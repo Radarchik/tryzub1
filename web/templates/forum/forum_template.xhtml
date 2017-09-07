@@ -5,7 +5,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
         <title><ui:insert name="title"/></title>
-        <h:outputStylesheet library="css" name="topic.css"  />
+        <h:outputStylesheet library="css" name="forum.css"  />
     </h:head>
     <h:body>
         <div class="container">
@@ -13,30 +13,30 @@
 
             <div id ="menu">
                 <ui:insert name="menu">
-                    <ui:include src="/templates/organization/menu.xhtml"/>
+                    <ui:include src="/templates/forum/menu.xhtml"/>
                 </ui:insert>                 
             </div>
 
             <div id ="header">
                 <ui:insert name="header">
-                    <ui:include src="/templates/organization/header.xhtml"/>
+                    <ui:include src="/templates/forum/header.xhtml"/>
                 </ui:insert>                 
             </div>
 
-            <div id="wrapperContentAndReviews">
-                <div id ="content">
-                    <ui:insert name="content">
-                        <ui:include src="/templates/organization/content.xhtml"/>
-                    </ui:insert>    
-                </div>
 
-
-                <div id ="reviews">
-                    <ui:insert name="reviews">
-                        <ui:include src="/templates/organization/reviews.xhtml"/>
-                    </ui:insert>                 
-                </div>
+            <div id ="content">
+                <ui:insert name="content">
+                    <ui:include src="/templates/forum/content.xhtml"/>
+                </ui:insert>    
             </div>
+
+
+            <div id ="footer">
+                <ui:insert name="footer">
+                    <ui:include src="/templates/forum/footer.xhtml"/>
+                </ui:insert>                 
+            </div>
+
 
         </div>
     </h:body>

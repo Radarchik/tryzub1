@@ -15,15 +15,17 @@ public class Post  implements java.io.Serializable {
      private User user;
      private String text;
      private Date date;
+     private int rating;
 
     public Post() {
     }
 
-    public Post(Topic topic, User user, String text, Date date) {
+    public Post(Topic topic, User user, String text, Date date, int rating) {
        this.topic = topic;
        this.user = user;
        this.text = text;
        this.date = date;
+       this.rating = rating;
     }
    
     public Integer getPostid() {
@@ -60,6 +62,14 @@ public class Post  implements java.io.Serializable {
     
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
     }
 
 

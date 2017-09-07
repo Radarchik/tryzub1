@@ -6,6 +6,7 @@
 package uk.tryzub.controllers;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.SortedSet;
@@ -14,6 +15,7 @@ import javax.faces.bean.SessionScoped;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import uk.tryzub.entity.Groupoftopic;
 import uk.tryzub.entity.HibernateUtil;
 import uk.tryzub.entity.Organization;
 import uk.tryzub.entity.Post;
@@ -28,18 +30,43 @@ import uk.tryzub.entity.User;
 @SessionScoped
 public final class TopicHelper implements Serializable {
 
-    private ArrayList<Topic> currentTopicList; //заповнюється автоматично при створенні обєкту
+    private ArrayList<Groupoftopic> currentGroupoftopic;
+    private ArrayList<Topic> currentTopicList;
 
+    private Groupoftopic selectedGroupoftopic;
     private Topic selectedTopic;
     private String topicName;
     private String text;
     private User authentUser;
 
     public TopicHelper() {
-        fillTopics();
+        //fillTopics(); - this one fill on view (metadata)
+        fillGroupoftopic();
     }
 
-    public void fillTopics(/*String section*/) {
+    public void fillGroupoftopic() {
+        final Session session = HibernateUtil.getSession();
+
+        try {
+            final Transaction transaction = session.beginTransaction();
+            try {
+                // The real work is here
+                Query q = session.createQuery("from Groupoftopic");
+                currentGroupoftopic = (ArrayList<Groupoftopic>) q.list();
+
+                transaction.commit();
+            } catch (Exception ex) {
+                // Log the exception here
+                transaction.rollback();
+                throw ex;
+            }
+        } finally {
+            HibernateUtil.closeSession();
+        }
+
+    }
+
+    public void fillTopics() {
         final Session session = HibernateUtil.getSession();
 
         try {
@@ -50,6 +77,9 @@ public final class TopicHelper implements Serializable {
                 currentTopicList = (ArrayList<Topic>) q.list();
 
                 transaction.commit();
+                
+                /* when fill all topic - selected group not needed*/
+                selectedGroupoftopic=null;
             } catch (Exception ex) {
                 // Log the exception here
                 transaction.rollback();
@@ -83,6 +113,30 @@ public final class TopicHelper implements Serializable {
 
     }
 
+    public void fillTopicsByGroup(String groupid) {
+        final Session session = HibernateUtil.getSession();
+
+        try {
+            final Transaction transaction = session.beginTransaction();
+            try {
+                // The real work is here
+
+                Query q = session.createQuery("from Topic where groupoftopic = " + groupid);
+
+                currentTopicList = (ArrayList<Topic>) q.list();
+
+                transaction.commit();
+            } catch (Exception ex) {
+                // Log the exception here
+                transaction.rollback();
+                throw ex;
+            }
+        } finally {
+            HibernateUtil.closeSession();
+        }
+
+    }
+
     public String addTopic() {
 
         //get all existing value but set "editable" to false 
@@ -93,11 +147,11 @@ public final class TopicHelper implements Serializable {
                 Topic topic = new Topic();
                 topic.setName(topicName);
                 topic.setUser(authentUser);
-                String text40 = text.substring(0, 40);
-                topic.setLast(text40);
+
+                topic.setLast("Тут придумати");
                 topic.setTopicid(null);
 
-               session.save(topic);
+                session.save(topic);
                 /*    transaction.commit();
                 transaction.begin();*/
 
@@ -122,6 +176,67 @@ public final class TopicHelper implements Serializable {
         }
         //return to current page
         return null;
+    }
+
+    public long countTopicPosts(Topic topic) {
+        final Session session = HibernateUtil.getSession();
+        Long count;
+        try {
+            final Transaction transaction = session.beginTransaction();
+            try {
+                // The real work is here
+
+                Query query = session.createQuery(
+                        "select count(*) from Post post where post.topic=:topic");
+                query.setParameter("topic", topic);
+                count = (Long) query.uniqueResult();
+
+                transaction.commit();
+            } catch (Exception ex) {
+                // Log the exception here
+                transaction.rollback();
+                throw ex;
+            }
+        } finally {
+            HibernateUtil.closeSession();
+        }
+        //сама тема не считается ответом
+        return count - 1;
+    }
+
+    public String getLastPost(Topic topic) {
+        final Session session = HibernateUtil.getSession();
+
+        StringBuilder lastComment = new StringBuilder("<span>");
+        try {
+            final Transaction transaction = session.beginTransaction();
+            try {
+                // The real work is here
+                Query query = session.createQuery("from Post post where post.topic=:topic order by postid DESC");
+                query.setParameter("topic", topic);
+                query.setMaxResults(1);
+
+                Post last = (Post) query.uniqueResult();
+
+                SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy, HH:mm");
+                String date = DATE_FORMAT.format(last.getDate());
+
+                lastComment.append(date);
+                lastComment.append("<br/>");
+                lastComment.append(last.getUser().getUsername());
+                lastComment.append("</span>");
+
+                transaction.commit();
+            } catch (Exception ex) {
+                // Log the exception here
+                transaction.rollback();
+                throw ex;
+            }
+        } finally {
+            HibernateUtil.closeSession();
+        }
+        //сама тема не считается ответом
+        return lastComment.toString();
     }
 
     public ArrayList<Topic> getCurrentTopicList() {
@@ -164,4 +279,19 @@ public final class TopicHelper implements Serializable {
         this.authentUser = authentUser;
     }
 
+    public ArrayList<Groupoftopic> getCurrentGroupoftopic() {
+        return currentGroupoftopic;
+    }
+
+    public void setCurrentGroupoftopic(ArrayList<Groupoftopic> currentGroupoftopic) {
+        this.currentGroupoftopic = currentGroupoftopic;
+    }
+
+    public Groupoftopic getSelectedGroupoftopic() {
+        return selectedGroupoftopic;
+    }
+
+    public void setSelectedGroupoftopic(Groupoftopic selectedGroupoftopic) {
+        this.selectedGroupoftopic = selectedGroupoftopic;
+    }
 }

@@ -12,6 +12,9 @@ public class Topic implements java.io.Serializable {
 
    
     private Integer topicid;
+    private Groupoftopic groupoftopic;
+
+
     private User user;
     private String name;
     private int answers;
@@ -35,23 +38,22 @@ public class Topic implements java.io.Serializable {
         this.last = last;
     }
 
-    public Topic(User user, String name, int answers, int views, String last, Set posts) {
+    public Topic(Groupoftopic groupoftopic, User user, String name, int answers, int views, String last) {
+        this.groupoftopic = groupoftopic;
         this.user = user;
         this.name = name;
         this.answers = answers;
         this.views = views;
         this.last = last;
-        this.posts = posts;
     }
-
-    public Topic(int topicid, User user, String name, int answers, int views, String last, Set posts) {
-        this.topicid = topicid;
-        this.user = user;
-        this.name = name;
-        this.answers = answers;
-        this.views = views;
-        this.last = last;
-        this.posts = posts;
+    public Topic(Groupoftopic groupoftopic, User user, String name, int answers, int views, String last, Set posts) {
+       this.groupoftopic = groupoftopic;
+       this.user = user;
+       this.name = name;
+       this.answers = answers;
+       this.views = views;
+       this.last = last;
+       this.posts = posts;
     }
 
     public Integer getTopicid() {
@@ -110,6 +112,12 @@ public class Topic implements java.io.Serializable {
         this.posts = posts;
     }
     
-    
+        public Groupoftopic getGroupoftopic() {
+        return groupoftopic;
+    }
+
+    public void setGroupoftopic(Groupoftopic groupoftopic) {
+        this.groupoftopic = groupoftopic;
+    }
 
 }
