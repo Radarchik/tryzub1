@@ -10,170 +10,188 @@ import java.util.Set;
  */
 public class User implements java.io.Serializable {
 
-    private String username;
-    private String email;
-    private String password;
-    private Date creationtime;
-    private String avatar;
-    private String city;
-    private int quantity;
-    private int reputation;
-    private String sign;
-    private byte sex;
-    private Set posts = new HashSet(0);
-    private Set reviews = new HashSet(0);
-    private Set topics = new HashSet(0);
-    private Set organizations = new HashSet(0);
+
+     private String username;
+     private String email;
+     private String password;
+     private Date creationtime;
+     private String avatar;
+     private String city;
+     private Integer quantity;
+     private Integer reputation;
+     private String sign;
+     private byte sex;
+     private Set comments = new HashSet(0);
+     private Set habitations = new HashSet(0);
+     private Set posts = new HashSet(0);
+     private Set publications = new HashSet(0);
+     private Set works = new HashSet(0);
+     private Set reviews = new HashSet(0);
+     private Set topics = new HashSet(0);
+     private Set organizations = new HashSet(0);
 
     public User() {
     }
 
-    public User(String username, String email, String password, byte sex) {
+	
+    public User(String username, String email, String password, Date creationtime, byte sex) {
         this.username = username;
         this.email = email;
         this.password = password;
+        this.creationtime = creationtime;
         this.sex = sex;
     }
-
-    public User(String username, String email, String password, Date creationtime, String avatar, String city, int quantity, int reputation, String sign) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.creationtime = creationtime;
-        this.avatar = avatar;
-        this.city = city;
-        this.quantity = quantity;
-        this.reputation = reputation;
-        this.sign = sign;
+    public User(String username, String email, String password, Date creationtime, String avatar, String city, Integer quantity, Integer reputation, String sign, byte sex, Set comments, Set habitations, Set posts, Set publications, Set works, Set reviews, Set topics, Set organizations) {
+       this.username = username;
+       this.email = email;
+       this.password = password;
+       this.creationtime = creationtime;
+       this.avatar = avatar;
+       this.city = city;
+       this.quantity = quantity;
+       this.reputation = reputation;
+       this.sign = sign;
+       this.sex = sex;
+       this.comments = comments;
+       this.habitations = habitations;
+       this.posts = posts;
+       this.publications = publications;
+       this.works = works;
+       this.reviews = reviews;
+       this.topics = topics;
+       this.organizations = organizations;
     }
-
-    public User(String username, String email, String password, Date creationtime, String avatar, String city, int quantity, int reputation, String sign, Set posts, Set reviews, Set topics, Set organizations) {
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.creationtime = creationtime;
-        this.avatar = avatar;
-        this.city = city;
-        this.quantity = quantity;
-        this.reputation = reputation;
-        this.sign = sign;
-        this.posts = posts;
-        this.reviews = reviews;
-        this.topics = topics;
-        this.organizations = organizations;
-    }
-
+   
     public String getUsername() {
         return this.username;
     }
-
+    
     public void setUsername(String username) {
         this.username = username;
-
     }
-
     public String getEmail() {
         return this.email;
     }
-
+    
     public void setEmail(String email) {
         this.email = email;
     }
-
     public String getPassword() {
         return this.password;
     }
-
+    
     public void setPassword(String password) {
         this.password = password;
     }
-
     public Date getCreationtime() {
         return this.creationtime;
     }
-
+    
     public void setCreationtime(Date creationtime) {
         this.creationtime = creationtime;
     }
-
     public String getAvatar() {
         return this.avatar;
     }
-
+    
     public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
-
     public String getCity() {
         return this.city;
     }
-
+    
     public void setCity(String city) {
         this.city = city;
     }
-
-    public int getQuantity() {
+    public Integer getQuantity() {
         return this.quantity;
     }
-
-    public void setQuantity(int quantity) {
+    
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
-
-    public int getReputation() {
+    public Integer getReputation() {
         return this.reputation;
     }
-
-    public void setReputation(int reputation) {
+    
+    public void setReputation(Integer reputation) {
         this.reputation = reputation;
     }
-
     public String getSign() {
         return this.sign;
     }
-
+    
     public void setSign(String sign) {
         this.sign = sign;
     }
-
     public byte getSex() {
         return this.sex;
     }
-
+    
     public void setSex(byte sex) {
         this.sex = sex;
     }
-
+    public Set getComments() {
+        return this.comments;
+    }
+    
+    public void setComments(Set comments) {
+        this.comments = comments;
+    }
+    public Set getHabitations() {
+        return this.habitations;
+    }
+    
+    public void setHabitations(Set habitations) {
+        this.habitations = habitations;
+    }
     public Set getPosts() {
         return this.posts;
     }
-
+    
     public void setPosts(Set posts) {
         this.posts = posts;
     }
-
+    public Set getPublications() {
+        return this.publications;
+    }
+    
+    public void setPublications(Set publications) {
+        this.publications = publications;
+    }
+    public Set getWorks() {
+        return this.works;
+    }
+    
+    public void setWorks(Set works) {
+        this.works = works;
+    }
     public Set getReviews() {
         return this.reviews;
     }
-
+    
     public void setReviews(Set reviews) {
         this.reviews = reviews;
     }
-
     public Set getTopics() {
         return this.topics;
     }
-
+    
     public void setTopics(Set topics) {
         this.topics = topics;
     }
-
     public Set getOrganizations() {
         return this.organizations;
     }
-
+    
     public void setOrganizations(Set organizations) {
         this.organizations = organizations;
     }
 
+
+
+
 }
+
+

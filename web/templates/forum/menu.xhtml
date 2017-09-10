@@ -18,6 +18,7 @@
                         <f:setPropertyActionListener target="#{topicHelper.selectedGroupoftopic}" value="#{null}" />
                     </p:commandLink>
                 </h2>
+                (у порядку останньої відповіді)
                 <hr></hr>
                 <h2><h:outputText value="Розділи:"/></h2>
 
@@ -29,7 +30,7 @@
 
                     </li>
                 </ui:repeat>
-<br/>
+                <br/>
 
 
             </h:form>
@@ -88,16 +89,26 @@
 
             </h:form>
 
-            <p:dialog id="dlgInviteRegistr" position="center center" width="400" height="150"  
+            <p:dialog id="dlgInviteRegistr" position="center center" width="400" height="300"  
                       widgetVar="dlgInviteRegistr" modal="true" resizable="false" closable="false"
                       appendTo="@(body)"> 
                 <div id="dialogwrapper1">
 
-                    <h:outputText  value="Шановний гість, "  />
-                    <h:outputText value="дана функція доступна лише зареєстрованим користувачам"  />
+                    <p><h:outputText  value="Шановний гість, "  />
+                        <h:outputText value="дана функція доступна лише зареєстрованим користувачам"  /></p>
 
+                    <h:outputText value="Ввійти:"  />
                     <h:form>
-                        <p:button value="Зареєструватися" outcome="registration1.xhtml" />
+                        <h:outputLabel for="login">Login:</h:outputLabel>
+                        <h:inputText id="login" value="#{loginView.username}" required="true" requiredMessage="Please enter your login"></h:inputText>
+                        <br/> 
+                        <h:outputLabel for="password">Password:</h:outputLabel>
+                        <h:inputSecret id="password" value="#{loginView.password}" required="true" requiredMessage="Please enter password"></h:inputSecret>
+
+                        <h:commandButton action="#{loginView.login}" value="Login"></h:commandButton>
+
+
+                        <p:button value="Зареєструватися" outcome="registration.xhtml" />
 
                         <p:commandButton value="Відміна" type="button" onclick="PF('dlgInviteRegistr').hide();" icon="ui-icon-close" />
 

@@ -60,5 +60,8 @@ Contributor(s):
     <mapping resource="uk/tryzub/entity/Groupofuser.hbm.xml"/>
     <mapping resource="uk/tryzub/entity/Groupoftopic.hbm.xml"/>
     <mapping resource="uk/tryzub/entity/Habitation.hbm.xml"/>
+    <mapping resource="uk/tryzub/entity/Publication.hbm.xml"/>
+    <mapping resource="uk/tryzub/entity/Comment.hbm.xml"/>
+    <mapping resource="uk/tryzub/entity/Work.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

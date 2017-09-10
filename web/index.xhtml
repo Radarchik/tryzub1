@@ -7,92 +7,83 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Тризуб</title>
-        <h:outputStylesheet  name="css/main_css.css" />
+        <h:outputStylesheet  name="css/index.css" />
+        <h:link rel="shortcut icon" value="resources/images/favicon.png" type="image/png"/>
         <!-- <h:outputScript library="js" name="library.js" target="head"/> -->
     </h:head>
     <h:body>
-        <div id="fond">
-            <div id="cap">
-                <div id="flagukr"><h:graphicImage class="images_flags" name="images/ukrflag.png"/> </div>
-                <div id="tryzub" ><h:graphicImage  class="image_tryzub" name="images/tryzub.png"/></div>
-                <div id="flaguk"><h:graphicImage  class="images_flags" name="images/flaguk1.png"/></div>
-                <div id="community_ukr"> Українська громада у Великій Британії</div>
-                <div id="community_uk">  Ukrainian community in Great Britain</div>
+        <ui:composition template="/templates/index/index_template.xhtml"> 
 
 
-                <div class="login_div">
+            <ui:define name="content"> 
+                <f:metadata>
+                    <!-- При загрузке стр. инициализ.весь список -->
+                    <f:viewAction action="#{publicationHelper.fillPublicationsListAll()}" />
+                </f:metadata>
 
-                    <h:link value="Create new account" outcome="registration1" />
-
-                </div>
-
-
-
-
-                <h:form>
-                    <h:commandLink action="#{loginView.logout}" value="Logout" />
-                </h:form>
-                <h3>
-                    #{msg.welcome}, 
-                    <h:outputLink rendered="#{loginView.authenticatedUser!=null}" value="#{request.contextPath}/member.xhtml?id=#{loginView.authenticatedUser.username}" target="_self">
-                        <h:outputText value="#{loginView.authenticatedUser==null? msg.guest:loginView.authenticatedUser.username}"/>
+                <div id="buttons">
+                    <h:outputLink value="">Дошка</h:outputLink>&nbsp;
+                    <h:outputLink value="work.xhtml">Робота для українців</h:outputLink>&nbsp;
+                    <h:outputLink value="ukrbiz.xhtml">Українські заклади (товари, послуги та громадські організації)</h:outputLink> &nbsp;
+                    <h:outputLink value="habitation.xhtml">Житло</h:outputLink> &nbsp;
+                    <h:outputLink value="dating1.jsp">Оголошення </h:outputLink> &nbsp;
+                    <h:outputLink value="dating.xhtml">
+                        #{msg.dating}                    
                     </h:outputLink>
-                </h3>
-                <p>Your user id is #{loginView.authenticatedUser.email}</p>
 
-                <div class="login">  
-                    <!-- Авторизація -->
-                    <span><i>&nbsp;</i>#{msg.authorization}</span>
-                    <h:form>
-                        <h3>Please Sign In</h3>
-                        <h:panelGrid columns="2">
-                            <h:outputLabel for="login">Login:</h:outputLabel>
-                            <h:inputText id="login" value="#{loginView.username}" required="true" requiredMessage="Please enter your login"></h:inputText>
+                    &nbsp;
 
-                            <h:outputLabel for="password">Password:</h:outputLabel>
-                            <h:inputSecret id="password" value="#{loginView.password}" required="true" requiredMessage="Please enter password"></h:inputSecret>
-
-                            <h:commandButton action="#{loginView.login}" value="Login"></h:commandButton>
-                        </h:panelGrid>
-                    </h:form>
-
-                    <a href="/user/password">Восстановить пароль</a>&nbsp;
-                    <h:outputLink value="registration.xhtml">Регистрация</h:outputLink>&nbsp;
-                    <h:outputLink value="registration1.xhtml">Регистрация1</h:outputLink>
+                    <h:outputLink value="forum.xhtml">
+                        Форум
+                    </h:outputLink>
                 </div>
+                <p:commandButton value="Додати оголошення"  update="" oncomplete="PF('dlgPublication').show();">
+                </p:commandButton>
+                <h:form id="publForm">
+                    <p:dataList value="#{publicationHelper.currentPublicationList}" var="publ" type="definition"
+                                paginator="true" id="publList" itemStyleClass="publrowOrg"
+                                rows="3" paginatorAlwaysVisible="false"
+                                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                rowsPerPageTemplate="3,10,15"> 
+
+
+                        <div id="itemname">
+                            <strong><h:outputText value="#{publ.name}"/></strong>
+                        </div>
 
 
 
-            </div>
 
-            <!-- <h:graphicImage  name="images/lesya.png" id="lesya"/> -->
-            <h:graphicImage  id="sheva" name="images/shev.png"/>
-            <!-- <img src="resources/image/Volod.png" id="volod">  -->
-            <h:graphicImage  name="images/Bogdan.png" id="bogdan"/>
+                        <div id="itemsections">
+
+                            <p><strong>Дата</strong> #{publ.date}</p>
+                            <p><strong>Контакти:</strong> #{publ.user.username}</p>
 
 
-        </div>
-        <div id="content">
-            <div id="buttons">
-                <h:outputLink value="">Дошка</h:outputLink>&nbsp;
-                <h:outputLink value="">Робота для українців</h:outputLink>&nbsp;
-                <h:outputLink value="ukrbiz.xhtml">Українські заклади (товари, послуги та громадські організації)</h:outputLink> &nbsp;
-                <h:outputLink value="habitation.xhtml">Житло</h:outputLink> &nbsp;
-                <h:outputLink value="dating1.jsp">Оголошення </h:outputLink> &nbsp;
-                <h:outputLink value="dating.xhtml">
-                    #{msg.dating}                    
-                </h:outputLink>
+                        </div>
 
-                &nbsp;
 
-                <h:outputLink value="forum.xhtml">
-                    Форум
-                </h:outputLink>
-            </div>
 
-        </div>
-        <br />
-        <h:link outcome="welcomePrimefaces" value="Primefaces welcome page" />
+
+                        <div id="itemdescr">
+                            <p><strong>#{msg.descr}</strong></p>
+                            <p><h:outputText value="#{publ.text}" escape="false"/></p>
+
+
+
+                        </div>
+
+                    </p:dataList>
+                </h:form>
+
+
+                <ui:include src="/templates/index/addpublication.xhtml" />
+            </ui:define>
+
+
+
+
+        </ui:composition>
     </h:body>
 </html>
 

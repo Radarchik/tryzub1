@@ -1,6 +1,9 @@
 package uk.tryzub.entity;
 // Generated 11-Aug-2017 12:48:46 by Hibernate Tools 4.3.1
 
+import java.util.Date;
+
+
 
 
 /**
@@ -13,14 +16,16 @@ public class Review  implements java.io.Serializable {
      private Organization organization;
      private User user;
      private String comment;
+     private Date date;
 
     public Review() {
     }
 
-    public Review(Organization organization, User user, String comment) {
+    public Review(Organization organization, User user, String comment, Date date) {
        this.organization = organization;
        this.user = user;
        this.comment = comment;
+       this.date = date;
     }
    
     public Integer getIdreview() {
@@ -50,6 +55,13 @@ public class Review  implements java.io.Serializable {
     
     public void setComment(String comment) {
         this.comment = comment;
+    }
+    public Date getDate() {
+        return this.date;
+    }
+    
+    public void setDate(Date date) {
+        this.date = date;
     }
 
 

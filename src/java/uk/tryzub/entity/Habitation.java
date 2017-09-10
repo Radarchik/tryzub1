@@ -1,6 +1,9 @@
 package uk.tryzub.entity;
 // Generated 06-Sep-2017 21:15:34 by Hibernate Tools 4.3.1
 
+import java.util.Date;
+
+
 
 
 /**
@@ -10,30 +13,34 @@ public class Habitation  implements java.io.Serializable {
 
 
      private Integer id;
+     private User user;
      private int type;
      private String address;
      private String photo;
      private String description;
-     private String phone;
-     private String email;
+     private String contact;
+     private Date date;
 
     public Habitation() {
     }
 
 	
-    public Habitation(int type, String address, String description, String email) {
+    public Habitation(User user, int type, String address, String description, String contact, Date date) {
+        this.user = user;
         this.type = type;
         this.address = address;
         this.description = description;
-        this.email = email;
+        this.contact = contact;
+        this.date = date;
     }
-    public Habitation(int type, String address, String photo, String description, String phone, String email) {
+    public Habitation(User user, int type, String address, String photo, String description,  String contact, Date date) {
+       this.user = user;
        this.type = type;
        this.address = address;
        this.photo = photo;
        this.description = description;
-       this.phone = phone;
-       this.email = email;
+       this.contact = contact;
+       this.date = date;
     }
    
     public Integer getId() {
@@ -42,6 +49,13 @@ public class Habitation  implements java.io.Serializable {
     
     public void setId(Integer id) {
         this.id = id;
+    }
+    public User getUser() {
+        return this.user;
+    }
+    
+    public void setUser(User user) {
+        this.user = user;
     }
     public int getType() {
         return this.type;
@@ -71,19 +85,20 @@ public class Habitation  implements java.io.Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-    public String getPhone() {
-        return this.phone;
+   
+    public String getContact() {
+        return this.contact;
     }
     
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setContact(String contact) {
+        this.contact = contact;
     }
-    public String getEmail() {
-        return this.email;
+    public Date getDate() {
+        return this.date;
     }
     
-    public void setEmail(String email) {
-        this.email = email;
+    public void setDate(Date date) {
+        this.date = date;
     }
 
 

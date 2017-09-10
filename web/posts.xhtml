@@ -8,6 +8,7 @@
       xmlns:pe="http://primefaces.org/ui/extensions">
     <h:head>
         <title>Форум Тризуб</title>
+        <h:link rel="shortcut icon" value="resources/images/favicon.png" type="image/png"/>
         <h:outputStylesheet  name="css/posts.css" />
     </h:head>
     <body>
@@ -117,7 +118,7 @@
 
                             <h:outputText value="#{post.rating}" id="postRating"/>
 
- 
+
 
                             <p:commandButton action="#{postHelper.changeRating()}" update="postRating reputation" icon="ui-icon-minus" title="Мінус за публікацію">
                                 <f:param name="postid" value="#{post.postid}" />

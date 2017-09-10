@@ -1,0 +1,252 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 27-Jul-2017, 22:45:06
+    Author     : tszin
+*/
+
+#menu{
+    position: fixed;
+    top:0%;
+    left: 0%;
+    width: 20%;
+    height: 100%;
+    background-color: brown;
+}
+
+#header{
+    position: relative;
+    top:0%;
+    left: 20%;
+    width: 80%;
+    height: 25%;
+    background-color: green;
+    display: block;
+
+}
+
+#content{
+    position: relative;
+    top:25%;
+    left: 20%;
+    width: 80%;
+    display: block;
+}
+
+#footer{
+    position: relative;  
+    left: 20%;
+    width: 80%;
+    
+    display: block;
+    background-color: skyblue;
+}
+
+
+#reviews{
+  
+
+    height: 160px;
+    background-color: deeppink;
+    display: block;
+
+}
+
+.welcome{
+    position: absolute;
+    align-items: center;
+    top: 3px;
+    left: 87%;
+    width: 10%;
+    height: 10%;
+}
+
+
+
+.listrowOrg{
+    position: relative;   /*сейчас вложенные дивы будут отсчитывать позицию от этого*/
+    box-sizing: border-box;   /*хорошее свойство, позволяет оставить див в заданных рамках при padding*/
+    margin: 20px;
+    margin-bottom: 40px;
+    height: 280px;
+}
+#itemname{
+    position: absolute;
+    display: table-cell;
+    box-sizing: border-box;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 20px;
+    text-align:center;
+}
+
+#itemphoto{
+    position: absolute;
+    box-sizing: border-box;
+    top: 30px;
+    left: 0%;
+    width: 250px;    
+}
+
+#itemsections{
+    position: absolute; 
+    box-sizing: border-box;
+    top: 30px;
+    left: 260px;
+    width: 350px;
+    height: 250px;
+    font-size:medium;
+}
+
+#itemdescr{
+    position: absolute;
+    box-sizing: border-box;
+    top: 30px;
+    left: 620px;
+    height: 250px;    
+    font-size:medium;
+}
+
+
+
+
+
+.listrowReview{
+    position: relative;   /*сейчас вложенные дивы будут отсчитывать позицию от этого*/
+    box-sizing: border-box;   /*хорошее свойство, позволяет оставить див в заданных рамках при padding*/
+    margin: 10px;
+    margin-bottom: 20px;
+    height: 100px;
+}
+
+#reviewname{
+    position: absolute;
+    display: table-cell;
+    box-sizing: border-box;
+    top: 0%;
+    left: 110px;
+    
+    height: 20px;
+    text-align:left;
+}
+
+#reviewphoto{
+    position: absolute;
+    box-sizing: border-box;
+    top: 0px;
+    left: 0%;
+    height: 100px;
+    width: 100px;    
+}
+
+
+#reviewdescr{
+    position: absolute;
+    box-sizing: border-box;
+    top: 30px;
+    left: 110px;
+    height: 70px;    
+    font-size:small;
+}
+
+
+
+
+
+
+
+
+
+
+#dialogwrapper{
+    position: relative;
+    box-sizing: border-box;   /*хорошее свойство, позволяет оставить див в заданных рамках при padding*/
+    margin: 20px;
+    background-color: hotpink;
+}
+
+#dialog_itemphoto{
+    position: absolute;
+    box-sizing: border-box;
+    top: 30px;
+    left: 0%;
+    width: 210px; 
+    background-color: bisque;    
+}
+
+#dialog_smallphotos{
+    position: absolute;
+    box-sizing: border-box;
+    top: 30px;
+    left: 220px;
+    width: 70px; 
+    height: 300px;
+    background-color: springgreen;    
+}
+
+#dialog_itemsections{
+    position: absolute; 
+    box-sizing: border-box;
+    top: 30px;
+    left: 300px;
+    width: 320px;
+    height: 300px;
+    font-size:medium;
+    background-color: blueviolet;
+     display: flex;
+     flex-direction:column;
+}
+
+.prePhoto{
+    width: 60px;
+    height: 60px;
+    background-color: #aaa;
+    margin:  5px;
+    box-sizing: border-box;
+}
+
+
+
+
+#dialog_itemdescr{
+    position: absolute;
+    box-sizing: border-box;
+    top: 30px;
+    left: 650px;
+    height: 300px;    
+    font-size:medium;
+    background-color: chartreuse;
+}
+
+#dialog_checkbox{
+    position: absolute;
+    box-sizing: border-box;
+    top: 360px;
+    left: 0%;
+    height: 25px;    
+    font-size:medium;
+    background-color: burlywood;
+}
+
+#dialog_buttons{
+    position: absolute;
+    box-sizing: border-box;
+    top: 390px;
+    left: 0%;
+    height: 40px;    
+    font-size:medium;
+    background-color: brown;
+}
+
+.edit-title{
+    font-weight: bold;
+    color:#880000;
+}
+
+.edit-field{
+    width:360px !important;
+}

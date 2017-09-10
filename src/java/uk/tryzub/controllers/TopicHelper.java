@@ -148,7 +148,7 @@ public final class TopicHelper implements Serializable {
                 topic.setName(topicName);
                 topic.setUser(authentUser);
 
-                topic.setLast("Тут придумати");
+               // topic.setLast("Тут придумати");
                 topic.setTopicid(null);
 
                 session.save(topic);

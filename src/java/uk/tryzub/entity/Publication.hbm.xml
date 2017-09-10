@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 09-Sep-2017 20:54:20 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="uk.tryzub.entity.Publication" table="publication" catalog="tryzub" optimistic-lock="version">
+        <id name="idpublication" type="java.lang.Integer">
+            <column name="idpublication" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="user" class="uk.tryzub.entity.User" fetch="select">
+            <column name="author" not-null="true" />
+        </many-to-one>
+        <property name="date" type="timestamp">
+            <column name="date" length="19" not-null="true" />
+        </property>
+        <property name="text" type="string">
+            <column name="text" length="20000" not-null="true" />
+        </property>
+        <property name="tryzub" type="int">
+            <column name="tryzub" not-null="true" />
+        </property>
+        <property name="name" type="string">
+            <column name="name" length="100" not-null="true" />
+        </property>
+        <property name="photo" type="string">
+            <column name="photo" length="500" />
+        </property>
+        <set name="comments" table="comment" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idpublication" not-null="true" />
+            </key>
+            <one-to-many class="uk.tryzub.entity.Comment" />
+        </set>
+    </class>
+</hibernate-mapping>

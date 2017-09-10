@@ -31,8 +31,10 @@ import uk.tryzub.entity.Organization;
 import org.primefaces.event.CellEditEvent;
 import uk.tryzub.beans.LoginView;
 import uk.tryzub.entity.Habitation;
+import uk.tryzub.entity.Publication;
 import uk.tryzub.entity.Review;
 import uk.tryzub.entity.User;
+import uk.tryzub.entity.Work;
 
 /**
  *
@@ -40,13 +42,13 @@ import uk.tryzub.entity.User;
  */
 @ManagedBean
 @SessionScoped
-public final class HabitationHelper implements Serializable {
+public final class PublicationHelper implements Serializable {
 
-    private ArrayList<Habitation> currentHabitationList; //заповнюється автоматично при створенні обєкту
+    private ArrayList<Publication> currentPublicationList; //заповнюється автоматично при створенні обєкту
 
-    private Habitation habit;
+    private Publication publicationToAdding;
 
-    public HabitationHelper() {
+    public PublicationHelper() {
 
         //делаем это (заполняем лист) при загрузке страницы
         //fillOrganizationsListAll();
@@ -55,12 +57,9 @@ public final class HabitationHelper implements Serializable {
     /*creating new HAbitation for adding to DB*/
     @PostConstruct
     public void init() {
-        habit = new Habitation();
+        publicationToAdding = new Publication();
     }
 
-    public void setNewHabitation() {
-        this.habit = new Habitation();
-    }
     
     
     
@@ -76,21 +75,17 @@ public final class HabitationHelper implements Serializable {
     }
 
   
-    
+   
 
-    public ArrayList<Habitation> getCurrentHabitationList() {
-        return currentHabitationList;
-    }
-
-    public void fillHabitationsListAll(/*String section*/) {
+    public void fillPublicationsListAll(/*String section*/) {
         final Session session = HibernateUtil.getSession();
 
         try {
             final Transaction transaction = session.beginTransaction();
             try {
                 // The real work is here
-                Query q = session.createQuery("from Habitation");
-                currentHabitationList = (ArrayList<Habitation>) q.list();
+                Query q = session.createQuery("from Publication");
+                currentPublicationList = (ArrayList<Publication>) q.list();
 
                 transaction.commit();
             } catch (Exception ex) {
@@ -104,34 +99,9 @@ public final class HabitationHelper implements Serializable {
 
     }
 
-    /*
-    In jsf can not to send parameters in method signature, only in params
-     */
-    public void fillHabitationsByType() {
-        Map<String, String> params
-                = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+  
 
-        final Session session = HibernateUtil.getSession();
-        try {
-            final Transaction transaction = session.beginTransaction();
-            try {
-                // The real work is here
-                Query q = session.createQuery("from Habitation where type = " + params.get("type")); // получение окончания с параметров
-                currentHabitationList = (ArrayList<Habitation>) q.list();
-
-                transaction.commit();
-            } catch (Exception ex) {
-                // Log the exception here
-                transaction.rollback();
-                throw ex;
-            }
-        } finally {
-            HibernateUtil.closeSession();
-        }
-
-    }
-
-    public String addHabitation() {
+    public String addPublication() {
 
         //get all existing value but set "editable" to false 
         final Session session = HibernateUtil.getSession();
@@ -139,11 +109,10 @@ public final class HabitationHelper implements Serializable {
             final Transaction transaction = session.beginTransaction();
             try {
 
-                habit.setId(null); // добавить новую запись, а не изменить существующую
-                habit.setUser(loginView.getAuthenticatedUser());
-                habit.setType(1);
-
-                session.save(habit);
+                publicationToAdding.setIdpublication(null); // добавить новую запись, а не изменить существующую
+                publicationToAdding.setUser(loginView.getAuthenticatedUser());
+                
+                session.save(publicationToAdding);
 
                 transaction.commit();
             } catch (Exception ex) {
@@ -159,26 +128,22 @@ public final class HabitationHelper implements Serializable {
         return null;
 
     }
-    
-    
-    public ArrayList<String> getImagesForHabitations (String imagesPaths) {
-       ArrayList <String> images = new ArrayList<>();
-       String[] arr = imagesPaths.split(" ");
-       
-       Collections.addAll(images, arr); 
-        return images;
-    }
-    
-    
-     public void setNewPhotosPath(String paths) {
-        this.habit.setPhoto(paths);
+
+
+
+    public ArrayList<Publication> getCurrentPublicationList() {
+        return currentPublicationList;
     }
 
-    public Habitation getHabit() {
-        return habit;
+    public Publication getPublicationToAdding() {
+        return publicationToAdding;
     }
 
-    public void setHabit(Habitation habit) {
-        this.habit = habit;
+    public void setPublicationToAdding(Publication publicationToAdding) {
+        this.publicationToAdding = publicationToAdding;
     }
+  
+    
+    
+  
 }

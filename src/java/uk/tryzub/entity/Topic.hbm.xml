@@ -23,7 +23,7 @@
             <column name="views" />
         </property>
         <property name="last" type="string">
-            <column length="45" name="last" />
+            <column length="200" name="last" />
         </property>
         <set fetch="select" inverse="true" lazy="true" name="posts" table="post">
             <key>

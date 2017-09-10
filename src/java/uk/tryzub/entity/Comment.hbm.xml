@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 09-Sep-2017 20:26:29 by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="uk.tryzub.entity.Comment" table="comment" catalog="tryzub" optimistic-lock="version">
+        <id name="idcomment" type="java.lang.Integer">
+            <column name="idcomment" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="publication" class="uk.tryzub.entity.Publication" fetch="select">
+            <column name="idpublication" not-null="true" />
+        </many-to-one>
+        <many-to-one name="user" class="uk.tryzub.entity.User" fetch="select">
+            <column name="author" not-null="true" />
+        </many-to-one>
+        <property name="message" type="string">
+            <column name="message" length="1000" not-null="true" />
+        </property>
+        <property name="date" type="timestamp">
+            <column name="date" length="19" not-null="true" />
+        </property>
+        <property name="rating" type="int">
+            <column name="rating" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

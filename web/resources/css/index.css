@@ -104,13 +104,36 @@
     top:60%;
     left: 0%;
 }
-#content{
-    position: absolute;
+
+#middle{
+    position: relative;
     left: 15%;
     width:70% ;
+    min-height: 200px;
+    top: 222px;
+     box-sizing: border-box;
+   
+    
+}
+#content{
+box-sizing: border-box;
+    left: 0%;
+    top: 0px;
+    width:100% ;
     background-color: #9cecff;
-    top: 250px;
-    height: 2000px;
+   overflow:hidden;
+
+}
+
+#footer{
+    
+    overflow:hidden;
+
+    width:100% ;
+    background-color: #339933;
+    
+    height: 200px;
+    
 }
 
 .error{

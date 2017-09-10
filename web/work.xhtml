@@ -9,48 +9,38 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <ui:composition template="/templates/habitation/habitation_template.xhtml"> 
+        <ui:composition template="/templates/work/work_template.xhtml"> 
 
             <ui:define name="content"> 
                 <f:metadata>
                     <!-- При загрузке стр. инициализ.весь список -->
-                    <f:viewAction action="#{habitationHelper.fillHabitationsListAll()}" />
+                    <f:viewAction action="#{workHelper.fillWorksListAll()}" />
                 </f:metadata>
 
                 <!-- Відображення  - відображається лист, що змінюється по запитам аджакс-->
-                <h:form id="habitForm">
+                <h:form id="workForm">
 
-                    <p:dataList value="#{habitationHelper.currentHabitationList}" var="hab" type="definition"
-                                paginator="true" id="habitList" itemStyleClass="listrowOrg"
+                    <p:dataList value="#{workHelper.currentWorkList}" var="work" type="definition"
+                                paginator="true" id="workList" itemStyleClass="listrowOrg"
                                 rows="3" paginatorAlwaysVisible="false"
                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                 rowsPerPageTemplate="3,10,15"> 
 
                         <f:facet name="header">
-                            <h:outputText value = "#{hab.type}" />  <!-- поменять - достать жанр -->
+                            <h:outputText value = "#{work.type}" />  <!-- поменять - достать жанр -->
                         </f:facet>
 
                         <div id="itemname">
                             <strong>brodyaga</strong>
                         </div>
 
-                        <div id="itemphoto">
-                            <p:galleria value="#{habitationHelper.getImagesForHabitations(hab.photo)}"
-                                        var="image" panelWidth="210" panelHeight="250" showCaption="false"
-                                        rendered="#{hab.photo != null}">
-                                <p:graphicImage  value="#{image}" width="210" height="250"/>
-                            </p:galleria>
-
-                            
-                            <!-- Path is defined in glassfish-web.xml --> 
-
-                        </div>
+                        
 
 
                         <div id="itemsections">
 
-                            <p><strong>#{msg.address}</strong> #{hab.address}</p>
-                            <p><strong>Контакти:</strong> #{hab.contact}</p>
+                            <p><strong>#{msg.address}</strong> #{work.address}</p>
+                            <p><strong>Контакти:</strong> #{work.contact}</p>
                             
 
                         </div>
@@ -60,7 +50,7 @@
 
                         <div id="itemdescr">
                             <p><strong>#{msg.descr}</strong></p>
-                            <p>#{hab.description}</p>
+                            <p>#{work.description}</p>
 
 
 

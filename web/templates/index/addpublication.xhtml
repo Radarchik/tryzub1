@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:o="http://omnifaces.org/ui">
+    <h:head>
+        <title>Добавлення або редагування організації</title>
+    </h:head>
+    <h:body>
+
+
+        <p:dialog id="dlgPublication" dynamic="true" position="center center" width="1100" height="500"  widgetVar="dlgPublication" modal="true" resizable="false" closable="false"> 
+
+            <div id="dialogwrapper">
+
+               
+           
+
+                <h:form id="FormPublication">
+                    <div id="dialog_itemsections">
+
+
+
+
+                        <p>
+                            <p:outputLabel value="Назва публікації:" styleClass="edit-title"/><br/>
+                            <p:inputText id="inputHabAddress" value="#{publicationHelper.publicationToAdding.name}"  size="60"  styleClass="edit-field"/>
+                        </p>
+
+                      
+
+                        
+                    </div>
+
+
+
+
+                    <div id="dialog_itemdescr">
+                        <p:outputLabel value="Текст публікації" styleClass="edit-title"/><br/>
+                         <p:textEditor widgetVar="publEditor" value="#{publicationHelper.publicationToAdding.text}" height="300" style="margin-bottom:10px"/>
+                    </div>
+
+
+                    
+
+                    <div id="dialog_buttons">
+
+
+                        <!-- button for add-->
+                        <p:commandButton id="button_savePubl" value="Save publication" process="@form" update=":publForm:publList" 
+                                         title="Save" onclick="dlgPublication.hide()" action="#{publicationHelper.addPublication()}">
+                        </p:commandButton> 
+
+                        <!-- button for cancel-->
+                        <p:commandButton onclick="dlgPublication.hide()" icon="ui-icon-close"  value="#{msg.cancel}" immediate="true" global="false">
+                           
+                        </p:commandButton> 
+                    </div>
+                </h:form>
+            </div>
+        </p:dialog>
+
+        
+
+
+    </h:body>
+</html>
+

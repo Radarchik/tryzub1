@@ -17,5 +17,8 @@
         <property name="comment" type="string">
             <column name="comment" length="1000" not-null="true" />
         </property>
+        <property name="date" type="timestamp">
+            <column name="date" length="19" not-null="true" />
+        </property>
     </class>
 </hibernate-mapping>

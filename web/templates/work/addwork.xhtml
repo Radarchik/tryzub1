@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:o="http://omnifaces.org/ui">
+    <h:head>
+        <title>Добавлення або редагування організації</title>
+    </h:head>
+    <h:body>
+
+
+        <p:dialog id="dlgWork" dynamic="true" position="center center" width="1100" height="500"  widgetVar="dlgWork" modal="true" resizable="false" closable="false"> 
+
+            <div id="dialogwrapper">
+
+               
+           
+
+                <h:form id="descrForm">
+                    <div id="dialog_itemsections">
+
+
+
+
+                        <p>
+                            <p:outputLabel value="Адреса:" styleClass="edit-title"/><br/>
+                            <p:inputText id="inputHabAddress" value="#{workHelper.workNew.address}"  size="20"  styleClass="edit-field"/>
+                        </p>
+
+                        <p>
+                            <p:outputLabel value="Контактні дані:" styleClass="edit-title"/><br/>
+                            <p:inputText id="inputHabEmail" value="#{workHelper.workNew.contact}"   styleClass="edit-field"/>
+                        </p>
+
+                        
+                    </div>
+
+
+
+
+                    <div id="dialog_itemdescr">
+                        <p:outputLabel value="Текст оголошення:" styleClass="edit-title"/><br/>
+                        <p:inputTextarea id="inputOrgDescr" value="#{workHelper.workNew.description}"   styleClass="edit-field"/>
+                    </div>
+
+
+                    
+
+                    <div id="dialog_buttons">
+
+
+                        <!-- button for add-->
+                        <p:commandButton id="button_saveHab" value="Save work" process="@form" update=":habitForm:habitList" 
+                                         title="Save" onclick="dlgWork.hide()" action="#{workHelper.addWork()}">
+                        </p:commandButton> 
+
+                        <!-- button for cancel-->
+                        <p:commandButton onclick="dlgWork.hide()" icon="ui-icon-close"  value="#{msg.cancel}" immediate="true" global="false">
+                           
+                        </p:commandButton> 
+                    </div>
+                </h:form>
+            </div>
+        </p:dialog>
+
+        
+
+
+    </h:body>
+</html>
+

@@ -51,4 +51,7 @@ Contributor(s):
     <table-filter match-name="groupofuser"/>
     <table-filter match-name="groupoftopic"/>
     <table-filter match-name="habitation"/>
+    <table-filter match-name="work"/>
+    <table-filter match-name="publication"/>
+    <table-filter match-name="comment"/>
 </hibernate-reverse-engineering>

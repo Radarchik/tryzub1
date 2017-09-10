@@ -15,7 +15,7 @@
             <column name="password" not-null="true" />
         </property>
         <property name="creationtime" type="timestamp">
-            <column name="creationtime" length="19"  />
+            <column name="creationtime" length="19" not-null="true"/>
         </property>
         <property name="avatar" type="string">
             <column name="avatar" />
@@ -35,6 +35,30 @@
         <property name="sex" type="byte">
             <column name="sex" not-null="true" />
         </property>
+        <set name="publications" table="publication" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="author" not-null="true" />
+            </key>
+            <one-to-many class="uk.tryzub.entity.Publication" />
+        </set>
+        <set name="comments" table="comment" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="author" not-null="true" />
+            </key>
+            <one-to-many class="uk.tryzub.entity.Comment" />
+        </set>
+        <set name="habitations" table="habitation" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="author" not-null="true" />
+            </key>
+            <one-to-many class="uk.tryzub.entity.Habitation" />
+        </set>
+        <set name="works" table="work" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="workauthor" not-null="true" />
+            </key>
+            <one-to-many class="uk.tryzub.entity.Work" />
+        </set>
         <set name="posts" table="post" inverse="true" lazy="true" fetch="select">
             <key>
                 <column name="postauthor" not-null="true" />
