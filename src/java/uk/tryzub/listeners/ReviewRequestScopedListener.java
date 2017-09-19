@@ -74,9 +74,7 @@ public class ReviewRequestScopedListener implements Serializable {
             final Transaction transaction = session.beginTransaction();
             try {
                
-                
-                /*получать надо будет автора из сессии (кто добавил). Пока moderator */
-          
+                   
                 
               //  Organization organ = (Organization) session.get(Organization.class, 2);
                 Review review = new Review();

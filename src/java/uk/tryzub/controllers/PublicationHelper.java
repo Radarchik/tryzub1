@@ -5,6 +5,7 @@
  */
 package uk.tryzub.controllers;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,6 +20,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ValueChangeEvent;
 import org.hibernate.Query;
@@ -30,6 +32,7 @@ import uk.tryzub.entity.HibernateUtil;
 import uk.tryzub.entity.Organization;
 import org.primefaces.event.CellEditEvent;
 import uk.tryzub.beans.LoginView;
+import uk.tryzub.entity.Comment;
 import uk.tryzub.entity.Habitation;
 import uk.tryzub.entity.Publication;
 import uk.tryzub.entity.Review;
@@ -45,8 +48,12 @@ import uk.tryzub.entity.Work;
 public final class PublicationHelper implements Serializable {
 
     private ArrayList<Publication> currentPublicationList; //заповнюється автоматично при створенні обєкту
+    private ArrayList<Comment> currentCommentList;
 
-    private Publication publicationToAdding;
+    private String message;
+
+    /*this field used for adding publication and for selection publication and for adding comments */
+    private Publication selectedPublication;
 
     public PublicationHelper() {
 
@@ -55,27 +62,22 @@ public final class PublicationHelper implements Serializable {
     }
 
     /*creating new HAbitation for adding to DB*/
-    @PostConstruct
-    public void init() {
-        publicationToAdding = new Publication();
+    public void initNewPublication() {
+        selectedPublication = new Publication();
+        message = "";
     }
 
-    
-    
-    
-   @ManagedProperty(value = "#{loginView}")
+    @ManagedProperty(value = "#{loginView}")
     private LoginView loginView;
 
     public LoginView getLoginView() {
         return loginView;
     }
 //Обязательный сеттер для инъекции
+
     public void setLoginView(LoginView loginView) {
         this.loginView = loginView;
     }
-
-  
-   
 
     public void fillPublicationsListAll(/*String section*/) {
         final Session session = HibernateUtil.getSession();
@@ -95,11 +97,10 @@ public final class PublicationHelper implements Serializable {
             }
         } finally {
             HibernateUtil.closeSession();
+            currentCommentList=null;
         }
 
     }
-
-  
 
     public String addPublication() {
 
@@ -109,10 +110,10 @@ public final class PublicationHelper implements Serializable {
             final Transaction transaction = session.beginTransaction();
             try {
 
-                publicationToAdding.setIdpublication(null); // добавить новую запись, а не изменить существующую
-                publicationToAdding.setUser(loginView.getAuthenticatedUser());
-                
-                session.save(publicationToAdding);
+                selectedPublication.setIdpublication(null); // добавить новую запись, а не изменить существующую
+                selectedPublication.setUser(loginView.getAuthenticatedUser());
+
+                session.save(selectedPublication);
 
                 transaction.commit();
             } catch (Exception ex) {
@@ -129,21 +130,164 @@ public final class PublicationHelper implements Serializable {
 
     }
 
+    public void setChozenPublication(String id) {
+        final Session session = HibernateUtil.getSession();
 
+        try {
+            final Transaction transaction = session.beginTransaction();
+            try {
+                // The real work is here
+                int idpublication = Integer.parseInt(id);
+                Publication selectedPubl = (Publication) session.get(Publication.class, idpublication);
+
+                this.currentPublicationList.clear();
+                this.currentPublicationList.add(selectedPubl);
+                this.selectedPublication = selectedPubl;
+
+                transaction.commit();
+
+                message = "";
+            } catch (Exception ex) {
+                // Log the exception here
+                transaction.rollback();
+                throw ex;
+            }
+        } finally {
+            HibernateUtil.closeSession();
+            fillComments(id);   //fill commentsList for this publication
+        }
+
+    }
+
+    public void setNewPhoto(String newPhoto) {
+        if (selectedPublication != null) {
+            selectedPublication.setPhoto(newPhoto);
+        }
+    }
+
+    public String addComment() throws IOException {
+
+        //get all existing value but set "editable" to false 
+        final Session session = HibernateUtil.getSession();
+        try {
+            final Transaction transaction = session.beginTransaction();
+            try {
+
+                Comment comment = new Comment();
+                comment.setMessage(message);
+
+                comment.setUser(loginView.getAuthenticatedUser());
+                comment.setPublication(selectedPublication);
+                comment.setIdcomment(null); // добавить новую запись, а не изменить существующую
+                session.save(comment);
+
+                transaction.commit();
+
+                //for reload comments
+                //selectedPublication = (Publication) session.get(Publication.class, selectedPublication.getIdpublication());
+            } catch (Exception ex) {
+                // Log the exception here
+                transaction.rollback();
+                throw ex;
+            }
+        } finally {
+            HibernateUtil.closeSession();
+            ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
+            context.redirect(context.getRequestContextPath() + "/index.xhtml?id=" + selectedPublication.getIdpublication());
+
+        }
+        return null;
+    }
+
+    public void fillComments(String idPublication) {
+        final Session session = HibernateUtil.getSession();
+        
+        try {
+            final Transaction transaction = session.beginTransaction();
+            try {
+                // The real work is here
+                Query q = session.createQuery("from Comment where idpublication = " + idPublication);
+                currentCommentList = (ArrayList<Comment>) q.list();
+
+                transaction.commit();
+
+            } catch (Exception ex) {
+                // Log the exception here
+                transaction.rollback();
+                throw ex;
+            }
+        } finally {
+            HibernateUtil.closeSession();
+            
+        }
+
+    }
+
+    public void changeCommentRating() {
+        final Session session = HibernateUtil.getSession();
+
+        try {
+            final Transaction transaction = session.beginTransaction();
+            try {
+                // The real work is here
+                Map<String, String> params
+                        = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+
+                int commentId = Integer.parseInt(params.get("commentid"));
+                String username = params.get("username");
+                int rating = Integer.parseInt(params.get("rating"));
+
+                System.out.println("barabolia 11111111111");
+                Comment comment = (Comment) session.get(Comment.class, commentId);
+                comment.setRating(comment.getRating() + rating);
+
+                User user = (User) session.get(User.class, username);
+                user.setReputation(user.getReputation() + rating);
+                session.update(comment);
+                session.update(user);
+                transaction.commit();
+                System.out.println("barabolia 22222222222222222222");
+                /*для обновления аджаксового */
+                fillComments(comment.getPublication().getIdpublication().toString());
+                // fillSelectedPosts(comment.getPublication().getTopicid().toString());
+            } catch (Exception ex) {
+                // Log the exception here
+                transaction.rollback();
+                throw ex;
+            }
+        } finally {
+            HibernateUtil.closeSession();
+            
+        }
+
+    }
 
     public ArrayList<Publication> getCurrentPublicationList() {
         return currentPublicationList;
     }
 
-    public Publication getPublicationToAdding() {
-        return publicationToAdding;
+    public Publication getSelectedPublication() {
+        return selectedPublication;
     }
 
-    public void setPublicationToAdding(Publication publicationToAdding) {
-        this.publicationToAdding = publicationToAdding;
+    public void setSelectedPublication(Publication selectedPublication) {
+        this.selectedPublication = selectedPublication;
     }
-  
-    
-    
-  
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public ArrayList<Comment> getCurrentCommentList() {
+        return currentCommentList;
+    }
+
+    public void setCurrentCommentList(ArrayList<Comment> currentCommentList) {
+        this.currentCommentList = currentCommentList;
+    }
+
 }

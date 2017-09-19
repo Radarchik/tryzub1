@@ -109,6 +109,8 @@
                                 <f:setPropertyActionListener target="#{postHelper.chosenTopic}" value="#{post.topic}" />
                             </p:commandButton>
 
+                            
+                            
                             <p:commandButton action="#{postHelper.changeRating()}" update="postRating reputation" icon="ui-icon-plus" title="Плюс за публікацію">
                                 <f:param name="postid" value="#{post.postid}" />
                                 <f:param name="username" value="#{post.user.username}" />

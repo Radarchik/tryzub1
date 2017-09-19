@@ -52,8 +52,8 @@ public class LoginView implements Serializable {
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         Map<String, Object> sessionMap = externalContext.getSessionMap();
         sessionMap.put("User", user);
-        System.out.println(request.isUserInRole("members"));
-        if (request.isUserInRole("member")) {
+        
+        if (request.isUserInRole("member")) {            
             return "/index?faces-redirect=true";
         } else {
             return "/forum";

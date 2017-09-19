@@ -11,22 +11,8 @@
     <h:body>
         <ui:composition>
 
-            <div class="logo">
-                <h:graphicImage library="images" name="volod.png" />
-            </div>
-
-
-
-            <div class="descr">
-                <h3>#{msg.welcome_title}</h3>
-            </div>
-
-            <div class="welcome">
-                <h:form>
-                    <h:commandLink action="#{loginView.logout}" value="Logout" />
-                </h:form>
-                <h3>#{msg.welcome}, <h:outputText value="#{loginView.authenticatedUser==null? msg.guest:loginView.authenticatedUser.username}"/></h3>
-                <p>Your user id is #{loginView.authenticatedUser.email}</p>
+            <div class="login">  
+                <ui:include src="/templates/login/login.xhtml" />
             </div>
 
 
@@ -39,9 +25,6 @@
                     </h:selectOneMenu>
                 </h:form>
             </div>
-
-            <h:link  value="Додати організацію" outcome="editorganization" />  <br/>  
-            <h:link  value="nova" outcome="nova" />
 
         </ui:composition>
 

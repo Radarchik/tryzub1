@@ -106,7 +106,8 @@ public class FileUploadHabitation implements Serializable {
         for (UploadedFile file : filesList) {
 
             /* getting filename with extension from path-fullname*/
-            String fileName = file.getFileName().replaceAll(".*[\\\\/]|\\.[^\\.]*$‌​", "").split("\\.")[0];
+            String fileName1 = file.getFileName().replaceAll(" ", "");
+            String fileName = fileName1.replaceAll(".*[\\\\/]|\\.[^\\.]*$‌​", "").split("\\.")[0];
             /*getContentType return String like image/jpeg  */
             String extention = file.getContentType().split("\\/")[1];
 

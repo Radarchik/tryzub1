@@ -15,7 +15,7 @@
             <column name="author" not-null="true" />
         </many-to-one>
         <property name="message" type="string">
-            <column name="message" length="1000" not-null="true" />
+            <column name="message" length="5000" not-null="true" />
         </property>
         <property name="date" type="timestamp">
             <column name="date" length="19" not-null="true" />

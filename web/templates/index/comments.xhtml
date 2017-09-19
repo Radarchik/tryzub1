@@ -1,0 +1,109 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition>
+            
+                <h:form  id="commentForm">
+
+                    <p:dataList value="#{publicationHelper.currentCommentList}" var="comment" type="definition"
+                                paginator="true" id="commentList" styleClass="#{param.id==null ? 'commentList1':'commentList'}"  itemStyleClass="#{(rowIndex mod 2) eq 0 ? 'commentRow1' : 'commentRow2'}" rowIndexVar="rowIndex"
+                                rows="15" paginatorAlwaysVisible="false"
+                                paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                emptyMessage="Коментарів ще немає" > 
+
+                        <div id="left_comment">
+                            <h:outputLink value="#{request.contextPath}/member.xhtml?id=#{comment.user.username}" target="_blank">
+                                <h:graphicImage  value="#{comment.user.avatar}" width="100" height="100"/>
+                                <!-- Path for graphicImage is defined in glassfish-web.xml --> 
+                            </h:outputLink>
+                        </div>
+
+                        <div id="right_comment">
+
+                            <div id="commentHeader">
+                                <strong><h:outputText value="#{comment.user.username} "/></strong>
+                                <i> 
+                                    <h:outputText value=" (репутація "/>
+                                    <h:outputText value="#{comment.user.reputation})" id="userReputation"/>
+                                </i>
+
+                                <div id="commentRating">
+                                <p:commandButton action="#{publicationHelper.changeCommentRating()}" update="commentRating userReputation" 
+                                                 icon="ui-icon-plus" title="Плюс за публікацію" style="width: 15px; height: 15px;">
+                                    <f:param name="commentid" value="#{comment.idcomment}" />
+                                    <f:param name="username" value="#{comment.user.username}" />
+                                    <f:param name="rating" value="1" />
+                                </p:commandButton>
+
+
+                                <h:outputText value=" #{comment.rating} " id="commentRating"/>
+
+
+
+                                <p:commandButton action="#{publicationHelper.changeCommentRating()}" update="commentRating userReputation" 
+                                                 icon="ui-icon-minus" title="Мінус за публікацію" style="width: 15px; height: 15px;">
+                                    <f:param name="commentid" value="#{comment.idcomment}" />
+                                    <f:param name="username" value="#{comment.user.username}" />
+                                    <f:param name="rating" value="-1" />
+                                </p:commandButton>
+                                </div>
+                            </div>
+
+
+
+                            <div id="commentDescr">                          
+                                <p ><h:outputText value="#{comment.message}" escape="false"/></p>
+                            </div>
+
+                            <div id="commentFoot">                            
+                                <h:outputText id="commentDate"  value="#{comment.date}" >
+                                    <f:convertDateTime pattern="dd.MM.yyyy HH:mm"/>
+                                </h:outputText>  
+                                <h:outputText value=" # Відповісти" styleClass="commentLinkAnswer"/>
+                            </div>
+
+                        </div>
+
+                    </p:dataList>
+
+
+
+
+
+
+                    <div id="#{param.id==null ? 'addreview1':'addreview'}">
+                        <p:outputLabel value="Додати коментар:" styleClass="edit-title" /><br/>
+                        <pe:ckEditor skin="moono-dark" id="editorPostId" widgetVar="editorPost" 
+                                     value="#{publicationHelper.message}" height="300" width="100%"
+                                     toolbar="[['Cut','Copy','Paste','-','Undo', 'Redo','-',
+                                     'Bold','Italic','Underline','Strike','Subscript','Superscript', 'NumberedList', 
+                                     'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'Smiley',
+                                     'SpecialChar', 'Maximize', 'TextColor', 'Link', 'Youtube', 'Iframe' ]]"/>
+
+
+
+
+                        <!-- button for add-->
+                        <p:commandButton id="button_saveOrg" value="Зберегти" 
+                                         title="Save" action="#{publicationHelper.addComment()}">
+                        </p:commandButton> 
+                    </div>
+
+
+                </h:form> 
+            
+        </ui:composition>
+
+    </h:body>
+</html>
+

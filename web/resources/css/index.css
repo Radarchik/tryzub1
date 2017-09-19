@@ -6,8 +6,8 @@
     height: 100%;
 
     background-image: url('../images/fond3.jpg');
-  /*   background-size: 100%;*/
-   /* background-repeat: no-repeat; */ 
+    /*   background-size: 100%;*/
+    /* background-repeat: no-repeat; */ 
     background-color: #068040;
 }
 
@@ -38,7 +38,7 @@
     align-items: center;
     top: 0px;
     left: 70%;
-   height: 110px;
+    height: 110px;
     width: 80px;
 }
 
@@ -75,7 +75,7 @@
     position: fixed;
     bottom:0%;
     right: 0%;
-     
+
 }
 #lesya{
     position: fixed;
@@ -111,29 +111,231 @@
     width:70% ;
     min-height: 200px;
     top: 222px;
-     box-sizing: border-box;
-   
-    
+    box-sizing: border-box;
+
+
 }
 #content{
-box-sizing: border-box;
+    box-sizing: border-box;
     left: 0%;
     top: 0px;
     width:100% ;
     background-color: #9cecff;
-   overflow:hidden;
+    overflow:hidden;
 
 }
 
-#footer{
+.ui-datalist{
+    border: 1px solid #bbb;
+    background: #fff;
+    border-bottom: 0;
+    box-shadow: 0 7px 0 -1px #ff0000, 4px 10px 2px 0 #bbb;
+    margin-top:  10px;
+    margin-bottom: 17px;
+    margin-left: 10px;
+    width: 70%;
+
+}
+
+.publRow1{
     
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.publRow2{
+    
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+
+.wrapperRow{
+    height: auto;
+   
+
+    position: relative;
+}
+
+
+
+
+.wrapperRow1{
+    height: auto;
+  
+
+    position: relative;
+}
+
+.publDate{
+    float:left;
+    font-weight: bold;
+    font-size:small;
+}
+
+#publName{
+    float:left;
+    width:100%;
+    height: auto;
+
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 15px;
+}
+
+
+
+#publAuthor{
+    float:right;
+    margin-right: 10px;
+    height: auto;
+    border: 1px solid #bbb;
+    width: auto;
+}
+
+
+
+
+
+
+#photo1{
+    float: left;
+
+
+   
+    padding-right: 10px;
+    padding-bottom: 10px;
+    height: 200px;
+    width: 200px;
+
+}
+
+
+
+
+.publText{
+    text-align: justify;
+line-height: 1.2;
+
+
+}
+
+.news {
+ text-align: justify;
+  width: 100%;
+  height: 350px;
+  overflow-y: hidden;
+  position: relative;
+  line-height: 1.2;
+}
+.news::after {
+  content: '';
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 70px;
+
+  background-image: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,255,255,1));
+}
+
+
+
+
+
+#publFooter{    
+    box-sizing: border-box;
+    height: auto;
+    width: 100%;
+    display: flex;
+    direction: row;
+    align-items: flex-end;
+    padding-bottom: 15px;
+}
+
+#publCommQuantity{
+    width: auto;
+    flex-grow: 1;
+}
+
+#publLinkFull{
+width: auto;
+height: auto;
+font-style: italic;
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+#dialogwrapper{
+    position: relative;
+    box-sizing: border-box;   /*хорошее свойство, позволяет оставить див в заданных рамках при padding*/
+    padding: 10px;
+    background-color: hotpink;
+}
+
+
+#dialog_namePubl{
+    position: absolute;
+    box-sizing: border-box;
+    top: 0px;
+    left: 0%;
+    width: 300px; 
+    background-color: activeborder;  
+}
+
+
+#dialog_itemphoto{
+    position: absolute;
+    box-sizing: border-box;
+    top: 60px;
+    left: 0%;
+    width: 300px; 
+    background-color: bisque;  
+}
+
+
+
+#dialog_publText{
+    position: absolute;
+    box-sizing: border-box;
+    top: 0px;
+    left: 350px;
+    height: 100%;    
+    font-size:medium;
+    background-color: chartreuse;
+}
+
+#dialog_buttons{
+    position: absolute;
+    box-sizing: border-box;
+    top: 450px;
+    left: 0%;
+    height: 40px;    
+    font-size:medium;
+    background-color: brown;
+}
+
+
+#footer{
+
     overflow:hidden;
 
     width:100% ;
     background-color: #339933;
-    
+
     height: 200px;
-    
+
 }
 
 .error{
@@ -142,36 +344,125 @@ box-sizing: border-box;
     font-size: 12px;
 }
 
-.login_div{
-
-
-}
-
 
 .login{
     position: fixed;
     align-items: center;
     top: 3px;
-    left: 83%;
-    width: 10%;
-    height: 10%;
+    right: 3px;
+    width: auto;
+    height: auto;
 }
 
-.login1{
-    background: #0f0f0f;
-    color: #dcdcdc;
-    font-family: 'ROBOTO Cn',sans-serif;
-    line-height: 20px;
-    font-weight: normal;
-    border: 1px solid #bdbdbd;
-    width: 175px;
-    box-shadow: 3px 3px 1px #aaa;
-    text-align: left;
-    font-size: 16px;
-    vertical-align: top;
-    padding-top: 7px;
-    padding-bottom: 0;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    cursor: pointer;
+
+.commentList{
+
+}
+
+/*hide div on main page*/
+.commentList1{
+    position: absolute;
+    top: -999px;
+    left: -999px;
+}
+
+
+.commentRow1{
+    position: relative;   /*сейчас вложенные дивы будут отсчитывать позицию от этого*/
+    box-sizing: border-box;   /*хорошее свойство, позволяет оставить див в заданных рамках при padding*/
+    margin: 10px;
+    margin-bottom: 20px;
+    height: auto;
+    display: flex;
+    flex-direction:row;
+    background-color: springgreen;
+}
+
+.commentRow2{
+    position: relative;   /*сейчас вложенные дивы будут отсчитывать позицию от этого*/
+    box-sizing: border-box;   /*хорошее свойство, позволяет оставить див в заданных рамках при padding*/
+    margin: 10px;
+    margin-bottom: 20px;
+    height: auto;
+    display: flex;
+    flex-direction:row;
+    background-color: burlywood;
+}
+
+
+
+#left_comment{
+
+    box-sizing: border-box;
+    top: 0px;
+    left: 0%;
+
+    width: 110px;    
+}
+
+#right_comment{
+    display: flex;
+    flex-direction:column;
+
+    width: 85%;
+}
+
+#commentHeader{
+    font-size:small;
+    box-sizing: border-box;
+
+    text-align:left;
+}
+
+#commentRating{
+    position: absolute;
+    top:0px;
+    right: 5px;
+
+}
+
+
+#commentDescr{
+
+    box-sizing: border-box;
+
+    font-size:small;
+    flex-grow: 1;
+}
+
+
+#commentFoot{
+    box-sizing: border-box;
+    font-size:x-small;
+
+}
+
+.commentLinkAnswer{
+    position: absolute;
+    right: 5px;
+
+}
+
+
+
+
+
+
+#addreview{
+    border: 1px solid #bbb;
+    background: #fff;
+    border-bottom: 0;
+    box-shadow: 0 7px 0 -1px #ff0000, 4px 10px 2px 0 #bbb;
+    margin-top:  10px;
+    margin-bottom: 17px;
+    margin-left: 10px;
+    margin-right: 200px;
+
+}
+
+/*hide div on main page*/
+#addreview1{ 
+    position: absolute;
+    top: -999px;
+    left: -999px;
 }

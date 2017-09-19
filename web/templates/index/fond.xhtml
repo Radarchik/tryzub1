@@ -19,44 +19,10 @@
                 <div id="community_uk">  Ukrainian community in Great Britain</div>
 
 
-                <div class="login_div">
 
-                    <h:link value="Create new account" outcome="registration" />
-
-                </div>
-
-
-
-
-                <h:form>
-                    <h:commandLink action="#{loginView.logout}" value="Logout" />
-                </h:form>
-                <h3>
-                    #{msg.welcome}, 
-                    <h:outputLink rendered="#{loginView.authenticatedUser!=null}" value="#{request.contextPath}/member.xhtml?id=#{loginView.authenticatedUser.username}" target="_self">
-                        <h:outputText value="#{loginView.authenticatedUser==null? msg.guest:loginView.authenticatedUser.username}"/>
-                    </h:outputLink>
-                </h3>
-                <p>Your user id is #{loginView.authenticatedUser.email}</p>
 
                 <div class="login">  
-                    <!-- Авторизація -->
-                    <span><i>&nbsp;</i>#{msg.authorization}</span>
-                    <h:form>
-                        <h3>Please Sign In</h3>
-                        <h:panelGrid columns="2">
-                            <h:outputLabel for="login">Login:</h:outputLabel>
-                            <h:inputText id="login" value="#{loginView.username}" required="true" requiredMessage="Please enter your login"></h:inputText>
-
-                            <h:outputLabel for="password">Password:</h:outputLabel>
-                            <h:inputSecret id="password" value="#{loginView.password}" required="true" requiredMessage="Please enter password"></h:inputSecret>
-
-                            <h:commandButton action="#{loginView.login}" value="Login"></h:commandButton>
-                        </h:panelGrid>
-                    </h:form>
-
-                    <a href="/user/password">Восстановить пароль</a>&nbsp;                    
-                    <h:outputLink value="registration.xhtml">Регистрация</h:outputLink>
+                    <ui:include src="/templates/login/login.xhtml" />
                 </div>
 
 

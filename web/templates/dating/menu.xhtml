@@ -45,15 +45,13 @@
                 <hr></hr>
 
                 <br />
-                <p:commandButton value="Додати оголошення"  update="" oncomplete="PF('dlgHabit').show();">
-                    <f:actionListener binding="#{fileUploadHabitation.setIsshowed(true)}" /> 
-                    <f:actionListener binding="#{fileUploadHabitation.setNewFilesList()}" />
-                    <f:actionListener binding="#{fileUploadHabitation.setImageContent(null)}" />
-                     </p:commandButton>
+                <p:commandButton value="Додати оголошення"  actionListener="#{datingHelper.setNewDating()}" oncomplete="PF('dlgDating').show();"/>
+
+                    
 
 
             </h:form>
-            <ui:include src="/templates/habitation/addhabitation.xhtml" />
+            <ui:include src="/templates/dating/adddating.xhtml" />
         </ui:composition>
     </h:body>
 </html>

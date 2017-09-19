@@ -47,8 +47,8 @@ public final class DatingHelper implements Serializable {
 
     public DatingHelper() {
 
-        //делаем это (заполняем лист) при загрузке страницы
-        //fillOrganizationsListAll();
+       
+    
     }
 
     /*creating new HAbitation for adding to DB*/

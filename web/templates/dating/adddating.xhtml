@@ -11,7 +11,9 @@
     <h:body>
 
 
-        <p:dialog id="dlgHabit" dynamic="true" position="center center" width="1100" height="500"  widgetVar="dlgHabit" modal="true" resizable="false" closable="false"> 
+        <p:dialog id="dlgDating" dynamic="true" position="center center" width="1100" height="500"  
+                  widgetVar="dlgDating" modal="true" resizable="false" closable="false"
+                  appendTo="@(body)"> 
 
             <div id="dialogwrapper">
 
@@ -99,12 +101,12 @@
 
 
                         <!-- button for add-->
-                        <p:commandButton id="button_saveHab" value="Save habitation" process="@form" update=":habitForm:habitList" 
-                                         title="Save" onclick="dlgHabit.hide()" actionListener="#{fileUploadHabitation.upload}" action="#{habitationHelper.addHabitation()}">
+                        <p:commandButton id="button_saveHab" value="Save habitation" process="@form" update=":datingForm:datingList" 
+                                         title="Save" onclick="dlgDating.hide()" actionListener="#{fileUploadHabitation.upload}" action="#{habitationHelper.addHabitation()}">
                         </p:commandButton> 
 
                         <!-- button for cancel-->
-                        <p:commandButton onclick="dlgHabit.hide()" icon="ui-icon-close"  value="#{msg.cancel}" immediate="true" global="false">
+                        <p:commandButton onclick="dlgDating.hide()" icon="ui-icon-close"  value="#{msg.cancel}" immediate="true" global="false">
                             <f:actionListener binding="#{fileUploadHabitation.setImageContent(null)}" />
                             <f:actionListener binding="#{fileUploadHabitationt.setIsshowed(true)}" />
                         </p:commandButton> 

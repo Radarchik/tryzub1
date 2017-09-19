@@ -9,15 +9,14 @@
         <h:link rel="shortcut icon" value="resources/images/favicon.png" type="image/png"/>
     </h:head>
     <h:body>
-        <div class="container">
-
-
+       
             <div id ="menu">
                 <ui:insert name="menu">
                     <ui:include src="/templates/organization/menu.xhtml"/>
                 </ui:insert>                 
             </div>
 
+        <div id="right_wrapper">
             <div id ="header">
                 <ui:insert name="header">
                     <ui:include src="/templates/organization/header.xhtml"/>
@@ -38,8 +37,9 @@
                     </ui:insert>                 
                 </div>
             </div>
+            
+            </div>
 
-        </div>
     </h:body>
 </html>
 

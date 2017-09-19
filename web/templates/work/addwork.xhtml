@@ -11,7 +11,9 @@
     <h:body>
 
 
-        <p:dialog id="dlgWork" dynamic="true" position="center center" width="1100" height="500"  widgetVar="dlgWork" modal="true" resizable="false" closable="false"> 
+        <p:dialog id="dlgWork" dynamic="true" position="center center" width="1100" height="500"  
+                  widgetVar="dlgWork" modal="true" resizable="false" closable="false"
+                  appendTo="@(body)"> 
 
             <div id="dialogwrapper">
 
@@ -20,9 +22,6 @@
 
                 <h:form id="descrForm">
                     <div id="dialog_itemsections">
-
-
-
 
                         <p>
                             <p:outputLabel value="Адреса:" styleClass="edit-title"/><br/>
@@ -52,7 +51,7 @@
 
 
                         <!-- button for add-->
-                        <p:commandButton id="button_saveHab" value="Save work" process="@form" update=":habitForm:habitList" 
+                        <p:commandButton id="button_saveWork" value="Save work" process="@form" update=":workForm:workList" 
                                          title="Save" onclick="dlgWork.hide()" action="#{workHelper.addWork()}">
                         </p:commandButton> 
 

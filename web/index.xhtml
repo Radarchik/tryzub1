@@ -9,6 +9,8 @@
         <title>Тризуб</title>
         <h:outputStylesheet  name="css/index.css" />
         <h:link rel="shortcut icon" value="resources/images/favicon.png" type="image/png"/>
+
+
         <!-- <h:outputScript library="js" name="library.js" target="head"/> -->
     </h:head>
     <h:body>
@@ -17,15 +19,17 @@
 
             <ui:define name="content"> 
                 <f:metadata>
-                    <!-- При загрузке стр. инициализ.весь список -->
-                    <f:viewAction action="#{publicationHelper.fillPublicationsListAll()}" />
+                    <!-- При загрузке стр. инициализ.весь список или выбранный по id. onPostback - данные загружаются заново при возврате на стр.-->
+                    <f:viewAction action="#{publicationHelper.fillPublicationsListAll()}" if="#{param.id==null}" onPostback="true"/>
+                    <f:viewAction action="#{publicationHelper.setChozenPublication(param.id)}" if="#{param.id!=null}" onPostback="true"/>
                 </f:metadata>
 
                 <div id="buttons">
                     <h:outputLink value="">Дошка</h:outputLink>&nbsp;
                     <h:outputLink value="work.xhtml">Робота для українців</h:outputLink>&nbsp;
-                    <h:outputLink value="ukrbiz.xhtml">Українські заклади (товари, послуги та громадські організації)</h:outputLink> &nbsp;
+                    <h:outputLink value="ukrbiz.xhtml">Укрбіз (товари, послуги та громадські організації)</h:outputLink> &nbsp;
                     <h:outputLink value="habitation.xhtml">Житло</h:outputLink> &nbsp;
+                    <h:outputLink value="">Івенти</h:outputLink> &nbsp;
                     <h:outputLink value="dating1.jsp">Оголошення </h:outputLink> &nbsp;
                     <h:outputLink value="dating.xhtml">
                         #{msg.dating}                    
@@ -37,45 +41,75 @@
                         Форум
                     </h:outputLink>
                 </div>
-                <p:commandButton value="Додати оголошення"  update="" oncomplete="PF('dlgPublication').show();">
+                <p:commandButton value="Додати публікацію"  action="#{publicationHelper.initNewPublication()}" oncomplete="PF('dlgPublication').show();">
                 </p:commandButton>
+
+
                 <h:form id="publForm">
                     <p:dataList value="#{publicationHelper.currentPublicationList}" var="publ" type="definition"
-                                paginator="true" id="publList" itemStyleClass="publrowOrg"
-                                rows="3" paginatorAlwaysVisible="false"
+                                paginator="true" id="publList" itemStyleClass="#{(rowIndex mod 2) eq 0 ? 'publRow1' : 'publRow2'}" 
+                                rows="5" paginatorAlwaysVisible="false" style="background-color: black;"
                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-                                rowsPerPageTemplate="3,10,15"> 
+                                rowsPerPageTemplate="3,10,15" rowIndexVar="rowIndex" > 
+                        <div class="#{param.id==null ? 'wrapperRow':'wrapperRow1'}">
+
+                            <div id="publName">
+                                <h:outputText id="publDate"  value="#{publ.date}" styleClass="publDate">
+                                    <f:convertDateTime pattern="dd.MM.yyyy HH:mm"/>
+                                </h:outputText>  
+                                <div id="publAuthor">
+                                    <h:graphicImage  value="#{publ.user.avatar}" width="35" height="35" />
+                                    <h:outputText value="#{publ.user.username}"/>
+                                </div>
+
+                                <br/>
+                                <h:outputLink value="#{request.contextPath}?id=#{publ.idpublication}" >  
+                                    <strong><h:outputText value="#{publ.name}"/></strong>
+
+                                </h:outputLink>                                
+
+                            </div>
 
 
-                        <div id="itemname">
-                            <strong><h:outputText value="#{publ.name}"/></strong>
+
+
+
+
+
+                            <div class="#{param.id==null ? 'news':'publText'}" >
+
+                                <div id="photo1">
+                                    <h:graphicImage  value="#{publ.photo}" width="200" height="200" rendered="#{publ.photo!=null}"/>
+                                </div>
+
+                                <h:outputText value="#{publ.text}" escape="false" />
+
+                            </div>
+
                         </div>
 
 
 
+                        <div id="publFooter">
+                            <div id="publCommQuantity">
+                                <h:outputLink value="#{request.contextPath}?id=#{publ.idpublication}" rendered="#{param.id==null}" > 
+                                    <h:graphicImage value="resources/images/comments-icon.png" />
+                                    <h:outputText value=" #{publ.comments.size()}"/>
+                                </h:outputLink>
+                            </div>
 
-                        <div id="itemsections">
-
-                            <p><strong>Дата</strong> #{publ.date}</p>
-                            <p><strong>Контакти:</strong> #{publ.user.username}</p>
-
-
-                        </div>
-
-
-
-
-                        <div id="itemdescr">
-                            <p><strong>#{msg.descr}</strong></p>
-                            <p><h:outputText value="#{publ.text}" escape="false"/></p>
-
-
+                            <div id="publLinkFull">
+                                <h:outputLink value="#{request.contextPath}?id=#{publ.idpublication}" rendered="#{param.id==null}" >                                         
+                                    <h:outputText value="Детальніше" style="color:blue"/>
+                                </h:outputLink>                               
+                            </div>
 
                         </div>
 
                     </p:dataList>
-                </h:form>
 
+                </h:form>
+                <ui:include src="/templates/index/comments.xhtml" />
 
                 <ui:include src="/templates/index/addpublication.xhtml" />
             </ui:define>

@@ -51,7 +51,7 @@ public class FileUploadView implements Serializable {
     public OrganizationHelper getOrganizationHelper() {
         return organizationHelper;
     }
-
+    
     public void setOrganizationHelper(OrganizationHelper organizationHelper) {
         this.organizationHelper = organizationHelper;
     }

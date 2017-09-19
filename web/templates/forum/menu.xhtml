@@ -97,21 +97,22 @@
                     <p><h:outputText  value="Шановний гість, "  />
                         <h:outputText value="дана функція доступна лише зареєстрованим користувачам"  /></p>
 
-                    <h:outputText value="Ввійти:"  />
                     <h:form>
+                  <h3><h:outputText value="Ввійти:"  /></h3>
+                    <h:panelGrid columns="2">
                         <h:outputLabel for="login">Login:</h:outputLabel>
                         <h:inputText id="login" value="#{loginView.username}" required="true" requiredMessage="Please enter your login"></h:inputText>
-                        <br/> 
+
                         <h:outputLabel for="password">Password:</h:outputLabel>
                         <h:inputSecret id="password" value="#{loginView.password}" required="true" requiredMessage="Please enter password"></h:inputSecret>
 
-                        <h:commandButton action="#{loginView.login}" value="Login"></h:commandButton>
-
-
-                        <p:button value="Зареєструватися" outcome="registration.xhtml" />
-
+                        <p:commandButton action="#{loginView.login}" value="Login" onclick="PF('dlgInviteRegistr').hide();"/>
                         <p:commandButton value="Відміна" type="button" onclick="PF('dlgInviteRegistr').hide();" icon="ui-icon-close" />
+                    </h:panelGrid>
 
+
+                    <p><h:link value="Відновити пароль" /></p>
+                    <p><h:link value="Зареєструватися" outcome="registration.xhtml" /></p>
 
                     </h:form>
                 </div>

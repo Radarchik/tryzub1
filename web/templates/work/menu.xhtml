@@ -30,14 +30,13 @@
                     <f:ajax event="click" render=":workForm" listener="#{workHelper.fillWorksByType()}"/>         
                 </h:commandLink> 
                 <br />
-                    
+
 
 
                 <hr></hr>
 
                 <br />
-                <p:commandButton value="Додати оголошення"  update="" oncomplete="PF('dlgWork').show();">
-                     </p:commandButton>
+                <p:commandButton value="Додати оголошення"  actionListener="#{workHelper.setNewWork()}" oncomplete="PF('dlgWork').show();"/>
 
 
             </h:form>

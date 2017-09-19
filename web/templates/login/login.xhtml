@@ -1,0 +1,60 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:o="http://omnifaces.org/ui">
+    <h:head>
+        <title>Добавлення або редагування організації</title>
+    </h:head>
+    <h:body>
+
+        <h:form> 
+            <h:panelGroup id="padding" layout="block">
+                #{msg.welcome}, 
+                <h:outputLink rendered="#{loginView.authenticatedUser!=null}" value="#{request.contextPath}/member.xhtml?id=#{loginView.authenticatedUser.username}" target="_self">
+                    <h:outputText value="#{loginView.authenticatedUser.username}"/>
+                </h:outputLink>
+                <h:outputText value="#{msg.guest}" rendered="#{loginView.authenticatedUser==null}"/>
+            </h:panelGroup>
+            <p:commandLink action="#{loginView.logout}" value="Logout" rendered="#{loginView.authenticatedUser!=null}"/>
+            <p:commandLink value="АВТОРИЗАЦІЯ"  rendered="#{loginView.authenticatedUser==null}" onclick="PF('dlgLogin').show();"/>
+            <h3>
+
+            </h3>
+
+        </h:form>
+
+        <p:dialog id="dlgLogin" position="center center" width="400" height="300"  
+                  widgetVar="dlgLogin" modal="true" resizable="false" closable="false"
+                  appendTo="@(body)"> 
+
+            <div id="dialogwrapper1">
+
+                <h:form>
+                    <h3><h:outputText value="Ввійти:"  /></h3>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel for="login">Login:</h:outputLabel>
+                        <h:inputText id="login" value="#{loginView.username}" required="true" requiredMessage="Please enter your login"></h:inputText>
+
+                        <h:outputLabel for="password">Password:</h:outputLabel>
+                        <h:inputSecret id="password" value="#{loginView.password}" required="true" requiredMessage="Please enter password"></h:inputSecret>
+
+                        <p:commandButton action="#{loginView.login}" value="Login" onclick="PF('dlgLogin').hide();"/>
+                        <p:commandButton value="Відміна" type="button" onclick="PF('dlgLogin').hide();" icon="ui-icon-close" />
+                    </h:panelGrid>
+
+
+                    <p><h:link value="Відновити пароль" /></p>
+                    <p><h:link value="Зареєструватися" outcome="registration.xhtml" /></p>
+
+                </h:form>
+
+            </div>
+        </p:dialog>
+
+
+    </h:body>
+</html>
+

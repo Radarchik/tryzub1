@@ -18,13 +18,15 @@
                 <h:graphicImage library="images" name="logo.png" height="200"/>
             </div>
 
+            <div class="login">  
+                <ui:include src="/templates/login/login.xhtml" />
+            </div>
 
             <div class="welcome">
-                <h:form>
-                    <h:commandLink action="#{loginView.logout}" value="Logout" />
-                </h:form>
-                <h3><h:outputText value="Вітаємо на форумі Тризубу, "/> <h:outputText value="#{loginView.authenticatedUser==null? msg.guest:loginView.authenticatedUser.username}"/></h3>
-                <p>Your user id is #{loginView.authenticatedUser.email}</p>
+
+                <h3><h:outputText value="Вітаємо на форумі Тризубу, "/>
+                    <h:outputText value="#{loginView.authenticatedUser==null? msg.guest:loginView.authenticatedUser.username}"/></h3>
+               
             </div>
 
 

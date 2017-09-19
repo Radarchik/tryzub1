@@ -8,6 +8,12 @@ and open the template in the editor.
     Author     : tszin
 */
 
+html, body {
+    height: 100%;
+    margin: 0;
+
+}
+
 
 #menu{
     position: fixed;
@@ -18,36 +24,48 @@ and open the template in the editor.
     background-color: brown;
 }
 
-#header{
-    position: relative;
-    top:0%;
-    left: 20%;
+#right_wrapper{
     width: 80%;
-    height: 25%;
+    height: auto;
+    outline: 1px solid;
+    position: absolute;
+    right: 0;
+    display: flex;
+    background-color: blueviolet;
+    /* Direction of the items, can be row or column */
+    flex-direction: column;
+
+}
+
+#header{
+    height: 100px;
     background-color: green;
-    display: block;
 
 }
 
 #content{
-    position: relative;
-    top:25%;
-    left: 20%;
-    width: 80%;
-    display: block;
+   
 }
 
 #footer{
-    position: relative;  
-    left: 20%;
-    width: 80%;
-    
-    display: block;
+    height: 900px;
     background-color: skyblue;
 }
+
 
 
 .selectedLink{
     color: red;
     background: #e9f6fc;
+}
+
+
+
+.login{
+    position: absolute;
+    align-items: center;
+    top: 3px;
+    right: 3px;
+ width: auto;
+    height: auto;
 }

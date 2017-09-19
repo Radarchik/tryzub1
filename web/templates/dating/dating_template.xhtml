@@ -8,7 +8,7 @@
         <h:outputStylesheet library="css" name="dating.css"  />
     </h:head>
     <h:body>
-        <div class="container">
+        
 
 
             <div id ="menu">
@@ -17,28 +17,31 @@
                 </ui:insert>                 
             </div>
 
-            <div id ="header">
-                <ui:insert name="header">
-                    <ui:include src="/templates/dating/header.xhtml"/>
-                </ui:insert>                 
+            <div id="right_wrapper">
+
+                <div id ="header">
+                    <ui:insert name="header">
+                        <ui:include src="/templates/dating/header.xhtml"/>
+                    </ui:insert>                 
+                </div>
+
+
+                <div id ="content">
+                    <ui:insert name="content">
+                        <ui:include src="/templates/dating/content.xhtml"/>
+                    </ui:insert>    
+                </div>
+
+
+                <div id ="footer">
+                    <ui:insert name="footer">
+                        <ui:include src="/templates/dating/footer.xhtml"/>
+                    </ui:insert>                 
+                </div>
+
             </div>
 
-
-            <div id ="content">
-                <ui:insert name="content">
-                    <ui:include src="/templates/dating/content.xhtml"/>
-                </ui:insert>    
-            </div>
-
-
-            <div id ="footer">
-                <ui:insert name="footer">
-                    <ui:include src="/templates/dating/footer.xhtml"/>
-                </ui:insert>                 
-            </div>
-
-
-        </div>
+       
     </h:body>
 </html>
 

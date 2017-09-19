@@ -8,15 +8,14 @@
         <h:outputStylesheet library="css" name="work.css"  />
     </h:head>
     <h:body>
-        <div class="container">
-
-
+        
             <div id ="menu">
                 <ui:insert name="menu">
                     <ui:include src="/templates/work/menu.xhtml"/>
                 </ui:insert>                 
             </div>
 
+        <div id="right_wrapper">
             <div id ="header">
                 <ui:insert name="header">
                     <ui:include src="/templates/work/header.xhtml"/>
@@ -36,9 +35,8 @@
                     <ui:include src="/templates/work/footer.xhtml"/>
                 </ui:insert>                 
             </div>
-
-
         </div>
+
     </h:body>
 </html>
 
