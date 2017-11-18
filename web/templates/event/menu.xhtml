@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:composition>
+
+            <h:form>
+                <h:link  value="#{msg.main}" outcome="index" />
+
+                <h2><h:commandLink value ="Весь каталог">
+                        <f:ajax event="click" render=":eventForm:eventList" listener="#{eventHelper.fillEventListAll()}"/>
+                    </h:commandLink></h2>
+                <hr></hr>
+
+
+            
+            
+            
+                <p:commandButton value="Додати подію"  actionListener="#{eventHelper.initNewEvent()}" oncomplete="PF('dlgEvent').show();" rendered="#{loginView.authenticatedUser!=null}"/>
+
+                
+                
+                
+                 <!-- fake button for publication -->
+          
+                <p:commandButton value="Додати подію"  rendered="#{loginView.authenticatedUser==null}" 
+                                 onclick="PF('dlgInviteRegistr').show();"/>
+
+
+            </h:form>
+            <ui:include src="/templates/event/addevent.xhtml" />
+            
+            
+            
+            
+            <p:dialog id="dlgInviteRegistr" position="center center" width="400" height="300"  
+                      widgetVar="dlgInviteRegistr" modal="true" resizable="false" closable="false"
+                      appendTo="@(body)"> 
+                <div id="dialogwrapper1">
+
+                    <p><h:outputText  value="Шановний гість, "  />
+                        <h:outputText value="дана функція доступна лише зареєстрованим користувачам"  /></p>
+
+                    <h:form>
+                        <h:outputText value="Ввійти:"  style="font-style: oblique"/>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel for="login">Login:</h:outputLabel>
+                        <h:inputText id="login" value="#{loginView.username}" required="true" requiredMessage="Please enter your login"></h:inputText>
+
+                        <h:outputLabel for="password">Password:</h:outputLabel>
+                        <h:inputSecret id="password" value="#{loginView.password}" required="true" requiredMessage="Please enter password"></h:inputSecret>
+
+                        <p:commandButton action="#{loginView.login}" value="Login" 
+                                         onclick="PF('dlgInviteRegistr').hide();" />
+                        <p:commandButton value="Відміна" type="button" onclick="PF('dlgInviteRegistr').hide();" icon="ui-icon-close" />
+                    </h:panelGrid>
+
+
+                    <p><h:link value="Відновити пароль" /></p>
+                    <p><h:link value="Зареєструватися" outcome="registration.xhtml" /></p>
+
+                    </h:form>
+                </div>
+            </p:dialog>
+
+        </ui:composition>
+    </h:body>
+</html>
+

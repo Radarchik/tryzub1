@@ -25,14 +25,14 @@
                 </f:metadata>
 
                 <div id="buttons">
-                    <h:outputLink value="">Дошка</h:outputLink>&nbsp;
+                    <h:outputLink value="viktoryna.xhtml">Вікторина</h:outputLink>&nbsp;
                     <h:outputLink value="work.xhtml">Робота для українців</h:outputLink>&nbsp;
                     <h:outputLink value="ukrbiz.xhtml">Укрбіз (товари, послуги та громадські організації)</h:outputLink> &nbsp;
                     <h:outputLink value="habitation.xhtml">Житло</h:outputLink> &nbsp;
-                    <h:outputLink value="">Івенти</h:outputLink> &nbsp;
+                    <h:outputLink value="event.xhtml">Івенти</h:outputLink> &nbsp;
                     <h:outputLink value="dating1.jsp">Оголошення </h:outputLink> &nbsp;
                     <h:outputLink value="dating.xhtml">
-                        #{msg.dating}                    
+                        Знайомства                  
                     </h:outputLink>
 
                     &nbsp;
@@ -46,13 +46,15 @@
 
 
                 <h:form id="publForm">
+                    <a name="publicStart" /> <!-- anchor -->
+                    
                     <p:dataList value="#{publicationHelper.currentPublicationList}" var="publ" type="definition"
                                 paginator="true" id="publList" itemStyleClass="#{(rowIndex mod 2) eq 0 ? 'publRow1' : 'publRow2'}" 
                                 rows="5" paginatorAlwaysVisible="false" style="background-color: black;"
                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                 rowsPerPageTemplate="3,10,15" rowIndexVar="rowIndex" > 
-                        <div class="#{param.id==null ? 'wrapperRow':'wrapperRow1'}">
-
+                        <div class="#{param.id==null ?((rowIndex mod 2) eq 0 ? 'wrapperRow':'wrapperRow1'):'wrapperRow2'}">
+                           
                             <div id="publName">
                                 <h:outputText id="publDate"  value="#{publ.date}" styleClass="publDate">
                                     <f:convertDateTime pattern="dd.MM.yyyy HH:mm"/>
@@ -92,14 +94,14 @@
 
                         <div id="publFooter">
                             <div id="publCommQuantity">
-                                <h:outputLink value="#{request.contextPath}?id=#{publ.idpublication}" rendered="#{param.id==null}" > 
+                                <h:outputLink value="#{request.contextPath}?id=#{publ.idpublication}#comments" rendered="#{param.id==null}" > 
                                     <h:graphicImage value="resources/images/comments-icon.png" />
                                     <h:outputText value=" #{publ.comments.size()}"/>
                                 </h:outputLink>
                             </div>
 
                             <div id="publLinkFull">
-                                <h:outputLink value="#{request.contextPath}?id=#{publ.idpublication}" rendered="#{param.id==null}" >                                         
+                                <h:outputLink value="#{request.contextPath}?id=#{publ.idpublication}#publicStart" rendered="#{param.id==null}" >                                         
                                     <h:outputText value="Детальніше" style="color:blue"/>
                                 </h:outputLink>                               
                             </div>

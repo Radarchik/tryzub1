@@ -3,24 +3,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-
+      xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
         <ui:composition>
+            <p:dataTable var="car" value="#{carBean.cars}">
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="Model" />
+                    </f:facet>
+                    <h:outputText value="#{car.model}" />
+                </p:column>
+                //more columns
+            </p:dataTable>
 
-
-            <div class="descr">
-                <h1>FOOTER</h1>
-            </div>
-
-
-        
-
-
-            <h:outputText value="Developer: Taras Sinyovich"/>
 
 
         </ui:composition>

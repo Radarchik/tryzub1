@@ -18,13 +18,22 @@
             <column name="type" not-null="true" />
         </property>
         <property name="contact" type="string">
-            <column name="contact" length="100" not-null="true" />
+            <column name="contact" length="300" not-null="true" />
         </property>
         <property name="address" type="string">
             <column name="address" length="100" not-null="true" />
         </property>
         <property name="description" type="string">
             <column name="description" length="2000" not-null="true" />
+        </property>
+        <property name="name" type="string">
+            <column name="name" length="100" />
+        </property>
+        <property name="salary" type="java.lang.Float">
+            <column name="salary" precision="3" scale="1" />
+        </property>
+        <property name="workshortname" type="string">
+            <column name="workshortname" length="100" />
         </property>
     </class>
 </hibernate-mapping>

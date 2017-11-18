@@ -15,10 +15,11 @@ import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import org.primefaces.context.RequestContext;
 
 import uk.tryzub.entity.User;
 
-@ManagedBean (eager = true)
+@ManagedBean(eager = true)
 @SessionScoped
 public class LoginView implements Serializable {
 
@@ -37,7 +38,7 @@ public class LoginView implements Serializable {
     public String login() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        
+
         try {
             request.login(username, password);
         } catch (ServletException e) {
@@ -48,15 +49,22 @@ public class LoginView implements Serializable {
         Principal principal = request.getUserPrincipal();
         this.user = userEJB.findUserByName(principal.getName());
         log.info("Authentication done for user: " + principal.getName());
-        
+
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         Map<String, Object> sessionMap = externalContext.getSessionMap();
         sessionMap.put("User", user);
-        
-        if (request.isUserInRole("member")) {            
-            return "/index?faces-redirect=true";
+
+        if (request.isUserInRole("member")) {
+          //  RequestContext context1 = RequestContext.getCurrentInstance();
+          //  context1.execute("PF('dlgWork').show();");
+          RequestContext.getCurrentInstance().update("formLogin");
+            return "";
+        } else if (request.isUserInRole("moderator")) {
+          //  RequestContext context1 = RequestContext.getCurrentInstance();
+          //  context1.execute("PF('dlgWork').show();");
+            return "/moderka/moderatorka?faces-redirect=true";
         } else {
-            return "/forum";
+            return "/forum"; // потом перенаправлять соотв на страницу админа и модератора
         }
     }
 

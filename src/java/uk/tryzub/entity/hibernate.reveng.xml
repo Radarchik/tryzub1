@@ -40,19 +40,19 @@ made subject to such option by the copyright holder.
 Contributor(s):
 -->
 <hibernate-reverse-engineering>
-    <schema-selection match-catalog="tryzub"/>
-    <table-filter match-name="post"/>
-    <table-filter match-name="user"/>
-    <table-filter match-name="dating"/>
-    <table-filter match-name="topic"/>
-    <table-filter match-name="review"/>
-    <table-filter match-name="organization"/>
-    <table-filter match-name="section"/>
-    <table-filter match-name="groupofuser"/>
-    <table-filter match-name="groupoftopic"/>
-    <table-filter match-name="habitation"/>
-    <table-filter match-name="work"/>
-    <table-filter match-name="publication"/>
-    <table-filter match-name="comment"/>
-    <table-filter match-name="event"/>
+  <schema-selection match-catalog="tryzub"/>
+  <table-filter match-name="organization"/>
+  <table-filter match-name="review"/>
+  <table-filter match-name="dating"/>
+  <table-filter match-name="user"/>
+  <table-filter match-name="post"/>
+  <table-filter match-name="topic"/>
+  <table-filter match-name="section"/>
+  <table-filter match-name="groupofuser"/>
+  <table-filter match-name="groupoftopic"/>
+  <table-filter match-name="habitation"/>
+  <table-filter match-name="work"/>
+  <table-filter match-name="publication"/>
+  <table-filter match-name="comment"/>
+  <table-filter match-name="event"/>
 </hibernate-reverse-engineering>

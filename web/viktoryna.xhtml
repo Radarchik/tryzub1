@@ -1,0 +1,199 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:o="http://omnifaces.org/ui"
+      xmlns:pe="http://primefaces.org/ui/extensions">
+    <h:head>
+        <title>Вікторина</title>
+        <h:outputStylesheet  name="css/viktoryna.css" />
+    </h:head>
+
+    <h:body>
+
+        <div class="login">  
+            <ui:include src="/templates/login/login.xhtml" />
+        </div>
+
+        <h:link  value="#{msg.main}" outcome="/index.xhtml" />
+
+        <p:clock pattern="HH:mm:ss dd.MM.yyyy" mode="server" />
+        <h2><h:outputText value="Вікторина"/></h2>
+
+
+
+  <h:form id="formTakePart">
+        <h4><h:outputText value="Йде реєстрація учасників... Початок гри - " rendered="#{viktorynaHelper.participants != null}"/>
+            <h:outputText id="authorDateReg"  value="#{viktorynaHelper.startingDate}" rendered="#{viktorynaHelper.participants != null}">
+                <f:convertDateTime pattern="dd.MM.yyyy  HH:mm"/>
+            </h:outputText> 
+        </h4>
+
+
+      
+            <p:commandLink value="Взяти участь у вікторині" id="commandLink1"
+                           rendered="#{loginView.authenticatedUser!=null and !viktorynaHelper.participants.contains(loginView.authenticatedUser) and viktorynaHelper.participants != null}"
+                           action="#{viktorynaHelper.register(loginView.authenticatedUser)}"
+                           update="participantsForm:participantsList formTakePart"/>
+
+
+            <!--fake link for registration -->        
+            <p:commandLink value="Взяти участь у вікторині" 
+                           onclick="PF('dlgInviteRegistr').show();"
+                           rendered="#{loginView.authenticatedUser==null and viktorynaHelper.participants != null}"/>
+
+            <h:outputText id ="outputText1" value="Ви зареєстровані для участі у вікторині Тризубу" rendered="#{viktorynaHelper.participants.contains(loginView.authenticatedUser)}"/>
+        </h:form>
+
+
+
+        <p:dialog id="dlgInviteRegistr" position="center center" width="400" height="300"  
+                  widgetVar="dlgInviteRegistr" modal="true" resizable="false" closable="false"
+                  appendTo="@(body)"> 
+            <div id="dialogwrapper1">
+
+                <p><h:outputText  value="Шановний гість, "  />
+                    <h:outputText value="дана функція доступна лише зареєстрованим користувачам"  /></p>
+
+                <h:form>
+                    <h:outputText value="Ввійти:"  style="font-style: oblique"/>
+                    <h:panelGrid columns="2">
+                        <h:outputLabel for="login">Login:</h:outputLabel>
+                        <h:inputText id="login" value="#{loginView.username}" required="true" requiredMessage="Please enter your login"></h:inputText>
+
+                        <h:outputLabel for="password">Password:</h:outputLabel>
+                        <h:inputSecret id="password" value="#{loginView.password}" required="true" requiredMessage="Please enter password"></h:inputSecret>
+
+                        <p:commandButton action="#{loginView.login}" value="Login" 
+                                         onclick="PF('dlgInviteRegistr').hide();" />
+                        <p:commandButton value="Відміна" type="button" onclick="PF('dlgInviteRegistr').hide();" icon="ui-icon-close" />
+                    </h:panelGrid>
+
+
+                    <p><h:link value="Відновити пароль" /></p>
+                    <p><h:link value="Зареєструватися" outcome="registration.xhtml" /></p>
+
+                </h:form>
+            </div>
+        </p:dialog>
+
+
+
+
+        <p/> 
+
+        <h:form id="participantsForm">
+
+            <p:dataList value="#{viktorynaHelper.participants}" var="participant" type="ordered" id="participantsList"
+                        itemType="none" paginator="true" rows="10" styleClass="paginated" 
+                        style="width: 25%; position: absolute;" rendered="#{viktorynaHelper.participants!=null}">
+                <f:facet name="header">
+                    Список учасників ( <h:outputText value="#{viktorynaHelper.participants.size()+0}"/> з 30-ти):
+                </f:facet>           
+                <h:outputText value="#{participant.username}" style="display:inline-block"/>
+            </p:dataList>
+        </h:form>
+
+
+        <div style="position: fixed; left: 33%">
+            <h:outputText id="startingWord" value="#{viktorynaHelper.startingWord}" style="color: red; font-size: 55px;"
+                          rendered="#{viktorynaHelper.isGameStart==true}"/>
+            <p/>
+
+            <h:form id="gameField" rendered="#{viktorynaHelper.isGameStart==true and viktorynaHelper.participants.contains(loginView.authenticatedUser)}">
+
+
+                <p:outputLabel   value="Введіть слово: " for="word"/>
+                <p:inputText  value="#{viktorynaHelper.word}" id="word"/>
+
+                <p:commandButton id="button_saveOrg" value=" Відправити" 
+                                 title="Save" action="#{viktorynaHelper.addWordToLeaderboard(loginView.authenticatedUser.username)}"
+                                 update=":gameField:word">                    
+                </p:commandButton> 
+
+
+            </h:form>
+
+            <p/>
+
+
+
+            <p:socket onMessage="handleMessage" channel="/counter" />
+            <script type="text/javascript">
+                function handleMessage() {
+                    updateWidgets();
+                }
+            </script>
+
+            <h:form>
+                <p:remoteCommand name="updateWidgets" update="formTable:dataTable" />              
+            </h:form>
+
+            
+
+
+
+            <h:form id="formTable" rendered="#{viktorynaHelper.isGameStart==true}">
+
+                <p:dataTable value="#{viktorynaHelper.leaderboard}" var="leaderboard" 
+                             tableStyle="width:500px" id="dataTable" 
+                             rowIndexVar="rowIndex"
+                             rows="10" 
+                             > 
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="№" />
+                        </f:facet>
+                        <h:outputText value="#{rowIndex+1}" 
+                                      />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Гравець" />
+                        </f:facet>
+                        <h:outputText value="#{leaderboard.playerName}" 
+                                      styleClass="#{(leaderboard.playerName eq loginView.authenticatedUser.username)? 'sameuser' : ''}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Слово" />
+                        </f:facet>
+                        <h:outputText value="#{leaderboard.word}" />
+                    </p:column>
+
+                    <p:column>
+                        <f:facet name="header">
+                            <h:outputText value="Результат" />
+                        </f:facet>
+                        <h:outputText value="#{leaderboard.score}" />
+                    </p:column>
+
+
+                </p:dataTable>
+
+
+
+            </h:form>
+            <!-- Відображення організації -->
+
+
+            <h:form>
+                <pe:timer 
+                    widgetVar="timer"
+                    timeout="1200"  
+                    format="mm:ss" autoStart="false"/> 
+            </h:form>
+
+        </div>
+
+
+
+    </h:body>
+</html>
+

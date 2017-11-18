@@ -10,7 +10,7 @@
     </h:head>
     <h:body>
 
-        <h:form> 
+        <h:form id="formLogin"> 
             <h:panelGroup id="padding" layout="block">
                 #{msg.welcome}, 
                 <h:outputLink rendered="#{loginView.authenticatedUser!=null}" value="#{request.contextPath}/member.xhtml?id=#{loginView.authenticatedUser.username}" target="_self">

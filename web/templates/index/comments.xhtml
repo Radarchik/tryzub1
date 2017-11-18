@@ -12,9 +12,9 @@
     </h:head>
     <h:body>
         <ui:composition>
-            
+             <a name="comments" />
                 <h:form  id="commentForm">
-
+                   
                     <p:dataList value="#{publicationHelper.currentCommentList}" var="comment" type="definition"
                                 paginator="true" id="commentList" styleClass="#{param.id==null ? 'commentList1':'commentList'}"  itemStyleClass="#{(rowIndex mod 2) eq 0 ? 'commentRow1' : 'commentRow2'}" rowIndexVar="rowIndex"
                                 rows="15" paginatorAlwaysVisible="false"

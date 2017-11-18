@@ -83,5 +83,11 @@
             </key>
             <one-to-many class="uk.tryzub.entity.Organization" />
         </set>
+        <set name="events" table="event" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="user" not-null="true" />
+            </key>
+            <one-to-many class="uk.tryzub.entity.Event" />
+        </set>
     </class>
 </hibernate-mapping>

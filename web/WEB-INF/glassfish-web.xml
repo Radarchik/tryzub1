@@ -11,6 +11,7 @@
   </security-role-mapping>
   <security-role-mapping>
     <role-name>moderator</role-name>
+    <principal-name>moderator</principal-name>
     <group-name>moderators</group-name>
   </security-role-mapping>
   <class-loader delegate="true"/>
@@ -23,5 +24,6 @@
   <property name="alternatedocroot_2" value="from=/member/* dir=F:/MyProjects/tryzub/photo"/>
   <property name="alternatedocroot_3" value="from=/habitation/* dir=F:/MyProjects/tryzub/photo"/>
   <property name="alternatedocroot_4" value="from=/publication/* dir=F:/MyProjects/tryzub/photo"/>
+  <property name="alternatedocroot_5" value="from=/wordlist/* dir=F:/MyProjects/tryzub/photo"/>
   <parameter-encoding default-charset="UTF-8"/>
 </glassfish-web-app>

@@ -2,40 +2,44 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:pe="http://primefaces.org/ui/extensions">
+      xmlns:ui="http://java.sun.com/jsf/facelets">
     <h:head>
-         <title>Тризуб</title>
-        <h:outputStylesheet  name="css/index.css" />
+        <title><ui:insert name="title"/></title>
+        <h:outputStylesheet library="css" name="event.css"  />
         <h:link rel="shortcut icon" value="resources/images/favicon.png" type="image/png"/>
-        
     </h:head>
     <h:body>
-        <div class="container">
 
+        <div id ="menu">
+            <ui:insert name="menu">
+                <ui:include src="/templates/event/menu.xhtml"/>
+            </ui:insert>                 
+        </div>
 
-            <div id ="fond">
-                <ui:insert name="fond">
-                    <ui:include src="/templates/index/fond.xhtml"/>
+        <div id="right_wrapper">
+            <div id ="header">
+                <ui:insert name="header">
+                    <ui:include src="/templates/event/header.xhtml"/>
                 </ui:insert>                 
             </div>
 
-<div id="middle"> 
+
             <div id ="content">
                 <ui:insert name="content">
-                    <ui:include src="/templates/index/content.xhtml"/>
+                    <ui:include src="/templates/event/content.xhtml"/>
                 </ui:insert>    
             </div>
 
 
+
             <div id ="footer">
                 <ui:insert name="footer">
-                    <ui:include src="/templates/index/footer.xhtml"/>
+                    <ui:include src="/templates/event/footer.xhtml"/>
                 </ui:insert>                 
             </div>
-</div>
 
         </div>
+
     </h:body>
 </html>
 

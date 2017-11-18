@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+    <h:head>
+        <title><ui:insert name="title"/></title>
+        <h:outputStylesheet library="css" name="viktoryna.css"  />
+        <h:link rel="shortcut icon" value="resources/images/favicon.png" type="image/png"/>
+    </h:head>
+    <h:body>
+
+        <div id ="participants">
+            <ui:insert name="participants">
+                <ui:include src="/templates/viktoryna/participants.xhtml"/>
+            </ui:insert>                 
+        </div>
+
+   
+        <div id ="leaderboard">
+            <ui:insert name="leaderboard">
+                <ui:include src="/templates/viktoryna/leaderboard.xhtml"/>
+            </ui:insert>                 
+        </div>
+
+    </h:body>
+</html>
+

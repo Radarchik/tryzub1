@@ -71,10 +71,10 @@
 
 }
 
-#sheva{
+#volod{
     position: fixed;
     bottom:0%;
-    right: 0%;
+    right: -20px;
 
 }
 #lesya{
@@ -90,12 +90,7 @@
     width:17%;
 
 }
-#volod{
-    position: fixed;
-    bottom:25%;
-    left: -4%;
-    width: 18%;
-}
+
 
 
 
@@ -152,20 +147,26 @@
 
 .wrapperRow{
     height: auto;
-   
-
+   background-color: lightgreen;
+overflow:hidden;
     position: relative;
+   
 }
-
-
 
 
 .wrapperRow1{
     height: auto;
-  
-
+  background-color: lightpink;
+overflow:hidden;
     position: relative;
 }
+
+.wrapperRow2{
+    height: auto;
+    position: relative;
+    overflow:hidden;
+}
+
 
 .publDate{
     float:left;
@@ -178,8 +179,9 @@
     width:100%;
     height: auto;
 
+    
     text-align: center;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     margin-top: 15px;
 }
 

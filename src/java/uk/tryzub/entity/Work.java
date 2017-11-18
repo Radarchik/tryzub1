@@ -10,6 +10,7 @@ import java.util.Date;
 public class Work  implements java.io.Serializable {
 
 
+
      private Integer idwork;
      private User user;
      private Date date;
@@ -17,17 +18,32 @@ public class Work  implements java.io.Serializable {
      private String contact;
      private String address;
      private String description;
+     private String name;
+     private Float salary;
+     private String workshortname;
 
     public Work() {
     }
 
+	
     public Work(User user, Date date, int type, String contact, String address, String description) {
+        this.user = user;
+        this.date = date;
+        this.type = type;
+        this.contact = contact;
+        this.address = address;
+        this.description = description;
+    }
+    public Work(User user, Date date, int type, String contact, String address, String description, String name, Float salary, String workshortname) {
        this.user = user;
        this.date = date;
        this.type = type;
        this.contact = contact;
        this.address = address;
        this.description = description;
+       this.name = name;
+       this.salary = salary;
+       this.workshortname = workshortname;
     }
    
     public Integer getIdwork() {
@@ -78,6 +94,27 @@ public class Work  implements java.io.Serializable {
     
     public void setDescription(String description) {
         this.description = description;
+    }
+    public String getName() {
+        return this.name;
+    }
+    
+    public void setName(String name) {
+        this.name = name;
+    }
+    public Float getSalary() {
+        return this.salary;
+    }
+    
+    public void setSalary(Float salary) {
+        this.salary = salary;
+    }
+    public String getWorkshortname() {
+        return this.workshortname;
+    }
+    
+    public void setWorkshortname(String workshortname) {
+        this.workshortname = workshortname;
     }
 
 

@@ -9,45 +9,42 @@
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        <ui:composition template="/templates/work/work_template.xhtml"> 
+        <ui:composition template="/templates/event/event_template.xhtml"> 
 
             <ui:define name="content"> 
                 <f:metadata>
                     <!-- При загрузке стр. инициализ.весь список -->
-                    <f:viewAction action="#{workHelper.fillWorksListAll()}" />
+                    <f:viewAction action="#{eventHelper.fillEventListAll()}" />
                 </f:metadata>
 
                 <!-- Відображення  - відображається лист, що змінюється по запитам аджакс-->
-                <h:form id="workForm">
+                <h:form id="eventForm">
 
-                    <p:dataList value="#{workHelper.currentWorkList}" var="work" type="definition"
-                                paginator="true" id="workList" itemStyleClass="listRow" styleClass="list"
+                    <p:dataList value="#{eventHelper.currentEventList}" var="event" type="definition"
+                                paginator="true" id="eventList" itemStyleClass="listRow" styleClass="list"
                                 rows="3" paginatorAlwaysVisible="false"
                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                 rowsPerPageTemplate="3,10,15"> 
 
                         
                         <h3>
-                            <h:outputText value = "#{work.type==1?'Пропоную роботу: ':'Шукаю роботу: '}" style="font-weight: 900" /> 
-                        <h:outputText value = " #{work.workshortname}, "/> 
-                        <h:outputText value = "#{work.salary}" /> 
-                        <h:outputText value = " £/h" /> 
+                            <h:outputText value = "#{event.name}" /> 
                         </h3>
      
                         <div style=" color: indianred; width: 155px; position: absolute; top:0; left: 0;">
-                            <h:outputText value = "#{work.date}" > 
+                            <h:outputText value = "#{event.date}" > 
                                 <f:convertDateTime pattern="dd.MM.yyyy HH:mm"/>
                             </h:outputText>
                         </div>
 
                         <div>
                             <h:outputText value = "Локація: " style="font-style: italic"/> 
-                            <h:outputText value = "#{work.address}" style="font-style: italic"/> 
+                            <h:outputText value = "#{event.location}" style="font-style: italic"/> 
                         </div>
                          
                         <div> 
-                            <h:outputText value = "#{work.name}" /> 
-                            <h:outputText value = " (#{work.contact})" /> 
+                            
+                            <h:outputText value = " (#{event.contact})" /> 
 
                         </div>
 
@@ -55,7 +52,7 @@
                         <br/>
 
                         <div>
-                            <h:outputText value = "#{work.description}" /> 
+                            <h:outputText value = "#{event.description}" /> 
                         </div>
                        
 

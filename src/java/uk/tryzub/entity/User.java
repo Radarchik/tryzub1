@@ -3,6 +3,7 @@ package uk.tryzub.entity;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -29,6 +30,7 @@ public class User implements java.io.Serializable {
      private Set reviews = new HashSet(0);
      private Set topics = new HashSet(0);
      private Set organizations = new HashSet(0);
+     private Set events = new HashSet(0);
 
     public User() {
     }
@@ -41,7 +43,7 @@ public class User implements java.io.Serializable {
         this.creationtime = creationtime;
         this.sex = sex;
     }
-    public User(String username, String email, String password, Date creationtime, String avatar, String city, Integer quantity, Integer reputation, String sign, byte sex, Set comments, Set habitations, Set posts, Set publications, Set works, Set reviews, Set topics, Set organizations) {
+    public User(String username, String email, String password, Date creationtime, String avatar, String city, Integer quantity, Integer reputation, String sign, byte sex, Set comments, Set habitations, Set posts, Set publications, Set works, Set reviews, Set topics, Set organizations, Set events) {
        this.username = username;
        this.email = email;
        this.password = password;
@@ -60,6 +62,7 @@ public class User implements java.io.Serializable {
        this.reviews = reviews;
        this.topics = topics;
        this.organizations = organizations;
+       this.events = events;
     }
    
     public String getUsername() {
@@ -189,9 +192,54 @@ public class User implements java.io.Serializable {
         this.organizations = organizations;
     }
 
+    public Set getEvents() {
+        return this.events;
+    }
 
+    public void setEvents(Set events) {
+        this.events = events;
+    }
 
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 89 * hash + Objects.hashCode(this.username);
+        hash = 89 * hash + Objects.hashCode(this.email);
+        hash = 89 * hash + Objects.hashCode(this.password);
+        hash = 89 * hash + Objects.hashCode(this.creationtime);
+        return hash;
+    }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final User other = (User) obj;
+        if (!Objects.equals(this.username, other.username)) {
+            return false;
+        }
+        if (!Objects.equals(this.email, other.email)) {
+            return false;
+        }
+        if (!Objects.equals(this.password, other.password)) {
+            return false;
+        }
+        if (!Objects.equals(this.creationtime, other.creationtime)) {
+            return false;
+        }
+        return true;
+    }
+
+    
+    
+    
 }
 
 
