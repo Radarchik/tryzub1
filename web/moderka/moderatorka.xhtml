@@ -16,19 +16,19 @@
         <div style="font-size: 40px; color: red">Кабінет модератора</div>
 
 
-      
+
 
         <div>
             <h:form>
                 <p:outputLabel for="startingWordInput" value="Starting word: " />    
                 <p:inputText id = "startingWordInput" value="#{viktorynaHelper.startingWord}"/>
-                 <p/> 
+                <p/> 
                 <p:outputLabel for="dateInput" value="Date: " />                
                 <p:inputText id = "dateInput" value = "#{viktorynaHelper.startingDate}"
                              label = "Date" >
                     <f:convertDateTime pattern = "dd-MM-yyyy_HH:mm" />
                 </p:inputText>
-                 <p/> 
+                <p/> 
                 <p:commandButton value = "Відкрити реєстрацію" action = "#{viktorynaHelper.startRegister()}"/>
             </h:form>
             <br/>
@@ -42,29 +42,31 @@
         </div> 
 
         <br/>
-           <br/>
-              <br/>
-                 <br/>
-                    <br/>
-                       <br/>
-                          <br/>
-                             <br/>
-                                <br/>
-        
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+
 
         <h:form>
 
-            <h:outputLabel  value="Введіть слово:" for="word"/>
-            <h:inputText value="#{viktorynaHelper.startingWord}" id="word"/>
-
-
-            <p:commandButton id="createGame" value="Створити гру" 
-                             title="Create game" action="#{viktorynaHelper.startGame()}">
-            </p:commandButton> 
-
             <p:commandButton id="closeGame" value="Закрити гру" 
                              action="#{viktorynaHelper.closeGame()}">
-           
+
+            </p:commandButton> 
+
+        </h:form>
+
+
+        <h:form>
+
+            <p:commandButton id="renewQuanLikes" value="Обновити кількість лайків" 
+                             action="#{timerController.renewQuantityOfLikesHandle()}">
+
             </p:commandButton> 
 
         </h:form>

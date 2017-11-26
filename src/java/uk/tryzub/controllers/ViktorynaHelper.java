@@ -5,19 +5,27 @@
  */
 package uk.tryzub.controllers;
 
+import com.sun.faces.util.LRUMap;
 import com.sun.xml.wss.impl.misc.NonceCache;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
@@ -55,10 +63,14 @@ public final class ViktorynaHelper implements Serializable {
     private Timer timer;
     private TimerTask timerStartGame;
     private TimerTask timerEndGame;
+    private ValidWords validWords;
 
     private HashSet<User> participants;
 
     private LinkedList<RowOfLeaderboard> leaderboard;
+
+    private LinkedHashMap<String, Integer> mapOfLeaders;
+    private List<String> keyList;
 
     private String startingWord;
     private Date startingDate;
@@ -67,19 +79,18 @@ public final class ViktorynaHelper implements Serializable {
     private String word;
 
     private boolean isGameStart;
+    private boolean isGameFinished;
 
     public void startRegister() {
         participants = new HashSet<>();
         System.out.println("startRegister!!!!!!!!!!!!");
-        
-        System.out.println(startingDate);
 
-        endDate = DateUtils.addMinutes(startingDate, 1);
+        endDate = DateUtils.addMinutes(startingDate, 3);
 
         timerStartGame = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("timerStartGame");
+
                 startGame();
             }
         };
@@ -87,30 +98,121 @@ public final class ViktorynaHelper implements Serializable {
         timerEndGame = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("timerEndGame");
-                closeGame();
+                System.out.println("timerEndGame " + endDate);
+                endGame();
             }
         };
 
         timer = new Timer();
         timer.schedule(timerStartGame, startingDate);
         timer.schedule(timerEndGame, endDate);
-              
-
+        EventBus eventBus = EventBusFactory.getDefault().eventBus();
+        eventBus.publish("/reloadPage", "message");
     }
 
     public void startGame() {
         leaderboard = new LinkedList<>();
         isGameStart = true;
+        validWords = new ValidWords();
+
+        System.out.print("Quantity of words: ");
+        System.out.println(validWords.h.size());
+
+        EventBus eventBus = EventBusFactory.getDefault().eventBus();
+        eventBus.publish("/reloadPage", "message");
+        eventBus = null;
+        System.out.println("timerStartGame " + startingDate);
+    }
+
+    public void endGame() {
+        if (!leaderboard.isEmpty()) {
+            mapOfLeaders = new LinkedHashMap<>();
+            for (int i = 0; i < leaderboard.size(); i++) {
+                if (mapOfLeaders.containsKey(leaderboard.get(i).getPlayerName())) {
+                    mapOfLeaders.put(leaderboard.get(i).getPlayerName(), mapOfLeaders.get(leaderboard.get(i).getPlayerName()) + leaderboard.get(i).getScore());
+                } else {
+                    mapOfLeaders.put(leaderboard.get(i).getPlayerName(), leaderboard.get(i).getScore());
+                }
+            }
+
+            //sorting map by value
+            mapOfLeaders = mapOfLeaders.entrySet().stream()
+                    .sorted(Entry.comparingByValue())
+                    .collect(Collectors.toMap(Entry::getKey, Entry::getValue,
+                            (e1, e2) -> e1, LinkedHashMap::new));
+
+            keyList = new ArrayList<String>(mapOfLeaders.keySet());
+
+            //making List decreasing
+            Collections.reverse(keyList);
+
+            //итеровать эту мапу, если лист больше 2-х - сравнить по доп. показателям и изменить keyList
+            Map<Integer, ArrayList<String>> reverseMap = new HashMap<>(
+                    mapOfLeaders.entrySet().stream()
+                            .collect(Collectors.groupingBy(Map.Entry::getValue)).values().stream()
+                            .collect(Collectors.toMap(
+                                    item -> item.get(0).getValue(),
+                                    item -> new ArrayList<>(
+                                            item.stream()
+                                                    .map(Map.Entry::getKey)
+                                                    .collect(Collectors.toList())
+                                    ))
+                            ));
+
+            for (Map.Entry entry : reverseMap.entrySet()) {
+                if (((ArrayList<String>) entry.getValue()).size() >= 2) {
+
+                    ArrayList<String> sortList = new ArrayList<>();
+
+                    for (int i = 0; i < leaderboard.size(); i++) {
+                        for (int j = 0; j < ((ArrayList<String>) entry.getValue()).size(); j++) {
+                            if (leaderboard.get(i).getPlayerName().equals(((ArrayList<String>) entry.getValue()).get(j))) {
+                                sortList.add(leaderboard.get(i).getPlayerName());
+                                ((ArrayList<String>) entry.getValue()).remove(j);
+                                break;
+                            }
+
+                        }
+                    }
+
+                    mainLoop:
+                    for (int i = 0; i < keyList.size(); i++) {
+                        for (int j = 0; j < sortList.size(); j++) {
+                            if (keyList.get(i).equals(sortList.get(j))) {
+                                while (sortList.size() > 0) {
+                                    keyList.set(i, sortList.get(0));
+                                    i++;
+                                    sortList.remove(0);
+                                }
+                                break mainLoop;
+                            }
+
+                        }
+
+                    }
+
+                }
+
+            }
+
+            isGameFinished = true;
+        }
+        EventBus eventBus = EventBusFactory.getDefault().eventBus();
+        eventBus.publish("/reloadPage", "message");
     }
 
     public void closeGame() {
+
         leaderboard = null;
         isGameStart = false;
+        isGameFinished = false;
         startingWord = "";
         startingDate = null;
         participants = null;
-
+        validWords = null;
+        EventBus eventBus = EventBusFactory.getDefault().eventBus();
+        eventBus.publish("/reloadPage", "message");
+        eventBus = null;
     }
 
     public void register(User user) {
@@ -154,7 +256,8 @@ public final class ViktorynaHelper implements Serializable {
                         leaderboard.remove(10);
                     }
                     EventBus eventBus = EventBusFactory.getDefault().eventBus();
-                    eventBus.publish("/counter", "message");
+                    eventBus.publish("/updateGame", "message");
+                    eventBus = null;
                     return true;
                 }
             }
@@ -193,9 +296,11 @@ public final class ViktorynaHelper implements Serializable {
         }
 
         //2)checking whether "word" is valid
-        /* if (!new ValidWords().contains(word)) {
-        return 0;
-        }*/
+        if (!validWords.contains(word)) {
+            System.out.println("Такого слова нет!!!");
+            return 0;
+        }
+
         return count;
     }
 
@@ -239,6 +344,14 @@ public final class ViktorynaHelper implements Serializable {
         this.isGameStart = isGameStart;
     }
 
+    public boolean isIsGameFinished() {
+        return isGameFinished;
+    }
+
+    public void setIsGameFinished(boolean isGameFinished) {
+        this.isGameFinished = isGameFinished;
+    }
+
     public Date getStartingDate() {
         return startingDate;
     }
@@ -277,6 +390,22 @@ public final class ViktorynaHelper implements Serializable {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public LinkedHashMap<String, Integer> getMapOfLeaders() {
+        return mapOfLeaders;
+    }
+
+    public List<String> getKeyList() {
+        return keyList;
+    }
+
+    public ValidWords getValidWords() {
+        return validWords;
+    }
+
+    public void setValidWords(ValidWords validWords) {
+        this.validWords = validWords;
     }
 
 }

@@ -6,7 +6,13 @@
 package uk.tryzub.validators;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Vector;
 
 /**
@@ -14,31 +20,31 @@ import java.util.Vector;
  * @author tszin
  */
 public class ValidWords {
-    
-	Vector v = new Vector();
 
-	public ValidWords() {
-		try {
-			InputStreamReader reader = new InputStreamReader(this.getClass().getResourceAsStream("F:\\MyProjects\\tryzub\\photo\\wordlist\\wordlist.txt"), "utf-8");
-			BufferedReader in = new BufferedReader(reader);
-			String inputLine;
-			while ((inputLine = in.readLine()) != null) {
-				v.add(inputLine);
-			}
-			in.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+    public HashSet <String> h = new HashSet();
 
-   
-	
-	public boolean contains(String word) {
-		return v.contains(word);
-	}
+    public ValidWords(){
+        String fileName = "F:/noun.txt";
 
-	
-	public int size() {
-		return v.size();
-	}
+        try {
+            Path path = Paths.get(fileName);
+            Scanner scanner = new Scanner(path, "UTF-8");
+            String inputLine;
+            while (scanner.hasNextLine()) {
+                 inputLine = new String(scanner.next().getBytes("UTF-8"), Charset.forName("UTF-8"));
+                 h.add(inputLine);                                
+            }
+            scanner.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean contains(String word) {
+        return h.contains(word);
+    }
+
+    public int size() {
+        return h.size();
+    }
 }

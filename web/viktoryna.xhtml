@@ -25,15 +25,15 @@
 
 
 
-  <h:form id="formTakePart">
-        <h4><h:outputText value="Йде реєстрація учасників... Початок гри - " rendered="#{viktorynaHelper.participants != null}"/>
-            <h:outputText id="authorDateReg"  value="#{viktorynaHelper.startingDate}" rendered="#{viktorynaHelper.participants != null}">
-                <f:convertDateTime pattern="dd.MM.yyyy  HH:mm"/>
-            </h:outputText> 
-        </h4>
+        <h:form id="formTakePart">
+            <h4><h:outputText value="Йде реєстрація учасників... Початок гри - " rendered="#{viktorynaHelper.participants != null}"/>
+                <h:outputText id="authorDateReg"  value="#{viktorynaHelper.startingDate}" rendered="#{viktorynaHelper.participants != null}">
+                    <f:convertDateTime pattern="dd.MM.yyyy  HH:mm"/>
+                </h:outputText> 
+            </h4>
 
 
-      
+
             <p:commandLink value="Взяти участь у вікторині" id="commandLink1"
                            rendered="#{loginView.authenticatedUser!=null and !viktorynaHelper.participants.contains(loginView.authenticatedUser) and viktorynaHelper.participants != null}"
                            action="#{viktorynaHelper.register(loginView.authenticatedUser)}"
@@ -87,18 +87,30 @@
 
         <h:form id="participantsForm">
 
-            <p:dataList value="#{viktorynaHelper.participants}" var="participant" type="ordered" id="participantsList"
-                        itemType="none" paginator="true" rows="10" styleClass="paginated" 
-                        style="width: 25%; position: absolute;" rendered="#{viktorynaHelper.participants!=null}">
+            <p:dataTable value="#{viktorynaHelper.participants}" var="participant"  id="participantsList"
+                         paginator="true" rows="10" styleClass="paginated" rowIndexVar="rowIndex"
+                         paginatorPosition="bottom"
+                         style="width: 20%; position: absolute;" rendered="#{viktorynaHelper.participants!=null}">
                 <f:facet name="header">
                     Список учасників ( <h:outputText value="#{viktorynaHelper.participants.size()+0}"/> з 30-ти):
-                </f:facet>           
-                <h:outputText value="#{participant.username}" style="display:inline-block"/>
-            </p:dataList>
+                </f:facet>   
+
+                <p:column style="width:20px;">
+                
+                    <h:outputText value="#{rowIndex+1}" 
+                                  />
+                </p:column>
+
+                <p:column>
+                   
+                    <h:outputText value="#{participant.username}" />
+                </p:column>
+                
+            </p:dataTable>
         </h:form>
 
 
-        <div style="position: fixed; left: 33%">
+        <h:panelGroup id="gamePanel" layout="block" style="position: fixed; left: 33%; top:5%"> 
             <h:outputText id="startingWord" value="#{viktorynaHelper.startingWord}" style="color: red; font-size: 55px;"
                           rendered="#{viktorynaHelper.isGameStart==true}"/>
             <p/>
@@ -119,9 +131,19 @@
 
             <p/>
 
+            <p:socket onMessage="handleMessage1" channel="/reloadPage" />
+            <script type="text/javascript">
+                function handleMessage1() {
+                    location.reload();
+                }
+            </script>
+
+            <h:form>
+                <p:remoteCommand name="updateGamePanel" update=":gamePanel" />              
+            </h:form>
 
 
-            <p:socket onMessage="handleMessage" channel="/counter" />
+            <p:socket onMessage="handleMessage" channel="/updateGame" />   
             <script type="text/javascript">
                 function handleMessage() {
                     updateWidgets();
@@ -132,19 +154,19 @@
                 <p:remoteCommand name="updateWidgets" update="formTable:dataTable" />              
             </h:form>
 
-            
+
 
 
 
             <h:form id="formTable" rendered="#{viktorynaHelper.isGameStart==true}">
 
                 <p:dataTable value="#{viktorynaHelper.leaderboard}" var="leaderboard" 
-                             tableStyle="width:500px" id="dataTable" 
+                             tableStyle="width:400px" id="dataTable" 
                              rowIndexVar="rowIndex"
                              rows="10" 
                              > 
 
-                    <p:column>
+                    <p:column style="width:20px;">
                         <f:facet name="header">
                             <h:outputText value="№" />
                         </f:facet>
@@ -167,7 +189,7 @@
                         <h:outputText value="#{leaderboard.word}" />
                     </p:column>
 
-                    <p:column>
+                    <p:column style="text-align: center">
                         <f:facet name="header">
                             <h:outputText value="Результат" />
                         </f:facet>
@@ -179,19 +201,57 @@
 
 
 
+
             </h:form>
             <!-- Відображення організації -->
 
+            <!--
+                       <h:form>
+                           <pe:timer 
+                               widgetVar="timer"
+                               timeout="50"  
+                               format="mm:ss"
+                               ontimercomplete="reloadPage()"/> 
+                       </h:form>
+           
+            -->
 
-            <h:form>
-                <pe:timer 
-                    widgetVar="timer"
-                    timeout="1200"  
-                    format="mm:ss" autoStart="false"/> 
-            </h:form>
 
-        </div>
 
+
+        </h:panelGroup>
+
+        <h:form>
+
+            <p:dataTable value="#{viktorynaHelper.keyList}" var="key" 
+                         rendered="#{viktorynaHelper.isGameFinished}"
+                         rowIndexVar="rowIndex" rows="3"
+                         style="position: absolute; right: 10px; width:  20%; height: 5%"
+                         > 
+
+                <p:column style="width:50px;">
+                    <f:facet name="header">
+                        <h:outputText value="Місце" />
+                    </f:facet>
+                    <h:outputText value="#{rowIndex+1}" />
+                </p:column>
+
+                <p:column> 
+                    <f:facet name="header">
+                        <h:outputText value="Призер" />
+                    </f:facet>
+                    <h:outputText value="#{key}"/>
+
+                </p:column> 
+                <p:column style="width:80px; text-align: center"> 
+                    <f:facet name="header">
+                        <h:outputText value="Результат" />
+                    </f:facet>
+                    <h:outputText value="#{viktorynaHelper.mapOfLeaders[key]}"/>                
+                </p:column> 
+            </p:dataTable>
+
+        </h:form>
 
 
     </h:body>

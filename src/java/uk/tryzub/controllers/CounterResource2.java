@@ -9,8 +9,8 @@ import org.primefaces.push.annotation.OnMessage;
 import org.primefaces.push.annotation.PushEndpoint;
 import org.primefaces.push.impl.JSONEncoder;
 
-@PushEndpoint("/reloadPage")
-public class CounterResource {
+@PushEndpoint("/updateGame")
+public class CounterResource2 {
 
     @OnMessage(encoders = {JSONEncoder.class})
     public String onMessage(String message) {

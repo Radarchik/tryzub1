@@ -1,5 +1,6 @@
 package uk.tryzub.beans;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.security.Principal;
 import java.util.Map;
@@ -55,9 +56,18 @@ public class LoginView implements Serializable {
         sessionMap.put("User", user);
 
         if (request.isUserInRole("member")) {
-          //  RequestContext context1 = RequestContext.getCurrentInstance();
-          //  context1.execute("PF('dlgWork').show();");
-          RequestContext.getCurrentInstance().update("formLogin");
+            try {
+                //  RequestContext context1 = RequestContext.getCurrentInstance();
+                //  context1.execute("PF('dlgWork').show();");
+                //RequestContext.getCurrentInstance().update("formLogin");
+                
+                //перезагрузка страницы, чтобы обновились все доступы для зарегистр. юзера
+                ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+                ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
+               
+            } catch (IOException ex) {
+                Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
+            } 
             return "";
         } else if (request.isUserInRole("moderator")) {
           //  RequestContext context1 = RequestContext.getCurrentInstance();

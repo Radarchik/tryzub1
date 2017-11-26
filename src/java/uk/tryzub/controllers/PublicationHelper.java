@@ -74,7 +74,6 @@ public final class PublicationHelper implements Serializable {
         return loginView;
     }
 //Обязательный сеттер для инъекции
-
     public void setLoginView(LoginView loginView) {
         this.loginView = loginView;
     }
@@ -97,7 +96,7 @@ public final class PublicationHelper implements Serializable {
             }
         } finally {
             HibernateUtil.closeSession();
-            currentCommentList=null;
+            currentCommentList = null;
         }
 
     }
@@ -201,7 +200,7 @@ public final class PublicationHelper implements Serializable {
 
     public void fillComments(String idPublication) {
         final Session session = HibernateUtil.getSession();
-        
+
         try {
             final Transaction transaction = session.beginTransaction();
             try {
@@ -218,7 +217,7 @@ public final class PublicationHelper implements Serializable {
             }
         } finally {
             HibernateUtil.closeSession();
-            
+
         }
 
     }
@@ -230,26 +229,40 @@ public final class PublicationHelper implements Serializable {
             final Transaction transaction = session.beginTransaction();
             try {
                 // The real work is here
-                Map<String, String> params
-                        = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+                String nameUserValuer = loginView.getAuthenticatedUser().getUsername();
+                User userValuer = (User) session.get(User.class, nameUserValuer);
 
-                int commentId = Integer.parseInt(params.get("commentid"));
-                String username = params.get("username");
-                int rating = Integer.parseInt(params.get("rating"));
+                if (userValuer.getQuantity() > 0) {
 
-                System.out.println("barabolia 11111111111");
-                Comment comment = (Comment) session.get(Comment.class, commentId);
-                comment.setRating(comment.getRating() + rating);
+                    Map<String, String> params
+                            = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
 
-                User user = (User) session.get(User.class, username);
-                user.setReputation(user.getReputation() + rating);
-                session.update(comment);
-                session.update(user);
-                transaction.commit();
-                System.out.println("barabolia 22222222222222222222");
-                /*для обновления аджаксового */
-                fillComments(comment.getPublication().getIdpublication().toString());
-                // fillSelectedPosts(comment.getPublication().getTopicid().toString());
+                    int commentId = Integer.parseInt(params.get("commentid"));
+
+                    String username = params.get("username");
+                    int rating = Integer.parseInt(params.get("rating"));
+
+                    Comment comment = (Comment) session.get(Comment.class, commentId);
+                    comment.setRating(comment.getRating() + rating);
+
+                    User user = (User) session.get(User.class, username);
+                    user.setReputation(user.getReputation() + rating);
+                    
+                    userValuer.setQuantity(userValuer.getQuantity()-1);
+
+                    session.update(comment);
+                    session.update(user);
+                    session.update(userValuer);
+                    transaction.commit();
+
+                    /*для обновления аджаксового */
+                    fillComments(comment.getPublication().getIdpublication().toString());
+                    // fillSelectedPosts(comment.getPublication().getTopicid().toString());                
+                } else {
+                    FacesMessage message1 = new FacesMessage(FacesMessage.SEVERITY_INFO, "Упсс", "Кількість лайків на сьогодні вичерпано :-(");
+                    RequestContext.getCurrentInstance().showMessageInDialog(message1);
+
+                }
             } catch (Exception ex) {
                 // Log the exception here
                 transaction.rollback();
@@ -257,7 +270,7 @@ public final class PublicationHelper implements Serializable {
             }
         } finally {
             HibernateUtil.closeSession();
-            
+
         }
 
     }

@@ -9,20 +9,19 @@ package uk.tryzub.entity;
  *
  * @author tszin
  */
-public class RowOfLeaderboard  implements java.io.Serializable{
-   private String playerName;
-     private   String word;
-      private  int score;
+public class RowOfLeaderboard implements java.io.Serializable {
 
-   
-        public RowOfLeaderboard(String playerName, String word, int score) {
-            this.playerName = playerName;
-            this.word = word;
-            this.score = score;
-        }
-        
-        
-         public String getPlayerName() {
+    private String playerName;
+    private String word;
+    private int score;
+
+    public RowOfLeaderboard(String playerName, String word, int score) {
+        this.playerName = playerName;
+        this.word = word;
+        this.score = score;
+    }
+
+    public String getPlayerName() {
         return playerName;
     }
 

@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -16,6 +17,8 @@ import javax.faces.context.FacesContext;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.primefaces.context.RequestContext;
+import uk.tryzub.beans.LoginView;
 import uk.tryzub.entity.HibernateUtil;
 import uk.tryzub.entity.Post;
 import uk.tryzub.entity.Topic;
@@ -39,6 +42,14 @@ public class PostHelper implements Serializable {
 
     private User authentUser;
     private Topic chosenTopic;
+
+    @ManagedProperty(value = "#{loginView}")
+    private LoginView loginView;
+
+//Обязательный сеттер для инъекции
+    public void setLoginView(LoginView loginView) {
+        this.loginView = loginView;
+    }
 
     @ManagedProperty(value = "#{topicHelper}")
     private TopicHelper topicHelper;
@@ -67,24 +78,34 @@ public class PostHelper implements Serializable {
             final Transaction transaction = session.beginTransaction();
             try {
                 // The real work is here
-                Map<String, String> params
-                        = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
-                
-                int postid = Integer.parseInt(params.get("postid"));
-                String username = params.get("username");
-                int rating = Integer.parseInt(params.get("rating"));
 
-                Post post = (Post) session.get(Post.class, postid);                
-                post.setRating(post.getRating()+rating);
-                
-                User user = (User) session.get(User.class, username);
-                user.setReputation(user.getReputation()+rating);
-                session.update(post);
-                session.update(user);
-                transaction.commit();
-                
-                /*для обновления аджаксового */
-                fillSelectedPosts(post.getTopic().getTopicid().toString());
+                String nameUserValuer = loginView.getAuthenticatedUser().getUsername();
+                User userValuer = (User) session.get(User.class, nameUserValuer);
+
+                if (userValuer.getQuantity() > 0) {
+                    Map<String, String> params
+                            = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap();
+
+                    int postid = Integer.parseInt(params.get("postid"));
+                    String username = params.get("username");
+                    int rating = Integer.parseInt(params.get("rating"));
+
+                    Post post = (Post) session.get(Post.class, postid);
+                    post.setRating(post.getRating() + rating);
+
+                    User user = (User) session.get(User.class, username);
+                    user.setReputation(user.getReputation() + rating);
+                    session.update(post);
+                    session.update(user);
+                    transaction.commit();
+
+                    /*для обновления аджаксового */
+                    fillSelectedPosts(post.getTopic().getTopicid().toString());
+                }else {
+                    FacesMessage message1 = new FacesMessage(FacesMessage.SEVERITY_INFO, "Упсс", "Кількість лайків на сьогодні вичерпано :-(");
+                    RequestContext.getCurrentInstance().showMessageInDialog(message1);
+
+                }
             } catch (Exception ex) {
                 // Log the exception here
                 transaction.rollback();
