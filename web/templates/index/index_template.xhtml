@@ -5,14 +5,22 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:pe="http://primefaces.org/ui/extensions">
     <h:head>
-         <title>Тризуб</title>
+        <title>Тризуб</title>
         <h:outputStylesheet  name="css/index.css" />
         <h:link rel="shortcut icon" value="resources/images/favicon.png" type="image/png"/>
-        
+
     </h:head>
     <h:body>
         <div class="container">
 
+            <div id ="fond1">
+                <div id ="fond11">
+
+                </div>  
+                <div id ="fond12">
+
+                </div>
+            </div>
 
             <div id ="fond">
                 <ui:insert name="fond">
@@ -20,20 +28,20 @@
                 </ui:insert>                 
             </div>
 
-<div id="middle"> 
-            <div id ="content">
-                <ui:insert name="content">
-                    <ui:include src="/templates/index/content.xhtml"/>
-                </ui:insert>    
-            </div>
+            <div id="middle"> 
+                <div id ="content">
+                    <ui:insert name="content">
+                        <ui:include src="/templates/index/content.xhtml"/>
+                    </ui:insert>    
+                </div>
 
 
-            <div id ="footer">
-                <ui:insert name="footer">
-                    <ui:include src="/templates/index/footer.xhtml"/>
-                </ui:insert>                 
+                <div id ="footer">
+                    <ui:insert name="footer">
+                        <ui:include src="/templates/index/footer.xhtml"/>
+                    </ui:insert>                 
+                </div>
             </div>
-</div>
 
         </div>
     </h:body>

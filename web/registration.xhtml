@@ -15,90 +15,133 @@
             <f:viewAction action="#{registerView.generateChecks()}" />
         </f:metadata>
 
-        <h:form>
-            <!-- register a PostValidateEvent -->
-            <f:event listener="#{registerView.validatePassword}"
-                     type="postValidate" />
-            <f:event listener="#{registerView.validateCheckBot}"
-                     type="postValidate" />
-            <h3>Create new account</h3>
-            <h:panelGrid columns="2">
-                <h:outputLabel for="username">Name:</h:outputLabel>
-                <h:inputText id="username" value="#{registerView.username}" required="true"
-                             requiredMessage="Please enter your name" maxlength="30">
-                    <f:validator validatorId="uk.tryzub.validators.LoginValidator"/>
-                </h:inputText>
-                <h:message for="username" style="color:red" />     <!--message for username from validator-->
+        <p:layout fullPage="true">
+            <p:layoutUnit position="north" size="50">
+                <h:outputText value="Top content." />
+            </p:layoutUnit>
+            <p:layoutUnit position="south" size="100">
+                <h:outputText value="Bottom content." />
+                <h:link value="I already have an account" outcome="signin" />
+            </p:layoutUnit>
+            <p:layoutUnit position="west" size="300">
+                <h:outputText value="Left content" />
+            </p:layoutUnit>
+            <p:layoutUnit position="east" size="200">
+                <h:outputText value="Right Content" />
+            </p:layoutUnit>
+            <p:layoutUnit position="center">
+                <h:form>    
+                    <!-- register a PostValidateEvent -->
+                    <f:event listener="#{registerView.validatePassword}"
+                             type="postValidate" />
+                    <f:event listener="#{registerView.validateCheckBot}"
+                             type="postValidate" />
+                    <f:event listener="#{registerView.validateAnswerForQuestion}"
+                             type="postValidate" />
+
+                    <p:panelGrid columns="3" layout="grid">
+                        <f:facet name="header">
+                            Create new account
+                        </f:facet>
+                        <h:outputLabel for="username">Name:</h:outputLabel>
+                        <h:inputText id="username" value="#{registerView.username}" required="true"
+                                     requiredMessage="Please enter your login" maxlength="10">
+                            <f:validator validatorId="uk.tryzub.validators.LoginValidator"/>
+                        </h:inputText>
+                        <h:message for="username" style="color:red" />    
+
+                        <h:outputLabel for="email">E-Mail:</h:outputLabel>
+                        <h:inputText id="email" value="#{registerView.email}" required="true"
+                                     requiredMessage="Please enter your e-mail address">
+                            <f:validator validatorId="uk.tryzub.validators.EmailValidator" />
+                        </h:inputText>
+                        <h:message for="email" style="color:red" /> 
 
 
-                <h:outputLabel for="email">E-Mail:</h:outputLabel>
-                <h:inputText id="email" value="#{registerView.email}" required="true"
-                             requiredMessage="Please enter your e-mail address">
-                    <f:validator validatorId="emailValidator" />
-                </h:inputText>
-                <h:message for="email" style="color:red" /> 
+                        <h:outputLabel for="password">Password:</h:outputLabel>
+                        <h:inputSecret id="password" value="#{registerView.password}"
+                                       required="true" requiredMessage="Please enter password">
+                            <f:validator validatorId="uk.tryzub.validators.PasswordValidator" />
+                        </h:inputSecret>
+                        <h:message for="password" style="color:red" /> 
 
-
-
-                <h:outputLabel for="password">Password:</h:outputLabel>
-                <h:inputSecret id="password" value="#{registerView.password}"
-                               required="true" requiredMessage="Please enter password">
-                    <f:validator validatorId="uk.tryzub.validators.PasswordValidator" />
-                </h:inputSecret>
-                <h:message for="password" style="color:red" /> 
-
-                <h:outputLabel for="confirmpassword">Confirm password:</h:outputLabel>
-                <h:inputSecret id="confirmpassword"
-                               value="#{registerView.confirmPassword}" required="true"
-                               requiredMessage="Please confirm your password">
-                </h:inputSecret>
-                <h:message for="confirmpassword" style="color:red" /> 
-
-
-
-                <h:outputLabel for="chooseSex">Виберіть Вашу стать:</h:outputLabel>
-                <p><p:inputSwitch id="chooseSex" value="#{registerView.sex}" onLabel="Чоловіча" offLabel="Жіноча"/></p>
-
-
-                <div id="defence">
-                    <p><h:outputText value="Захист:"/></p>
-
-                    <p><p:outputLabel value="Перевірка на програму-бот" styleClass="edit-title"/><br/></p>
-
-                    #{registerView.a} + #{registerView.b} =
-                    <p:inputText id="inputUserBot" value="#{registerView.answer}"  maxlength="2" required="true"
-                             requiredMessage="Введіть суму" styleClass="edit-field"/>
-                    <h:message for="inputUserBot" style="color:red" /> 
-
-
-
-                    <p><h:outputText value="Перевірка на москаля" styleClass="edit-title"/><br/></p>
-
-
-                    <p><h:outputText value="Введіть назву держави" styleClass="edit-title"/><br/></p>
-                    <h:outputLabel value="Крим - це " styleClass="edit-title"/><br/>
-                    <p:inputText id="inputUserCountry"   styleClass="edit-field"/>
-
-                    <p><h:outputText value="Введіть назву міста" styleClass="edit-title"/><br/></p>
-                    <h:outputLabel value="Русь було освячено у місті " styleClass="edit-title"/><br/>
-                    <p:inputText id="inputUserCit"   styleClass="edit-field"/>
-
-                    <p><h:outputText value="Введіть призвіще" styleClass="edit-title"/><br/></p>
-                    <h:outputLabel value="Український гетьман, що брав в облогу Москву - це " styleClass="edit-title"/><br/>
-                    <p:inputText id="inputUserHetman"   styleClass="edit-field"/>
-
-                </div>
-                <!-- Крим це:   Русь було освящено в місті:  Який клуб найбільше ставав чемпіоном СРСР:  -->
+                        <h:outputLabel for="confirmpassword">Confirm password:</h:outputLabel>
+                        <h:inputSecret id="confirmpassword"
+                                       value="#{registerView.confirmPassword}" required="true"
+                                       requiredMessage="Please confirm your password">
+                        </h:inputSecret>
+                        <h:message for="confirmpassword" style="color:red" /> 
 
 
 
+                        <h:outputLabel for="chooseSex">Виберіть Вашу стать:</h:outputLabel>
+                        <p:inputSwitch id="chooseSex" value="#{registerView.sex}" onLabel="Чоловіча" offLabel="Жіноча"/>
 
 
-                <h:commandButton action="#{registerView.register}" value="Register"></h:commandButton>
-            </h:panelGrid>
-        </h:form>
-        <br />
-        <br />
-        <h:link value="I already have an account" outcome="signin" />
+
+                        <h:outputText value =" "/>
+                        <h:outputText value =" "/>
+                        <h:outputText value =" "/>
+                        <h:outputText value =" "/>
+
+
+
+                        <p:outputLabel value="Спам-фільтр:" styleClass="edit-title1"/>
+                        <h:outputText value =" "/>
+                        <h:outputText value =" "/>
+
+
+
+                        <h:outputText value ="#{registerView.a} + #{registerView.b} = "/>
+                        <p:inputText id="inputUserBot" value="#{registerView.answerForCalc}"  maxlength="2" required="true"
+                                     requiredMessage="Введіть суму" styleClass="edit-field"/>
+                        <h:message for="inputUserBot" style="color:red" /> 
+
+                        <h:outputText value =" "/>
+                        <h:outputText value =" "/>
+                        <h:outputText value =" "/>
+
+                        <h:outputText value="Москаль-фільтр:" styleClass="edit-title1"/>
+                        <h:outputText value =" "/>
+                        <h:outputText value =" "/>
+
+                        <h:outputLabel value="Крим - це " styleClass="edit-title"  rendered="#{registerView.question==1}"/>
+                        <p:inputText id="inputCountry" value="#{registerView.answerForQuestion}" requiredMessage="Введіть назву держави"
+                                     styleClass="edit-field" required="true"  rendered="#{registerView.question==1}"/>
+                        <h:message for="inputCountry" style="color:red" /> 
+
+
+                        <h:outputLabel value="Хрещення Русі відбулося у місті " styleClass="edit-title"  rendered="#{registerView.question==2}"/>
+                        <p:inputText id="inputCity" value="#{registerView.answerForQuestion}"   requiredMessage="Введіть назву міста"
+                                     styleClass="edit-field" required="true" rendered="#{registerView.question==2}"/>
+                        <h:message for="inputCity" style="color:red" /> 
+
+
+                        <h:outputLabel value="Український гетьман, що брав в облогу Москву: " styleClass="edit-title" rendered="#{registerView.question==3}"/>                                          
+                        <p:inputText id="inputHetman"  value="#{registerView.answerForQuestion}"  requiredMessage="Введіть призвіще"
+                                     styleClass="edit-field" required="true" rendered="#{registerView.question==3}"/>
+                        <h:message for="inputHetman" style="color:red" /> 
+
+
+
+                        <h:outputLabel value="Футбольний клуб, що найбільше разів ставав чемпіоном СРСР: " styleClass="edit-title" rendered="#{registerView.question==4}"/>
+                        <p:inputText id="inputClub" value="#{registerView.answerForQuestion}"  requiredMessage="Введіть назву клубу" 
+                                     styleClass="edit-field" required="true" rendered="#{registerView.question==4}"/>
+                        <h:message for="inputClub" style="color:red" /> 
+
+                        <f:facet name="footer">
+                            <h:commandButton action="#{registerView.register}" value="Register"/>
+                        </f:facet>
+
+
+                    </p:panelGrid>
+                </h:form>
+
+
+
+            </p:layoutUnit>
+        </p:layout>
+
+
     </h:body>
 </html>

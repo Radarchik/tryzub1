@@ -26,7 +26,7 @@ public class LoginView implements Serializable {
 
     private static final long serialVersionUID = 3254181235309041386L;
 
-    private static Logger log = Logger.getLogger(LoginView.class.getName());
+    private final static Logger log = Logger.getLogger(LoginView.class.getName());
 
     @Inject
     private UserEJB userEJB;
@@ -43,7 +43,7 @@ public class LoginView implements Serializable {
         try {
             request.login(username, password);
         } catch (ServletException e) {
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login failed!", null));
+            context.addMessage("LoginForm:LoginPanelGrid:password", new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login failed!", null));
             return "signin";
         }
 
@@ -68,7 +68,7 @@ public class LoginView implements Serializable {
             } catch (IOException ex) {
                 Logger.getLogger(LoginView.class.getName()).log(Level.SEVERE, null, ex);
             } 
-            return "";
+            return "/?faces-redirect=true";
         } else if (request.isUserInRole("moderator")) {
           //  RequestContext context1 = RequestContext.getCurrentInstance();
           //  context1.execute("PF('dlgWork').show();");

@@ -36,7 +36,7 @@ import uk.tryzub.controllers.DB_Update_Quantity_Likes;
  *
  * @author tszin
  */
-@ManagedBean (eager = true)
+@ManagedBean(eager = true)
 @ApplicationScoped
 public final class TimerController implements Serializable {
 
@@ -44,14 +44,14 @@ public final class TimerController implements Serializable {
     private static final String DB_CONNECTION = "jdbc:mysql://localhost:3306/tryzub?zeroDateTimeBehavior=convertToNull";
     private static final String DB_USER = "root";
     private static final String DB_PASSWORD = "root";
-private Date currentDate = new Date();
+   // private Date currentDate = new Date();
     private TimerTask timerSetQuantityOfLikes;
     private Timer timerForLikesQuantityUpdates;
 
     public TimerController() {
-        
-        currentDate = DateUtils.addMinutes(currentDate, 3);
-        System.out.println(currentDate + "!!!!!!!!!!yopty!!!!!");
+
+        //currentDate = DateUtils.addMinutes(currentDate, 3);
+        System.out.println( "Timer for likes is started!!!");
 
         timerSetQuantityOfLikes = new TimerTask() {
             @Override
@@ -60,15 +60,14 @@ private Date currentDate = new Date();
             }
         };
 
-        //86400000
         timerForLikesQuantityUpdates = new Timer();
-        timerForLikesQuantityUpdates.schedule(timerSetQuantityOfLikes, currentDate, 60000);
+        timerForLikesQuantityUpdates.schedule(timerSetQuantityOfLikes,  86400000);
     }
 
     //for handle renewing
     public void renewQuantityOfLikesHandle() {
         try {
-           
+
             DB_Update_Quantity_Likes.renewQuantityOfLikes();
         } catch (SQLException ex) {
             Logger.getLogger(TimerController.class.getName()).log(Level.SEVERE, null, ex);

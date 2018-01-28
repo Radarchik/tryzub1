@@ -14,6 +14,26 @@
 
     <h:body>
 
+        <audio id="ring" preload="auto">
+            <source src="resources/sounds/ring.mp3" type="audio/mpeg"/>
+        </audio>
+
+
+        <audio id="tap" preload="auto">
+            <source src="resources/sounds/tap.mp3" type="audio/mpeg"/>
+        </audio>
+
+        <h:form rendered="#{viktorynaHelper.isSoundRingNeed}">
+            <h:outputScript library="js" name="sound_ring.js" />
+            <h2><h:outputText value="Туй го маэш суко"/></h2>
+
+        </h:form>
+
+
+
+
+
+
         <div class="login">  
             <ui:include src="/templates/login/login.xhtml" />
         </div>
@@ -23,9 +43,17 @@
         <p:clock pattern="HH:mm:ss dd.MM.yyyy" mode="server" />
         <h2><h:outputText value="Вікторина"/></h2>
 
+        <!-- Timer for game -->
+        <h:form rendered="#{viktorynaHelper.isGameStart==true and viktorynaHelper.isGameFinished==false}">
+            <p:poll interval="1" update="txt_count" />
+            <h:outputText  value="До кінця гри залишилось: " />              
+            <pe:timer id="txt_count" format="mm:ss"
+                      timeout="#{viktorynaHelper.numberTimer}"/> 
+        </h:form>
 
 
-        <h:form id="formTakePart">
+        <!-- Registration -->
+        <h:form id="formTakePart" rendered="#{viktorynaHelper.isGameRegister==true}">
             <h4><h:outputText value="Йде реєстрація учасників... Початок гри - " rendered="#{viktorynaHelper.participants != null}"/>
                 <h:outputText id="authorDateReg"  value="#{viktorynaHelper.startingDate}" rendered="#{viktorynaHelper.participants != null}">
                     <f:convertDateTime pattern="dd.MM.yyyy  HH:mm"/>
@@ -33,9 +61,8 @@
             </h4>
 
 
-
             <p:commandLink value="Взяти участь у вікторині" id="commandLink1"
-                           rendered="#{loginView.authenticatedUser!=null and !viktorynaHelper.participants.contains(loginView.authenticatedUser) and viktorynaHelper.participants != null}"
+                           rendered="#{loginView.authenticatedUser!=null and viktorynaHelper.participants != null and !viktorynaHelper.participants.contains(loginView.authenticatedUser) }"
                            action="#{viktorynaHelper.register(loginView.authenticatedUser)}"
                            update="participantsForm:participantsList formTakePart"/>
 
@@ -96,16 +123,16 @@
                 </f:facet>   
 
                 <p:column style="width:20px;">
-                
+
                     <h:outputText value="#{rowIndex+1}" 
                                   />
                 </p:column>
 
                 <p:column>
-                   
+
                     <h:outputText value="#{participant.username}" />
                 </p:column>
-                
+
             </p:dataTable>
         </h:form>
 
@@ -115,7 +142,7 @@
                           rendered="#{viktorynaHelper.isGameStart==true}"/>
             <p/>
 
-            <h:form id="gameField" rendered="#{viktorynaHelper.isGameStart==true and viktorynaHelper.participants.contains(loginView.authenticatedUser)}">
+            <h:form id="gameField" rendered="#{viktorynaHelper.isGameStart==true and viktorynaHelper.participants.contains(loginView.authenticatedUser) and viktorynaHelper.isGameFinished==false}">
 
 
                 <p:outputLabel   value="Введіть слово: " for="word"/>
@@ -143,9 +170,11 @@
             </h:form>
 
 
+
             <p:socket onMessage="handleMessage" channel="/updateGame" />   
             <script type="text/javascript">
                 function handleMessage() {
+                    playTap();
                     updateWidgets();
                 }
             </script>
@@ -203,23 +232,9 @@
 
 
             </h:form>
-            <!-- Відображення організації -->
-
-            <!--
-                       <h:form>
-                           <pe:timer 
-                               widgetVar="timer"
-                               timeout="50"  
-                               format="mm:ss"
-                               ontimercomplete="reloadPage()"/> 
-                       </h:form>
-           
-            -->
-
-
-
 
         </h:panelGroup>
+
 
         <h:form>
 
@@ -252,6 +267,37 @@
             </p:dataTable>
 
         </h:form>
+
+
+
+
+
+
+        <p>Click the buttons to play or pause the audio.</p>
+
+        <button onclick="playRing()" type="button">Ring Audio</button>
+
+        <button onclick="playTap()" type="button">Tap Audio</button> 
+
+        <script>
+            var x = document.getElementById("ring");
+
+            var z = document.getElementById("tap");
+
+            function playRing() {
+                x.play();
+            }
+
+            function playTap() {
+                z.play();
+            }
+
+
+        </script>
+
+        <img src="shev.png" onload="playRing()" width="2" height="2"></img>
+
+
 
 
     </h:body>

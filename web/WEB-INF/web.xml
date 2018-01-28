@@ -39,13 +39,21 @@
             <param-name>org.atmosphere.cpr.broadcasterCacheClass</param-name>
             <param-value>org.atmosphere.cache.UUIDBroadcasterCache</param-value>
         </init-param>
-         <load-on-startup>1</load-on-startup>
+        <load-on-startup>1</load-on-startup>
         <async-supported>true</async-supported>   
     </servlet>
     <servlet-mapping>
         <servlet-name>Push Servlet</servlet-name>
         <url-pattern>/primepush/*</url-pattern>
     </servlet-mapping>
+
+
+    <!--trying fjr avoid javax.faces.application.ViewExpiredException-->
+    <context-param>
+        <param-name>com.sun.faces.enableRestoreView11Compatibility</param-name>
+        <param-value>true</param-value>
+    </context-param>
+
 
     
     <session-config>

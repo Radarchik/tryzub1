@@ -15,15 +15,13 @@ import javax.faces.validator.ValidatorException;
 @FacesValidator("uk.tryzub.validators.PasswordValidator")
 public class PasswordValidator implements Validator {
 
-    private static final String PASSWORD_PATTERN = "^(?=[^\\d_].*?\\d)\\w(\\w|[!@#$%]){5,20}";
+    private static final String PASSWORD_PATTERN = "^([a-zA-Z0-9@*#]{5,15})$";
 
     /**
-     * This regex can be used to restrict passwords to a length of 6 to 20
-     * aplhanumeric characters and select special characters. The password also
-     * can not start with a digit, underscore or special character and must
-     * contain at least one digit.
+     * Password matching expression. Match all alphanumeric character and predefined wild characters. 
+   * Password must consists of at least 6 characters and not more than 15 characters..
      */
-    private Pattern pattern;
+    private final Pattern pattern;
     private Matcher matcher;
 
     public PasswordValidator() {

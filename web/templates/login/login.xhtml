@@ -32,9 +32,9 @@
 
             <div id="dialogwrapper1">
 
-                <h:form>
+                <h:form id="LoginForm">               
                     <h3><h:outputText value="Ввійти:"  /></h3>
-                    <h:panelGrid columns="2">
+                    <h:panelGrid columns="2" id="LoginPanelGrid">
                         <h:outputLabel for="login">Login:</h:outputLabel>
                         <h:inputText id="login" value="#{loginView.username}" required="true" requiredMessage="Please enter your login"></h:inputText>
 

@@ -5,3 +5,4 @@ tmp
 nbproject
 build
 build.xml
+/dist/

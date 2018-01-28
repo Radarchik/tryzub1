@@ -95,14 +95,19 @@ public class PostHelper implements Serializable {
 
                     User user = (User) session.get(User.class, username);
                     user.setReputation(user.getReputation() + rating);
+                    
+                    
+                    userValuer.setQuantity(userValuer.getQuantity()-1);
+                    
                     session.update(post);
                     session.update(user);
+                    session.update(userValuer);
                     transaction.commit();
 
                     /*для обновления аджаксового */
                     fillSelectedPosts(post.getTopic().getTopicid().toString());
                 }else {
-                    FacesMessage message1 = new FacesMessage(FacesMessage.SEVERITY_INFO, "Упсс", "Кількість лайків на сьогодні вичерпано :-(");
+                    FacesMessage message1 = new FacesMessage(FacesMessage.SEVERITY_INFO, "Упсс..", "Кількість лайків на сьогодні вичерпано :-(");
                     RequestContext.getCurrentInstance().showMessageInDialog(message1);
 
                 }

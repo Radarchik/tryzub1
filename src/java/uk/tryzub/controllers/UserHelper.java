@@ -30,7 +30,7 @@ import uk.tryzub.entity.HibernateUtil;
 import uk.tryzub.entity.Organization;
 import org.primefaces.event.CellEditEvent;
 import uk.tryzub.beans.LoginView;
-import uk.tryzub.beans.UserEJB;
+import uk.tryzub.beans.UserEJBImpl;
 import uk.tryzub.entity.Review;
 import uk.tryzub.entity.User;
 
@@ -47,7 +47,7 @@ public final class UserHelper implements Serializable {
     private static Logger log = Logger.getLogger(LoginView.class.getName());
 
     @Inject
-    private UserEJB userEJB;
+    private UserEJBImpl userEJB;
     
     public User findUserByName(String username) {
         return userEJB.findUserByName(username);

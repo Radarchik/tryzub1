@@ -6,7 +6,9 @@ import java.util.logging.Logger;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
@@ -16,7 +18,7 @@ import javax.inject.Inject;
 import uk.tryzub.entity.User;
 
 @ManagedBean
-@SessionScoped
+@ViewScoped
 public class RegisterView implements Serializable {
 
     private static final long serialVersionUID = 1685823449195612778L;
@@ -31,10 +33,13 @@ public class RegisterView implements Serializable {
     private String confirmPassword;
     private String email;
 
+    private Random r;
     private int a;
     private int b;
+    private String answerForCalc;
 
-    private String answer;
+    private int question;
+    private String answerForQuestion;
 
     private boolean sex = false; //true - man; false - woman 
 
@@ -55,18 +60,66 @@ public class RegisterView implements Serializable {
 
         UIComponent components = event.getComponent();
 
-        // get answer
+        // get answerForCalc
         UIInput uiInputAnswer = (UIInput) components.findComponent("inputUserBot");
-        String answer = uiInputAnswer.getLocalValue() == null ? "" : uiInputAnswer.getLocalValue().toString();
+        answerForCalc = uiInputAnswer.getLocalValue() == null ? "" : uiInputAnswer.getLocalValue().toString();
         String answerId = uiInputAnswer.getClientId();
 
-        if (answer==null||answer.equals("")||a + b != Integer.parseInt(answer)) {
+        if (answerForCalc == null || answerForCalc.equals("") || a + b != Integer.parseInt(answerForCalc)) {
             FacesMessage msg = new FacesMessage("Неправильна відповідь");
             msg.setSeverity(FacesMessage.SEVERITY_ERROR);
             facesContext.addMessage(answerId, msg);
             facesContext.renderResponse();
         }
 
+    }
+
+    public void validateAnswerForQuestion(ComponentSystemEvent event) {
+
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+
+        UIComponent components = event.getComponent();
+
+        UIInput uiInputAnswer = null;
+        boolean isAnswerTrue = false;
+        // get answerForCalc
+        switch (question) {
+            case 1:
+                uiInputAnswer = (UIInput) components.findComponent("inputCountry");
+                answerForQuestion = uiInputAnswer.getLocalValue() == null ? "" : uiInputAnswer.getLocalValue().toString();
+                isAnswerTrue = ("Україна").equals(answerForQuestion);
+                break;
+            case 2:
+                uiInputAnswer = (UIInput) components.findComponent("inputCity");
+                answerForQuestion = uiInputAnswer.getLocalValue() == null ? "" : uiInputAnswer.getLocalValue().toString();
+                isAnswerTrue = ("Київ").equals(answerForQuestion);
+                break;
+            case 3:
+                uiInputAnswer = (UIInput) components.findComponent("inputHetman");
+                answerForQuestion = uiInputAnswer.getLocalValue() == null ? "" : uiInputAnswer.getLocalValue().toString();
+                isAnswerTrue = ("Сагайдачний").equals(answerForQuestion);
+                break;
+            case 4:
+                uiInputAnswer = (UIInput) components.findComponent("inputClub");
+                answerForQuestion = uiInputAnswer.getLocalValue() == null ? "" : uiInputAnswer.getLocalValue().toString();
+                isAnswerTrue = ("Динамо").equals(answerForQuestion);
+                break;
+        }
+
+        
+            
+            String answerId = uiInputAnswer.getClientId();
+            
+          
+       
+        if (isAnswerTrue==false) {
+            
+            FacesMessage msg = new FacesMessage("Що, москалику, спалився?))");
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            facesContext.addMessage(answerId, msg);
+            facesContext.renderResponse();
+        }
+         
     }
 
     public void validatePassword(ComponentSystemEvent event) {
@@ -77,11 +130,11 @@ public class RegisterView implements Serializable {
 
         // get password
         UIInput uiInputPassword = (UIInput) components.findComponent("password");
-        String password = uiInputPassword.getLocalValue() == null ? "" : uiInputPassword.getLocalValue().toString();
+        password = uiInputPassword.getLocalValue() == null ? "" : uiInputPassword.getLocalValue().toString();
 
         // get confirm password
         UIInput uiInputConfirmPassword = (UIInput) components.findComponent("confirmpassword");
-        String confirmPassword = uiInputConfirmPassword.getLocalValue() == null ? ""
+        confirmPassword = uiInputConfirmPassword.getLocalValue() == null ? ""
                 : uiInputConfirmPassword.getLocalValue().toString();
         String confirmPasswordId = uiInputPassword.getClientId();
         // Let required="true" do its job.
@@ -104,14 +157,14 @@ public class RegisterView implements Serializable {
         user.setEmail(email);
         user.setPassword(password);
 
-        /*установка пола(sex)*/
+        /*установка пола(sex) 0-woman, 1-man*/
         byte x = 0;
         if (sex == true) {
             x = 1;
         }
         user.setSex(x);
 
-        /*установка аватара*/
+        /*установка аватара - можно тоже по рендому выбрать из 4-х*/
         if (sex == true) {
             user.setAvatar("/member/boy.jpg");
         } else {
@@ -124,13 +177,15 @@ public class RegisterView implements Serializable {
     }
 
     public void generateChecks() {
-        Random r = new Random();
-        a = r.nextInt(9);
-        b = r.nextInt(9);
+        r = new Random();
+        a = r.nextInt(10);
+        b = r.nextInt(10);
+
+        //make question from 1 to 4  for chose random question
+        question = r.nextInt(4) + 1;
 
     }
 
-  
     public Integer getA() {
         return a;
     }
@@ -147,12 +202,24 @@ public class RegisterView implements Serializable {
         this.b = b;
     }
 
-    public String getAnswer() {
-        return answer;
+    public String getAnswerForQuestion() {
+        return answerForQuestion;
     }
 
-    public void setAnswer(String answer) {
-        this.answer = answer;
+    public void setAnswerForQuestion(String answerForQuestion) {
+        this.answerForQuestion = answerForQuestion;
+    }
+
+    public int getQuestion() {
+        return question;
+    }
+
+    public String getAnswerForCalc() {
+        return answerForCalc;
+    }
+
+    public void setAnswerForCalc(String answerForCalc) {
+        this.answerForCalc = answerForCalc;
     }
 
     public String getUsername() {

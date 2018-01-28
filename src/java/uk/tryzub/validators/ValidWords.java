@@ -24,17 +24,17 @@ public class ValidWords {
     public HashSet <String> h = new HashSet();
 
     public ValidWords(){
-        String fileName = "F:/noun.txt";
-
+        //String fileName = "/home/3zub/DataForTryzub/wordlist/words.txt";
+        String fileName = "F:/noun1.txt";
         try {
             Path path = Paths.get(fileName);
-            Scanner scanner = new Scanner(path, "UTF-8");
-            String inputLine;
-            while (scanner.hasNextLine()) {
-                 inputLine = new String(scanner.next().getBytes("UTF-8"), Charset.forName("UTF-8"));
-                 h.add(inputLine);                                
+            try (Scanner scanner = new Scanner(path, "UTF-8")) {
+                String inputLine;
+                while (scanner.hasNextLine()) {
+                    inputLine = new String(scanner.next().getBytes("UTF-8"), Charset.forName("UTF-8"));
+                    h.add(inputLine);                                
+                }
             }
-            scanner.close();
         } catch (Exception e) {
             e.printStackTrace();
         }

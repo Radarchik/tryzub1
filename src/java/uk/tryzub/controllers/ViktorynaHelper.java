@@ -5,49 +5,36 @@
  */
 package uk.tryzub.controllers;
 
-import com.sun.faces.util.LRUMap;
-import com.sun.xml.wss.impl.misc.NonceCache;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
+
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
+
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.Random;
+
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.TreeSet;
+
 import java.util.stream.Collectors;
 import javax.faces.application.FacesMessage;
+
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
-import javax.faces.bean.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.faces.event.ValueChangeEvent;
+
 import org.apache.commons.lang3.time.DateUtils;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.Transaction;
-import org.hibernate.type.descriptor.java.DataHelper;
+
 import org.primefaces.context.RequestContext;
-import uk.tryzub.entity.HibernateUtil;
-import uk.tryzub.entity.Organization;
-import org.primefaces.event.CellEditEvent;
+
 import org.primefaces.push.EventBus;
 import org.primefaces.push.EventBusFactory;
-import uk.tryzub.beans.LoginView;
-import uk.tryzub.entity.Habitation;
-import uk.tryzub.entity.Review;
 import uk.tryzub.entity.RowOfLeaderboard;
 import uk.tryzub.entity.User;
 import uk.tryzub.validators.ValidWords;
@@ -63,6 +50,7 @@ public final class ViktorynaHelper implements Serializable {
     private Timer timer;
     private TimerTask timerStartGame;
     private TimerTask timerEndGame;
+
     private ValidWords validWords;
 
     private HashSet<User> participants;
@@ -78,14 +66,20 @@ public final class ViktorynaHelper implements Serializable {
 
     private String word;
 
+    private boolean isGameRegister;
     private boolean isGameStart;
     private boolean isGameFinished;
+    private boolean isSoundRingNeed;
+
+    private int numberTimer;
 
     public void startRegister() {
+        isGameRegister = true;
         participants = new HashSet<>();
         System.out.println("startRegister!!!!!!!!!!!!");
 
-        endDate = DateUtils.addMinutes(startingDate, 3);
+        endDate = DateUtils.addMinutes(startingDate, 10);
+        numberTimer = (int) (endDate.getTime() - startingDate.getTime()) / 1000;
 
         timerStartGame = new TimerTask() {
             @Override
@@ -98,23 +92,34 @@ public final class ViktorynaHelper implements Serializable {
         timerEndGame = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("timerEndGame " + endDate);
+                System.out.println(numberTimer);
+                if (endDate.getTime() > System.currentTimeMillis()) {
+                    numberTimer = (int) ((endDate.getTime() - System.currentTimeMillis()) / 1000);
+                    return;
+                }
                 endGame();
             }
         };
 
         timer = new Timer();
         timer.schedule(timerStartGame, startingDate);
-        timer.schedule(timerEndGame, endDate);
+        timer.schedule(timerEndGame, 1000, 1000);
         EventBus eventBus = EventBusFactory.getDefault().eventBus();
         eventBus.publish("/reloadPage", "message");
     }
 
     public void startGame() {
         leaderboard = new LinkedList<>();
+        isGameRegister = false;
+        isSoundRingNeed = true;
         isGameStart = true;
         validWords = new ValidWords();
 
+        /*
+        for (int i = 0; i < 5; i++) {
+            startingWord = startingWord + " " + validWords.h.toArray()[new Random().nextInt(validWords.h.size())].toString();
+        }
+         */
         System.out.print("Quantity of words: ");
         System.out.println(validWords.h.size());
 
@@ -125,6 +130,12 @@ public final class ViktorynaHelper implements Serializable {
     }
 
     public void endGame() {
+        timer.cancel();
+        timer = null;
+        timerStartGame = null;
+        timerEndGame = null;
+        isSoundRingNeed = false;
+
         if (!leaderboard.isEmpty()) {
             mapOfLeaders = new LinkedHashMap<>();
             for (int i = 0; i < leaderboard.size(); i++) {
@@ -196,23 +207,33 @@ public final class ViktorynaHelper implements Serializable {
             }
 
             isGameFinished = true;
+
         }
         EventBus eventBus = EventBusFactory.getDefault().eventBus();
         eventBus.publish("/reloadPage", "message");
     }
 
     public void closeGame() {
+        if (timer != null) {
+            timer.cancel();
+            timer = null;
+        }
+        timerStartGame = null;
+        timerEndGame = null;
 
         leaderboard = null;
         isGameStart = false;
         isGameFinished = false;
-        startingWord = "";
+        isSoundRingNeed = false;
+        startingWord = null;
         startingDate = null;
         participants = null;
         validWords = null;
+
         EventBus eventBus = EventBusFactory.getDefault().eventBus();
         eventBus.publish("/reloadPage", "message");
         eventBus = null;
+
     }
 
     public void register(User user) {
@@ -238,6 +259,9 @@ public final class ViktorynaHelper implements Serializable {
             //checking whether leaderboard already contains this word
             for (RowOfLeaderboard row : leaderboard) {
                 if (word.equals(row.getWord())) {
+
+                    FacesMessage message1 = new FacesMessage(FacesMessage.SEVERITY_INFO, "Упсс", "Дане слово уже є на дошці :-(");
+                    RequestContext.getCurrentInstance().showMessageInDialog(message1);
                     return false;
                 }
             }
@@ -263,6 +287,8 @@ public final class ViktorynaHelper implements Serializable {
             }
 
             //if word was not added
+            FacesMessage message1 = new FacesMessage(FacesMessage.SEVERITY_INFO, "Упсс", "На дошці вже немає місця для цього слова :-(");
+            RequestContext.getCurrentInstance().showMessageInDialog(message1);
             return false;
         } finally {
             setWordNull();
@@ -271,11 +297,10 @@ public final class ViktorynaHelper implements Serializable {
     }
 
     public synchronized int submitWord(String playerName, String word) {
-
-        System.out.println(1111111);
+       
         //1)checking whether all letters in "word" are contained in "wordForGame"
-        char[] availableLetters = startingWord.toCharArray();
-        char[] proposedLetters = word.toCharArray();
+        char[] availableLetters = startingWord.toLowerCase().toCharArray();
+        char[] proposedLetters = word.toLowerCase().toCharArray();
 
         int count = 0;
 
@@ -292,12 +317,16 @@ public final class ViktorynaHelper implements Serializable {
         }
 
         if (count != word.length()) {
+
+            FacesMessage message1 = new FacesMessage(FacesMessage.SEVERITY_INFO, "Упсс", "Слово містить літери, яких немає у реченні :-(");
+            RequestContext.getCurrentInstance().showMessageInDialog(message1);
             return 0;
         }
 
         //2)checking whether "word" is valid
         if (!validWords.contains(word)) {
-            System.out.println("Такого слова нет!!!");
+            FacesMessage message1 = new FacesMessage(FacesMessage.SEVERITY_INFO, "Упсс", "Такого слова немає у словнику :-(");
+            RequestContext.getCurrentInstance().showMessageInDialog(message1);
             return 0;
         }
 
@@ -360,6 +389,14 @@ public final class ViktorynaHelper implements Serializable {
         this.startingDate = startingDate;
     }
 
+    public boolean isIsGameRegister() {
+        return isGameRegister;
+    }
+
+    public void setIsGameRegister(boolean isGameRegister) {
+        this.isGameRegister = isGameRegister;
+    }
+
     public Timer getTimer() {
         return timer;
     }
@@ -406,6 +443,22 @@ public final class ViktorynaHelper implements Serializable {
 
     public void setValidWords(ValidWords validWords) {
         this.validWords = validWords;
+    }
+
+    public int getNumberTimer() {
+        return numberTimer;
+    }
+
+    public void setNumberTimer(int numberTimer) {
+        this.numberTimer = numberTimer;
+    }
+
+    public boolean isIsSoundRingNeed() {
+        return isSoundRingNeed;
+    }
+
+    public void setIsSoundRingNeed(boolean isSoundRingNeed) {
+        this.isSoundRingNeed = isSoundRingNeed;
     }
 
 }

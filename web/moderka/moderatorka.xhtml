@@ -24,10 +24,10 @@
                 <p:inputText id = "startingWordInput" value="#{viktorynaHelper.startingWord}"/>
                 <p/> 
                 <p:outputLabel for="dateInput" value="Date: " />                
-                <p:inputText id = "dateInput" value = "#{viktorynaHelper.startingDate}"
-                             label = "Date" >
+                <p:inputMask id = "dateInput" value = "#{viktorynaHelper.startingDate}"
+                             label = "Date" mask="99-99-9999_99:99" >
                     <f:convertDateTime pattern = "dd-MM-yyyy_HH:mm" />
-                </p:inputText>
+                </p:inputMask>
                 <p/> 
                 <p:commandButton value = "Відкрити реєстрацію" action = "#{viktorynaHelper.startRegister()}"/>
             </h:form>
@@ -59,13 +59,15 @@
 
             </p:commandButton> 
 
-        </h:form>
-
-
-        <h:form>
 
             <p:commandButton id="renewQuanLikes" value="Обновити кількість лайків" 
                              action="#{timerController.renewQuantityOfLikesHandle()}">
+
+            </p:commandButton> 
+            
+            
+            <p:commandButton id="showAllBeans" value="showAllBeans" 
+                             action="#{administration.getRegisteredBeans()}">
 
             </p:commandButton> 
 

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE glassfish-web-app PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 Servlet 3.0//EN" "http://glassfish.org/dtds/glassfish-web-app_3_0-1.dtd">
 <glassfish-web-app error-url="">
+    
+    <context-root>/tryzub</context-root>
+    
   <security-role-mapping>
     <role-name>admin</role-name>
     <group-name>admin</group-name>
@@ -20,10 +23,12 @@
       <description>Keep a copy of the generated servlet class' java code.</description>
     </property>
   </jsp-config>
-  <property name="alternatedocroot_1" value="from=/organization/* dir=F:/MyProjects/tryzub/photo"/>
-  <property name="alternatedocroot_2" value="from=/member/* dir=F:/MyProjects/tryzub/photo"/>
-  <property name="alternatedocroot_3" value="from=/habitation/* dir=F:/MyProjects/tryzub/photo"/>
-  <property name="alternatedocroot_4" value="from=/publication/* dir=F:/MyProjects/tryzub/photo"/>
-  <property name="alternatedocroot_5" value="from=/wordlist/* dir=F:/MyProjects/tryzub/photo"/>
+<!-- /organization/embassy.jpeg -->  
+  <property name="alternatedocroot_1" value="from=/organization/* dir=F:\MyProjects\tryzub\photo"/>
+  <property name="alternatedocroot_2" value="from=/member/* dir=F:\MyProjects\tryzub\photo"/>
+  <property name="alternatedocroot_3" value="from=/habitation/* dir=F:\MyProjects\tryzub\photo"/>
+  <property name="alternatedocroot_4" value="from=/publication/* dir=F:\MyProjects\tryzub\photo"/>
+  <property name="alternatedocroot_5" value="from=/wordlist/* dir=F:\MyProjects\tryzub\photo"/>
+  <property name="alternatedocroot_5" value="from=/sound/* dir=F:\MyProjects\tryzub\photo"/>
   <parameter-encoding default-charset="UTF-8"/>
 </glassfish-web-app>

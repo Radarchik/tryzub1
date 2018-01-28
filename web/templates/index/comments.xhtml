@@ -39,7 +39,8 @@
 
                             <div id="commentRating">
                                 <p:commandButton action="#{publicationHelper.changeCommentRating()}" update="commentRating userReputation" 
-                                                 icon="ui-icon-plus" title="Плюс за публікацію" style="width: 15px; height: 15px; top:3px">
+                                                 icon="ui-icon-plus" title="Плюс за публікацію" style="width: 15px; height: 15px; top:3px"
+                                                 rendered="#{loginView.authenticatedUser!=null}">
                                     <f:param name="commentid" value="#{comment.idcomment}" />
                                     <f:param name="username" value="#{comment.user.username}" />
                                     <f:param name="rating" value="1" />
@@ -51,7 +52,8 @@
 
 
                                 <p:commandButton action="#{publicationHelper.changeCommentRating()}" update="commentRating userReputation" 
-                                                 icon="ui-icon-minus" title="Мінус за публікацію" style="width: 15px; height: 15px; top:3px">
+                                                 icon="ui-icon-minus" title="Мінус за публікацію" style="width: 15px; height: 15px; top:3px"
+                                                 rendered="#{loginView.authenticatedUser!=null}">
                                     <f:param name="commentid" value="#{comment.idcomment}" />
                                     <f:param name="username" value="#{comment.user.username}" />
                                     <f:param name="rating" value="-1" />
